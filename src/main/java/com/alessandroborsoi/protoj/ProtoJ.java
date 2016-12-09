@@ -1,11 +1,14 @@
 package com.alessandroborsoi.protoj;
 
+import com.alessandroborsoi.protoj.util.Time;
+
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
 import lombok.extern.log4j.Log4j2;
 
+import static com.alessandroborsoi.protoj.util.Time.getInstance;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
@@ -39,62 +42,53 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 @Log4j2
 public class ProtoJ {
-
     private long window;
+    private Time time;
+    public static Layer bullets = new Layer();
+    public static Layer enemies = new Layer();
+    public static Layer fx = new Layer();
+    public static Layer bonus = new Layer();
+    public static Layer background = new Layer();
+    public static Layer frontground = new Layer();
+    public static Layer text = new Layer();
 
     private void init() {
-        // Setup an error callback. The default implementation
-        // will print the error message in System.err.
+        time = getInstance();
         GLFWErrorCallback.createPrint(System.err).set();
-
-        // Initialize GLFW. Most GLFW functions will not work before doing this.
         if (!glfwInit())
             throw new IllegalStateException("Unable to initialize GLFW");
-
-        // Configure our window
-        glfwDefaultWindowHints(); // optional, the current window hints are already the default
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
-
-        int WIDTH = 300;
-        int HEIGHT = 300;
-
-        // Create the window
-        window = glfwCreateWindow(WIDTH, HEIGHT, "ProtoJ", NULL, NULL);
+        glfwDefaultWindowHints();
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+        int width = 800;
+        int height = 600;
+        window = glfwCreateWindow(width, height, "ProtoJ", NULL, NULL);
         if (window == NULL)
             throw new RuntimeException("Failed to create the GLFW window");
-
-        // Setup a key callback. It will be called every time a key is pressed, repeated or released.
         glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
             if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-                glfwSetWindowShouldClose(window, true); // We will detect this in our rendering loop
+                glfwSetWindowShouldClose(window, true);
         });
-
-        // Get the resolution of the primary monitor
         GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        // Center our window
         glfwSetWindowPos(
                 window,
-                (vidmode.width() - WIDTH) / 2,
-                (vidmode.height() - HEIGHT) / 2
+                (vidmode.width() - width) / 2,
+                (vidmode.height() - height) / 2
         );
-
-        // Make the OpenGL context current
         glfwMakeContextCurrent(window);
-        // Enable v-sync
         glfwSwapInterval(1);
-
-        // Make the window visible
         glfwShowWindow(window);
     }
 
     private void loop() {
         GL.createCapabilities();
-        glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         while (!glfwWindowShouldClose(window)) {
+            time.heartBeat();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             glfwSwapBuffers(window);
             glfwPollEvents();
+            time.update();
         }
     }
 
@@ -103,6 +97,7 @@ public class ProtoJ {
             init();
             log.info("The loop begins...");
             loop();
+            log.info("...and ends");
             glfwFreeCallbacks(window);
             glfwDestroyWindow(window);
         } finally {
