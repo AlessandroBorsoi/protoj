@@ -1,8 +1,10 @@
 package com.alessandroborsoi.protoj;
 
+import com.alessandroborsoi.protoj.input.KeyboardHandler;
 import com.alessandroborsoi.protoj.util.Time;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
@@ -12,6 +14,7 @@ import static com.alessandroborsoi.protoj.util.Time.getInstance;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
 import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
@@ -44,6 +47,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class ProtoJ {
     private long window;
     private Time time;
+    private GLFWKeyCallback keyCallback;
     public static Layer bullets = new Layer();
     public static Layer enemies = new Layer();
     public static Layer fx = new Layer();
@@ -85,6 +89,9 @@ public class ProtoJ {
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         while (!glfwWindowShouldClose(window)) {
             time.heartBeat();
+            glfwSetKeyCallback(window, keyCallback = new KeyboardHandler());
+            if (KeyboardHandler.isKeyDown(GLFW_KEY_SPACE))
+                log.debug("Space Key Pressed");
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             glfwSwapBuffers(window);
             glfwPollEvents();
