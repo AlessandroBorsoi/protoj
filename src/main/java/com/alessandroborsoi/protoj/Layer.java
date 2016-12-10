@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Layer {
-    @SuppressWarnings("unchecked")
-    private List<AbstractEntity> entities = new ArrayList();
+    private List<AbstractEntity> entities = new ArrayList<>();
 
     public void add(AbstractEntity e) {
         entities.add(e);

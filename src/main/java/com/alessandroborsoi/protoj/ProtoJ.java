@@ -53,7 +53,7 @@ public class ProtoJ {
     public static Layer fx = new Layer();
     public static Layer bonus = new Layer();
     public static Layer background = new Layer();
-    public static Layer frontground = new Layer();
+    public static Layer foreground = new Layer();
     public static Layer text = new Layer();
 
     private void init() {
@@ -92,11 +92,38 @@ public class ProtoJ {
             glfwSetKeyCallback(window, keyCallback = new KeyboardHandler());
             if (KeyboardHandler.isKeyDown(GLFW_KEY_SPACE))
                 log.debug("Space Key Pressed");
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            glfwSwapBuffers(window);
-            glfwPollEvents();
+            update();
+            checkCollisons();
+            render();
             time.update();
         }
+    }
+
+    private void render() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        bullets.render();
+        enemies.render();
+        fx.render();
+        background.render();
+        bonus.render();
+        foreground.render();
+        text.render();
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    private void checkCollisons() {
+
+    }
+
+    private void update() {
+        bullets.update();
+        enemies.update();
+        fx.update();
+        background.update();
+        bonus.update();
+        foreground.update();
+        text.update();
     }
 
     private void run() {
@@ -104,7 +131,7 @@ public class ProtoJ {
             init();
             log.info("The loop begins...");
             loop();
-            log.info("...and ends");
+            log.info("...and the loop ends");
             glfwFreeCallbacks(window);
             glfwDestroyWindow(window);
         } finally {

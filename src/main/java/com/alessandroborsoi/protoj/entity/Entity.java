@@ -1,6 +1,6 @@
 package com.alessandroborsoi.protoj.entity;
 
-interface Entity {
+public interface Entity {
     int PLANET = 0;
     int PLAYER_SHIP = 1;
     int GREEN_ORB = 2;
