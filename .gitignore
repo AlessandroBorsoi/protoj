@@ -2,3 +2,4 @@
 logs/
 protoj.iml
 target/
+.DS_Store
