@@ -1,5 +1,5 @@
 package com.alessandroborsoi.protoj.entity;
 
-public abstract class AnimatedEntity extends AbstractEntity {
+public abstract class AnimatedEntity extends Entity {
 
 }
