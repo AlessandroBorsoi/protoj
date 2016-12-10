@@ -1,12 +1,16 @@
 package com.alessandroborsoi.protoj;
 
 import com.alessandroborsoi.protoj.input.KeyboardHandler;
+import com.alessandroborsoi.protoj.texture.TextureLoader;
+import com.alessandroborsoi.protoj.texture.TextureLoaderImpl;
 import com.alessandroborsoi.protoj.util.Time;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL45;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -40,7 +44,6 @@ import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 @Log4j2
@@ -48,6 +51,7 @@ public class ProtoJ {
     private long window;
     private Time time;
     private GLFWKeyCallback keyCallback;
+    private TextureLoader textureLoader;
     public static Layer bullets = new Layer();
     public static Layer enemies = new Layer();
     public static Layer fx = new Layer();
@@ -56,7 +60,18 @@ public class ProtoJ {
     public static Layer foreground = new Layer();
     public static Layer text = new Layer();
 
+
+    public static void main(String args[]) {
+        new ProtoJ().run();
+    }
+
+    private ProtoJ() {
+        init();
+        initGL();
+    }
+
     private void init() {
+        log.debug("init() starts");
         time = getInstance();
         GLFWErrorCallback.createPrint(System.err).set();
         if (!glfwInit())
@@ -74,26 +89,51 @@ public class ProtoJ {
                 glfwSetWindowShouldClose(window, true);
         });
         GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        glfwSetWindowPos(
-                window,
-                (vidmode.width() - width) / 2,
-                (vidmode.height() - height) / 2
-        );
+        glfwSetWindowPos(window, (vidmode.width() - width) / 2, (vidmode.height() - height) / 2);
         glfwMakeContextCurrent(window);
         glfwSwapInterval(1);
         glfwShowWindow(window);
+        log.debug("init() ends");
+    }
+
+    private void initGL() {
+        log.debug("initGL() starts");
+        GL.createCapabilities();
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        GL11.glClearDepth(1.0f);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDepthMask(false);
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
+        GL11.glLoadIdentity();
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+        textureLoader = new TextureLoaderImpl();
+        textureLoader.init();
+        log.debug("initGL() ends");
+    }
+
+    private void run() {
+        try {
+            log.info("The loop begins...");
+            loop();
+            log.info("...and the loop ends");
+            glfwFreeCallbacks(window);
+            glfwDestroyWindow(window);
+        } finally {
+            glfwTerminate();
+            glfwSetErrorCallback(null).free();
+        }
     }
 
     private void loop() {
-        GL.createCapabilities();
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         while (!glfwWindowShouldClose(window)) {
             time.heartBeat();
             glfwSetKeyCallback(window, keyCallback = new KeyboardHandler());
             if (KeyboardHandler.isKeyDown(GLFW_KEY_SPACE))
                 log.debug("Space Key Pressed");
             update();
-            checkCollisons();
+            checkCollisions();
             render();
             time.update();
         }
@@ -112,7 +152,7 @@ public class ProtoJ {
         glfwPollEvents();
     }
 
-    private void checkCollisons() {
+    private void checkCollisions() {
 
     }
 
@@ -124,23 +164,5 @@ public class ProtoJ {
         bonus.update();
         foreground.update();
         text.update();
-    }
-
-    private void run() {
-        try {
-            init();
-            log.info("The loop begins...");
-            loop();
-            log.info("...and the loop ends");
-            glfwFreeCallbacks(window);
-            glfwDestroyWindow(window);
-        } finally {
-            glfwTerminate();
-            glfwSetErrorCallback(null).free();
-        }
-    }
-
-    public static void main(String args[]) {
-        new ProtoJ().run();
     }
 }

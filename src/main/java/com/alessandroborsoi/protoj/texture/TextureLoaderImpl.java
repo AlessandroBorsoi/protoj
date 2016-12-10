@@ -4,17 +4,17 @@ import com.alessandroborsoi.protoj.entity.IEntity;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
-import java.io.IOException;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import lombok.extern.log4j.Log4j2;
 
-import static com.alessandroborsoi.protoj.util.IOUtil.ioResourceToByteBuffer;
 import static org.lwjgl.stb.STBImage.stbi_failure_reason;
-import static org.lwjgl.stb.STBImage.stbi_load_from_memory;
+import static org.lwjgl.stb.STBImage.stbi_load;
 
 @Log4j2
 public class TextureLoaderImpl implements TextureLoader {
@@ -90,26 +90,25 @@ public class TextureLoaderImpl implements TextureLoader {
     }
 
     private Texture loadTexture(String path, int xOffSet, int yOffSet, int textureWidth, int textureHeight) {
-        ByteBuffer imageBuffer;
+        URL url = this.getClass().getResource(path);
+        File file;
         try {
-            log.debug("Loading image: {0}", path);
-            imageBuffer = ioResourceToByteBuffer(path, textureWidth * textureHeight);
-        } catch (IOException e) {
-            log.error("Cannot load image: {0}", path);
-            throw new RuntimeException(e);
+            file = new File(url.toURI());
+        } catch (URISyntaxException e) {
+            log.error("Wrong URL: {}", path);
+            throw new RuntimeException("Wrong URL: " + path);
         }
         IntBuffer w = BufferUtils.createIntBuffer(1);
         IntBuffer h = BufferUtils.createIntBuffer(1);
         IntBuffer comp = BufferUtils.createIntBuffer(1);
-        ByteBuffer image = stbi_load_from_memory(imageBuffer, w, h, comp, 0);
+        log.debug("Loading image: {}", path);
+        ByteBuffer image = stbi_load(file.toString(), w, h, comp, 0);
         if (image == null) {
-            log.error("Failed to load image: {0}", stbi_failure_reason());
+            log.error("Failed to load image: {}", stbi_failure_reason());
             throw new RuntimeException("Failed to load image: " + stbi_failure_reason());
         }
         int textureId = GL11.glGenTextures();
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureId);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL12.GL_CLAMP_TO_EDGE);
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL12.GL_CLAMP_TO_EDGE);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
         GL11.glTexImage2D(
@@ -122,6 +121,7 @@ public class TextureLoaderImpl implements TextureLoader {
                 GL11.GL_RGBA,
                 GL11.GL_UNSIGNED_BYTE,
                 image);
+        image.clear();
         return new Texture(textureId, textureHeight, textureWidth);
     }
 
