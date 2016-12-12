@@ -1,4 +1,4 @@
-package com.alessandroborsoi.protoj.input;
+package com.alessandroborsoi.protoj.io;
 
 import org.lwjgl.glfw.GLFWKeyCallback;
 

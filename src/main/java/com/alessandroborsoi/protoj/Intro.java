@@ -2,8 +2,12 @@ package com.alessandroborsoi.protoj;
 
 import com.alessandroborsoi.protoj.entity.impl.Planet;
 import com.alessandroborsoi.protoj.entity.impl.Text;
+import com.alessandroborsoi.protoj.io.EventManager;
+import com.alessandroborsoi.protoj.io.KeyListener;
 import com.alessandroborsoi.protoj.util.Time;
 import com.alessandroborsoi.protoj.util.Vector2f;
+
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
 public class Intro {
     private Layer layer;
@@ -42,14 +46,14 @@ public class Intro {
         commandLabel5.spawn(new Vector2f(pointX, pointY -= interspace), immobile, layer);
         commandLabel6.spawn(new Vector2f(pointX + 150, pointY -= interspace * 3), immobile, layer);
 
-//        KeyListener space = new KeyListener() {
-//            public void onKeyUp() {
-//                introOn = false;
-//                ProtoJ.timer.resume();
-//            }
-//        };
-//
-//        EventManager.instance().addListener(Keyboard.KEY_SPACE, space);
+        KeyListener space = new KeyListener() {
+            public void onKeyUp() {
+                introOn = false;
+                Time.getInstance().resume();
+            }
+        };
+
+        EventManager.getInstance().addListener(GLFW_KEY_SPACE, space);
     }
 
     public void play() {
@@ -65,10 +69,8 @@ public class Intro {
 //                introOn = false;
 //                protoJ.gameOff = true;
 //            }
-//
-//            EventManager.instance().checkEvents();
+            EventManager.getInstance().checkEvents();
         }
-//
-//        EventManager.instance().clear();
+        EventManager.getInstance().clear();
     }
 }

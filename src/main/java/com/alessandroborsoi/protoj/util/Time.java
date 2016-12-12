@@ -40,7 +40,11 @@ public class Time {
     }
 
     public void pause() {
-        pause = !pause;
+        pause = true;
+    }
+
+    public void resume() {
+        pause = false;
     }
 
     private double getCurrentTimeMillis() {
