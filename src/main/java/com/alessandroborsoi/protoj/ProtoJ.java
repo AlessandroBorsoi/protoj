@@ -10,8 +10,8 @@ import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL45;
 
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
 import static com.alessandroborsoi.protoj.util.Time.getInstance;
@@ -48,17 +48,17 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 @Log4j2
 public class ProtoJ {
-    private long window;
+    public static TextureLoader textureLoader;
+    public long window;
     private Time time;
     private GLFWKeyCallback keyCallback;
-    private TextureLoader textureLoader;
-    public static Layer bullets = new Layer();
-    public static Layer enemies = new Layer();
-    public static Layer fx = new Layer();
-    public static Layer bonus = new Layer();
-    public static Layer background = new Layer();
-    public static Layer foreground = new Layer();
-    public static Layer text = new Layer();
+    private static Layer bullets = new Layer();
+    private static Layer enemies = new Layer();
+    private static Layer fx = new Layer();
+    private static Layer bonus = new Layer();
+    @Getter private static Layer background = new Layer();
+    private static Layer foreground = new Layer();
+    private static Layer text = new Layer();
 
 
     public static void main(String args[]) {
@@ -139,7 +139,7 @@ public class ProtoJ {
         }
     }
 
-    private void render() {
+    public void render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         bullets.render();
         enemies.render();
@@ -152,11 +152,7 @@ public class ProtoJ {
         glfwPollEvents();
     }
 
-    private void checkCollisions() {
-
-    }
-
-    private void update() {
+    public void update() {
         bullets.update();
         enemies.update();
         fx.update();
@@ -164,5 +160,9 @@ public class ProtoJ {
         bonus.update();
         foreground.update();
         text.update();
+    }
+
+    private void checkCollisions() {
+
     }
 }
