@@ -1,10 +1,10 @@
 package com.alessandroborsoi.protoj.io;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 
 import lombok.Getter;
+import lombok.extern.log4j.Log4j2;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
@@ -29,11 +29,11 @@ import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+@Log4j2
 public class WindowManager {
-    private static int WIDTH = 800;
-    private static int HEIGHT = 600;
+    public static int WIDTH = 800;
+    public static int HEIGHT = 600;
     @Getter private static long window;
-    private GLFWKeyCallback keyCallback;
 
     private WindowManager() {
     }
@@ -41,16 +41,20 @@ public class WindowManager {
     public static long init() {
         if (window == NULL) {
             GLFWErrorCallback.createPrint(System.err).set();
-            if (!glfwInit())
+            if (!glfwInit()) {
+                log.error("Unable to initialize GLFW");
                 throw new IllegalStateException("Unable to initialize GLFW");
+            }
             glfwDefaultWindowHints();
             glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
             glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
             window = glfwCreateWindow(WIDTH, HEIGHT, "ProtoJ", NULL, NULL);
-            if (window == NULL)
+            if (window == NULL) {
+                log.error("Failed to create the GLFW window");
                 throw new RuntimeException("Failed to create the GLFW window");
-            GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-            glfwSetWindowPos(window, (vidmode.width() - WIDTH) / 2, (vidmode.height() - HEIGHT) / 2);
+            }
+            GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+            glfwSetWindowPos(window, (videoMode.width() - WIDTH) / 2, (videoMode.height() - HEIGHT) / 2);
             glfwMakeContextCurrent(window);
             glfwSwapInterval(1);
             glfwShowWindow(window);

@@ -5,13 +5,14 @@ import org.lwjgl.BufferUtils;
 import java.nio.DoubleBuffer;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Based on: https://github.com/SilverTiger/lwjgl3-tutorial/blob/master/src/silvertiger/tutorial/lwjgl/math/Vector2f.java
  */
 public class Vector2f {
-    @Getter private float x;
-    @Getter private float y;
+    @Getter @Setter private float x;
+    @Getter @Setter private float y;
 
     public Vector2f() {
         this.x = 0.0f;

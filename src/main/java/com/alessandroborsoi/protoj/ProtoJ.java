@@ -70,16 +70,16 @@ public class ProtoJ {
 
     private void run() {
         try {
-            log.info("The loop begins...");
+            new Intro(this).play();
             loop();
-            log.info("...and the loop ends");
         } finally {
-            log.info("Closing the window");
+            log.debug("Closing the window");
             WindowManager.terminate();
         }
     }
 
     private void loop() {
+        log.debug("The loop begins...");
         while (running()) {
             time.heartBeat();
             glfwSetKeyCallback(WindowManager.getWindow(), keyCallback = new KeyboardHandler());
@@ -90,6 +90,7 @@ public class ProtoJ {
             render();
             time.update();
         }
+        log.debug("...and the loop ends");
     }
 
     public void render() {

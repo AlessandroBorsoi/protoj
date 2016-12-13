@@ -1,12 +1,15 @@
 package com.alessandroborsoi.protoj.util;
 
+import lombok.Getter;
+
 import static org.lwjgl.glfw.GLFW.glfwGetTime;
 
 public class Time {
     private static Time time;
-    private double lastTime;
-    private double deltas;
-    private double fps;
+    private float lastTime;
+    @Getter private float tick;
+    private float deltas;
+    private float fps;
     private int frames;
     private boolean pause;
 
@@ -23,7 +26,8 @@ public class Time {
 
     public void heartBeat() {
         if (!pause) {
-            deltas += getCurrentTimeMillis() - lastTime;
+            tick = getCurrentTimeMillis() - lastTime;
+            deltas += tick;
             lastTime = getCurrentTimeMillis();
         }
     }
@@ -47,7 +51,7 @@ public class Time {
         pause = false;
     }
 
-    private double getCurrentTimeMillis() {
-        return glfwGetTime() * 1000;
+    private float getCurrentTimeMillis() {
+        return (float) (glfwGetTime() * 1000);
     }
 }
