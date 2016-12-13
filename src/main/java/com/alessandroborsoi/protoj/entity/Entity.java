@@ -36,7 +36,7 @@ public abstract class Entity implements IEntity {
     @Override
     public void draw() {
         GL11.glLoadIdentity();
-        GL11.glTranslatef(position.getX(), position.getY(), 0);
+        GL11.glTranslatef(position.x, position.y, 0);
         GL11.glRotatef(this.rotation, 0f, 0f, 1f);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texture.getId());
         GL11.glBegin(GL11.GL_QUADS);
@@ -60,8 +60,8 @@ public abstract class Entity implements IEntity {
     public void update() {
         interpolate(position, speed);
         this.rotation += rotationSpeed * tick;
-        if (this.position.getX() - this.width > (WindowManager.WIDTH / 2) ||
-                this.position.getX() + this.width < -(WindowManager.WIDTH / 2)) {
+        if (this.position.x - this.width > (WindowManager.WIDTH / 2) ||
+                this.position.x + this.width < -(WindowManager.WIDTH / 2)) {
             unSpawn();
             log.debug(this.getClass().getName() + " died");
             return;
@@ -73,8 +73,8 @@ public abstract class Entity implements IEntity {
     }
 
     protected Vector2f interpolate(Vector2f old_position, Vector2f speed) {
-        old_position.setX(old_position.getX() + tick * speed.getX());
-        old_position.setY(old_position.getY() + tick * speed.getY());
+        old_position.x = old_position.x + tick * speed.x;
+        old_position.y = old_position.y + tick * speed.y;
         return old_position;
     }
 

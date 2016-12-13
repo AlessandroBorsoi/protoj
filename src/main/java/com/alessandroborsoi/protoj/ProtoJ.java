@@ -1,10 +1,12 @@
 package com.alessandroborsoi.protoj;
 
+import com.alessandroborsoi.protoj.entity.impl.PlayerShip;
 import com.alessandroborsoi.protoj.io.KeyboardHandler;
 import com.alessandroborsoi.protoj.io.WindowManager;
 import com.alessandroborsoi.protoj.texture.TextureLoader;
 import com.alessandroborsoi.protoj.texture.TextureLoaderImpl;
 import com.alessandroborsoi.protoj.util.Time;
+import com.alessandroborsoi.protoj.util.Vector2f;
 
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.opengl.GL;
@@ -19,6 +21,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_VERSION;
 import static org.lwjgl.opengl.GL11.glClear;
 
 @Log4j2
@@ -30,10 +33,11 @@ public class ProtoJ {
     private static Layer enemies = new Layer();
     private static Layer fx = new Layer();
     private static Layer bonus = new Layer();
-    @Getter private static Layer background = new Layer();
+    @Getter
+    private static Layer background = new Layer();
     private static Layer foreground = new Layer();
     private static Layer text = new Layer();
-
+    private static PlayerShip player = null;
 
     public static void main(String args[]) {
         new ProtoJ().run();
@@ -56,6 +60,7 @@ public class ProtoJ {
         GL.createCapabilities();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        log.debug("OpenGL: {}", GL11.glGetString(GL_VERSION));
         GL11.glClearDepth(1.0f);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glEnable(GL11.GL_BLEND);
@@ -70,12 +75,19 @@ public class ProtoJ {
 
     private void run() {
         try {
-            new Intro(this).play();
+//            new Intro(this).play();
+            addBasicEntries();
             loop();
         } finally {
             log.debug("Closing the window");
             WindowManager.terminate();
+            GL.destroy();
         }
+    }
+
+    private void addBasicEntries() {
+        player = new PlayerShip();
+        player.spawn(new Vector2f(-150f, -100f), new Vector2f(), bullets);
     }
 
     private void loop() {

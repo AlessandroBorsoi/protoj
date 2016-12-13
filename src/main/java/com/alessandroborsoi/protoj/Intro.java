@@ -27,7 +27,7 @@ public class Intro {
         Text commandLabel2 = new Text("F2           : Start enemy waves.");
         Text commandLabel3 = new Text("X            : Detach/Move Orb.");
         Text commandLabel4 = new Text("Arrow key    : Move.");
-        Text commandLabel5 = new Text("Space        : Fire ( maintain to charge).");
+        Text commandLabel5 = new Text("Space        : Fire (maintain to charge).");
         Text commandLabel6 = new Text("Press SPACE to Start !!");
         Vector2f immobile = new Vector2f(0, 0);
         int pointY = 240;
