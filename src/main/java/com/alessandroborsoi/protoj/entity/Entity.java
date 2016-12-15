@@ -2,6 +2,7 @@ package com.alessandroborsoi.protoj.entity;
 
 import com.alessandroborsoi.protoj.Layer;
 import com.alessandroborsoi.protoj.io.WindowManager;
+import com.alessandroborsoi.protoj.texture.Sprite;
 import com.alessandroborsoi.protoj.texture.Texture;
 import com.alessandroborsoi.protoj.util.Time;
 import com.alessandroborsoi.protoj.util.Vector2f;
@@ -28,7 +29,17 @@ public abstract class Entity implements IEntity {
     protected float tick;
     protected Vector2f position;
     protected Vector2f speed;
+    protected Sprite sprite;
     private float ratio = 1.0f;
+
+    public Entity() {
+//        this.texture = ProtoJ.textureLoader.getTexture(this.type);
+//        this.original_width = this.texture.getWidth();
+//        this.original_height = this.texture.getHeight();
+//        this.width = this.original_width * ratio;
+//        this.height = this.original_height * ratio;
+        this.sprite = getSprite();
+    }
 
     @Override
     public void draw() {
@@ -80,14 +91,6 @@ public abstract class Entity implements IEntity {
         tick = Time.getInstance().getTick();
     }
 
-    public void init() {
-//        this.texture = ProtoJ.textureLoader.getTexture(this.type);
-        this.original_width = this.texture.getWidth();
-        this.original_height = this.texture.getHeight();
-        this.width = this.original_width * ratio;
-        this.height = this.original_height * ratio;
-    }
-
     public void spawn(Vector2f position, Vector2f speed, Layer layer) {
         this.position = position;
         this.speed = speed;
@@ -105,4 +108,6 @@ public abstract class Entity implements IEntity {
         this.width = this.original_width * ratio;
         this.height = this.original_height * ratio;
     }
+
+    protected abstract Sprite getSprite();
 }

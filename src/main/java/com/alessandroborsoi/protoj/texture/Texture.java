@@ -10,6 +10,7 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
 import static org.lwjgl.opengl.ARBInternalformatQuery2.GL_TEXTURE_2D;
@@ -31,19 +32,13 @@ import static org.lwjgl.stb.STBImage.stbi_set_flip_vertically_on_load;
 @Log4j2
 public class Texture {
     private int id;
-    private int width;
-    private int height;
-    private String name;
-
-    public Texture(int id, int width, int height) {
-        this.id = id;
-        this.width = width;
-        this.height = height;
-    }
+    @Getter private int width;
+    @Getter private int height;
+    @Getter private String name;
 
     private Texture(String name, int width, int height, ByteBuffer data) {
         log.debug("Loading texture {} on memory", name);
-        id = glGenTextures();
+        this.id = glGenTextures();
         this.width = width;
         this.height = height;
         this.name = name;

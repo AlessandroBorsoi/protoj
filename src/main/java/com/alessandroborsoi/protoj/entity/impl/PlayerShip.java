@@ -1,6 +1,7 @@
 package com.alessandroborsoi.protoj.entity.impl;
 
 import com.alessandroborsoi.protoj.entity.AnimatedEntity;
+import com.alessandroborsoi.protoj.texture.Sprite;
 
 import org.lwjgl.opengl.GL11;
 
@@ -11,7 +12,6 @@ public class PlayerShip extends AnimatedEntity {
 //        concentrateAnimation.spawn(new Vector2f(0, 0), new Vector2f(0, 0), Prototyp.fx);
 //        accelerateEntrity.spawn(new Vector2f(0, 0), new Vector2f(0, 0), Prototyp.fx);
         this.type = PLAYER_SHIP;
-        init();
         setRatio(0.25f);
     }
 
@@ -23,7 +23,7 @@ public class PlayerShip extends AnimatedEntity {
         GL11.glTranslatef(position.x, position.y, 0);
         int animationFrame = (int) ((speed.y * 4) / MAX_SPEED);
         animationFrame += 4;
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.animationTextures[animationFrame].getId());
+//        GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.animationTextures[animationFrame].getId());
         GL11.glColor4f(1, 1, 1, 1f);
         GL11.glBegin(GL11.GL_QUADS);
         {
@@ -40,5 +40,10 @@ public class PlayerShip extends AnimatedEntity {
             GL11.glVertex2f(width, height);
         }
         GL11.glEnd();
+    }
+
+    @Override
+    protected Sprite getSprite() {
+        return new Sprite(4, 4, 128, 128);
     }
 }

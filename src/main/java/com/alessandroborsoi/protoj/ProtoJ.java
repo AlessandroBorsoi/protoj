@@ -74,7 +74,7 @@ public class ProtoJ {
     private void run() {
         try {
 //            new Intro(this).play();
-//            addBasicEntries();
+            addBasicEntries();
             loop();
         } finally {
             log.debug("Terminating all...");

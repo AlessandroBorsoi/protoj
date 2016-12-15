@@ -1,6 +1,7 @@
 package com.alessandroborsoi.protoj.entity.impl;
 
 import com.alessandroborsoi.protoj.entity.AnimatedEntity;
+import com.alessandroborsoi.protoj.texture.Sprite;
 
 import org.lwjgl.opengl.GL11;
 
@@ -14,7 +15,6 @@ public class Text extends AnimatedEntity {
     public Text(String string) {
         this.setString(string);
         this.type = FONT;
-        init();
         setRatio(0.4f);
     }
 
@@ -46,8 +46,13 @@ public class Text extends AnimatedEntity {
         }
     }
 
+    @Override
+    protected Sprite getSprite() {
+        return new Sprite(16, 16, 32, 32);
+    }
+
     private void drawChar(int i) {
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.animationTextures[chars[i]].getId());
+//        GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.animationTextures[chars[i]].getId());
         GL11.glBegin(GL11.GL_QUADS);
         {
             GL11.glTexCoord2f(textureRight, textureUp); //Upper right

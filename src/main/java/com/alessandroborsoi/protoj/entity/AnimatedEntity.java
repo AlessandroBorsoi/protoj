@@ -1,27 +1,31 @@
 package com.alessandroborsoi.protoj.entity;
 
-import com.alessandroborsoi.protoj.texture.Texture;
+import com.alessandroborsoi.protoj.texture.Coordinates;
 
 public abstract class AnimatedEntity extends Entity {
-    protected Texture[] animationTextures;
-    // This field hold the blast charge..
-    protected float animationCursor;
-    protected float animationSpeed = 4.4f;
-    // This field set if player is charging a blast
-    private boolean displayAnimation;
+    protected Coordinates[] animation;
 
-    public void init() {
-//        this.animationTextures = ProtoJ.textureLoader.getAnimation(this.type);
-//        this.original_width = animationTextures[0].getWidth();
-//        this.original_height = animationTextures[0].getHeight();
-    }
-
-    public void startAnimation() {
-        this.displayAnimation = true;
-    }
-
-    public void stopAnimation() {
-        this.displayAnimation = false;
-        this.animationCursor = 0;
+    public AnimatedEntity() {
+        int rows = sprite.getRows();
+        int cols = sprite.getCols();
+        int x = sprite.getX();
+        int w = sprite.getW();
+        int y = sprite.getY();
+        int h = sprite.getH();
+        this.animation = new Coordinates[rows * cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                Coordinates coordinates = new Coordinates();
+                coordinates.getCoordinates()[0].x = x + w * j;
+                coordinates.getCoordinates()[0].y = y + h * i;
+                coordinates.getCoordinates()[1].x = x + w * (j + 1);
+                coordinates.getCoordinates()[1].y = y + h * i;
+                coordinates.getCoordinates()[2].x = x + w * (j + 1);
+                coordinates.getCoordinates()[2].y = y + h * (i + 1);
+                coordinates.getCoordinates()[3].x = x + w * j;
+                coordinates.getCoordinates()[3].y = y + h * (i + 1);
+                animation[i * cols + j] = coordinates;
+            }
+        }
     }
 }

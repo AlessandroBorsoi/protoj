@@ -124,7 +124,8 @@ public class TextureLoaderImpl {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 //        glTexSubImage2D(GL_TEXTURE_2D, 0, xOffSet, yOffSet, textureWidth, textureHeight, GL_RGBA, GL_UNSIGNED_BYTE, image);
-        return new Texture(textureId, width, height);
+//        return new Texture(textureId, width, height);
+        return null;
     }
 
     private Texture[] loadAnimation(String path, int cols, int rows, int textWidth, int textHeight) {
