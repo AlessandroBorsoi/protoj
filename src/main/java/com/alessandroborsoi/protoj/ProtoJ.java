@@ -4,7 +4,6 @@ import com.alessandroborsoi.protoj.entity.impl.PlayerShip;
 import com.alessandroborsoi.protoj.io.KeyboardHandler;
 import com.alessandroborsoi.protoj.io.WindowManager;
 import com.alessandroborsoi.protoj.texture.TextureLoader;
-import com.alessandroborsoi.protoj.texture.TextureLoaderImpl;
 import com.alessandroborsoi.protoj.util.Time;
 import com.alessandroborsoi.protoj.util.Vector2f;
 
@@ -68,18 +67,17 @@ public class ProtoJ {
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
-        textureLoader = new TextureLoaderImpl();
-        textureLoader.init();
+        textureLoader = TextureLoader.getInstance();
         log.debug("initGL() ends");
     }
 
     private void run() {
         try {
 //            new Intro(this).play();
-            addBasicEntries();
+//            addBasicEntries();
             loop();
         } finally {
-            log.debug("Closing the window");
+            log.debug("Terminating all...");
             WindowManager.terminate();
             GL.destroy();
         }
@@ -99,10 +97,20 @@ public class ProtoJ {
                 log.debug("Space Key Pressed");
             update();
             checkCollisions();
-            render();
             time.update();
+            render();
         }
         log.debug("...and the loop ends");
+    }
+
+    public void update() {
+        bullets.update();
+        enemies.update();
+        fx.update();
+        background.update();
+        bonus.update();
+        foreground.update();
+        text.update();
     }
 
     public void render() {
@@ -115,16 +123,6 @@ public class ProtoJ {
         foreground.render();
         text.render();
         WindowManager.render();
-    }
-
-    public void update() {
-        bullets.update();
-        enemies.update();
-        fx.update();
-        background.update();
-        bonus.update();
-        foreground.update();
-        text.update();
     }
 
     private void checkCollisions() {

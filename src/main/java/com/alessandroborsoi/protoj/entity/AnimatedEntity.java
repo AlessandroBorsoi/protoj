@@ -1,6 +1,5 @@
 package com.alessandroborsoi.protoj.entity;
 
-import com.alessandroborsoi.protoj.ProtoJ;
 import com.alessandroborsoi.protoj.texture.Texture;
 
 public abstract class AnimatedEntity extends Entity {
@@ -12,9 +11,9 @@ public abstract class AnimatedEntity extends Entity {
     private boolean displayAnimation;
 
     public void init() {
-        this.animationTextures = ProtoJ.textureLoader.getAnimation(this.type);
-        this.original_width = animationTextures[0].getWidth();
-        this.original_height = animationTextures[0].getHeight();
+//        this.animationTextures = ProtoJ.textureLoader.getAnimation(this.type);
+//        this.original_width = animationTextures[0].getWidth();
+//        this.original_height = animationTextures[0].getHeight();
     }
 
     public void startAnimation() {

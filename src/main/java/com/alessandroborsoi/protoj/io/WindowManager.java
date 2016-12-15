@@ -34,13 +34,15 @@ public class WindowManager {
     public static int WIDTH = 800;
     public static int HEIGHT = 600;
     @Getter private static long window;
+    private static GLFWErrorCallback errorCallback;
 
     private WindowManager() {
     }
 
     public static long init() {
         if (window == NULL) {
-            GLFWErrorCallback.createPrint(System.err).set();
+            errorCallback = GLFWErrorCallback.createPrint(System.err);
+            glfwSetErrorCallback(errorCallback);
             if (!glfwInit()) {
                 log.error("Unable to initialize GLFW");
                 throw new IllegalStateException("Unable to initialize GLFW");
@@ -66,15 +68,15 @@ public class WindowManager {
         return !glfwWindowShouldClose(window);
     }
 
+    public static void render() {
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
     public static void terminate() {
         glfwFreeCallbacks(window);
         glfwDestroyWindow(window);
         glfwTerminate();
-        glfwSetErrorCallback(null).free();
-    }
-
-    public static void render() {
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+        errorCallback.free();
     }
 }

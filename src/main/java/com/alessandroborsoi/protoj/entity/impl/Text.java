@@ -29,7 +29,7 @@ public class Text extends AnimatedEntity {
 
     public void draw() {
         GL11.glLoadIdentity();
-        GL11.glTranslatef(getPosition().x, getPosition().y, 0);
+        GL11.glTranslatef(position.x, position.y, 0);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 
         if (mode == LEFT_TO_RIGHT) {

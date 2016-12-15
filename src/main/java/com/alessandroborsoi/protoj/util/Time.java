@@ -8,8 +8,8 @@ public class Time {
     private static Time time;
     private float lastTime;
     @Getter private float tick;
+    @Getter private float fps;
     private float deltas;
-    private float fps;
     private int frames;
     private boolean pause;
 
@@ -21,14 +21,14 @@ public class Time {
     }
 
     private Time() {
-        lastTime = getCurrentTimeMillis();
+        lastTime = getTime();
     }
 
     public void heartBeat() {
         if (!pause) {
-            tick = getCurrentTimeMillis() - lastTime;
+            tick = getTime() - lastTime;
             deltas += tick;
-            lastTime = getCurrentTimeMillis();
+            lastTime = getTime();
         }
     }
 
@@ -51,7 +51,7 @@ public class Time {
         pause = false;
     }
 
-    private float getCurrentTimeMillis() {
-        return (float) (glfwGetTime() * 1000);
+    private float getTime() {
+        return (float) glfwGetTime();
     }
 }

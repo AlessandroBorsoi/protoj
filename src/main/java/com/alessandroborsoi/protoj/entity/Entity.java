@@ -1,7 +1,6 @@
 package com.alessandroborsoi.protoj.entity;
 
 import com.alessandroborsoi.protoj.Layer;
-import com.alessandroborsoi.protoj.ProtoJ;
 import com.alessandroborsoi.protoj.io.WindowManager;
 import com.alessandroborsoi.protoj.texture.Texture;
 import com.alessandroborsoi.protoj.util.Time;
@@ -9,7 +8,6 @@ import com.alessandroborsoi.protoj.util.Vector2f;
 
 import org.lwjgl.opengl.GL11;
 
-import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -28,10 +26,9 @@ public abstract class Entity implements IEntity {
     protected float width;
     protected float height;
     protected float tick;
+    protected Vector2f position;
+    protected Vector2f speed;
     private float ratio = 1.0f;
-    @Getter
-    private Vector2f position;
-    private Vector2f speed;
 
     @Override
     public void draw() {
@@ -84,7 +81,7 @@ public abstract class Entity implements IEntity {
     }
 
     public void init() {
-        this.texture = ProtoJ.textureLoader.getTexture(this.type);
+//        this.texture = ProtoJ.textureLoader.getTexture(this.type);
         this.original_width = this.texture.getWidth();
         this.original_height = this.texture.getHeight();
         this.width = this.original_width * ratio;
