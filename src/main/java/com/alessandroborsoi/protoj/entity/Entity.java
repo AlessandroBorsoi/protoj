@@ -2,8 +2,10 @@ package com.alessandroborsoi.protoj.entity;
 
 import com.alessandroborsoi.protoj.Layer;
 import com.alessandroborsoi.protoj.io.WindowManager;
+import com.alessandroborsoi.protoj.texture.Coordinates;
 import com.alessandroborsoi.protoj.texture.Sprite;
 import com.alessandroborsoi.protoj.texture.Texture;
+import com.alessandroborsoi.protoj.texture.TextureLoader;
 import com.alessandroborsoi.protoj.util.Time;
 import com.alessandroborsoi.protoj.util.Vector2f;
 
@@ -13,7 +15,6 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public abstract class Entity implements IEntity {
-    protected int type;
     protected Layer layer = null;
     protected float rotation = 0;
     protected float textureUp = 1;
@@ -30,6 +31,8 @@ public abstract class Entity implements IEntity {
     protected Vector2f position;
     protected Vector2f speed;
     protected Sprite sprite;
+    protected int textureId;
+    protected String textureName;
     private float ratio = 1.0f;
 
     public Entity() {
@@ -39,14 +42,18 @@ public abstract class Entity implements IEntity {
 //        this.width = this.original_width * ratio;
 //        this.height = this.original_height * ratio;
         this.sprite = getSprite();
+        this.textureName = getTextureName();
+        this.textureId = TextureLoader.getInstance().getTextureId(this.textureName);
     }
+
+    protected abstract String getTextureName();
 
     @Override
     public void draw() {
         GL11.glLoadIdentity();
         GL11.glTranslatef(position.x, position.y, 0);
         GL11.glRotatef(this.rotation, 0f, 0f, 1f);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texture.getId());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureId);
         GL11.glBegin(GL11.GL_QUADS);
         {
             GL11.glTexCoord2f(textureRight, textureUp); // Upper right
@@ -64,7 +71,6 @@ public abstract class Entity implements IEntity {
         GL11.glEnd();
     }
 
-    @Override
     public void update() {
         interpolate(position, speed);
         this.rotation += rotationSpeed * tick;
@@ -86,7 +92,6 @@ public abstract class Entity implements IEntity {
         return old_position;
     }
 
-    @Override
     public void updateTick() {
         tick = Time.getInstance().getTick();
     }
@@ -110,4 +115,33 @@ public abstract class Entity implements IEntity {
     }
 
     protected abstract Sprite getSprite();
+
+    protected Coordinates[] getCoordinates(Sprite sprite) {
+        int rows = sprite.getRows();
+        int cols = sprite.getCols();
+        int x = sprite.getX();
+        int w = sprite.getW();
+        int y = sprite.getY();
+        int h = sprite.getH();
+        Coordinates[] sprites = new Coordinates[rows * cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                Coordinates coordinates = new Coordinates();
+                // Upper left
+                coordinates.getCoordinates()[0].x = x + w * j;
+                coordinates.getCoordinates()[0].y = y + h * i;
+                // Lower left
+                coordinates.getCoordinates()[1].x = x + w * j;
+                coordinates.getCoordinates()[1].y = y + h * (i + 1);
+                // Lower right
+                coordinates.getCoordinates()[2].x = x + w * (j + 1);
+                coordinates.getCoordinates()[2].y = y + h * (i + 1);
+                // Upper right
+                coordinates.getCoordinates()[3].x = x + w * (j + 1);
+                coordinates.getCoordinates()[3].y = y + h * i;
+                sprites[i * cols + j] = coordinates;
+            }
+        }
+        return sprites;
+    }
 }

@@ -1,5 +1,6 @@
 package com.alessandroborsoi.protoj;
 
+import com.alessandroborsoi.protoj.entity.impl.Planet;
 import com.alessandroborsoi.protoj.entity.impl.PlayerShip;
 import com.alessandroborsoi.protoj.io.KeyboardHandler;
 import com.alessandroborsoi.protoj.io.WindowManager;
@@ -84,8 +85,10 @@ public class ProtoJ {
     }
 
     private void addBasicEntries() {
-        player = new PlayerShip();
-        player.spawn(new Vector2f(-150f, -100f), new Vector2f(), bullets);
+        Planet planet = new Planet();
+        planet.spawn(new Vector2f(-150f, -100f), new Vector2f(), bullets);
+//        player = new PlayerShip();
+//        player.spawn(new Vector2f(-150f, -100f), new Vector2f(), bullets);
     }
 
     private void loop() {

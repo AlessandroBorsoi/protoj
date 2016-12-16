@@ -1,16 +1,21 @@
 package com.alessandroborsoi.protoj.entity.impl;
 
-import com.alessandroborsoi.protoj.entity.Entity;
+import com.alessandroborsoi.protoj.entity.EntityEnum;
+import com.alessandroborsoi.protoj.entity.SingleEntity;
 import com.alessandroborsoi.protoj.texture.Sprite;
 
 import org.lwjgl.opengl.GL11;
 
-public class Planet extends Entity {
+public class Planet extends SingleEntity {
 
     public Planet() {
-        this.type = PLANET;
         this.setRatio(0.65f);
         this.rotation = 180;
+    }
+
+    @Override
+    protected String getTextureName() {
+        return EntityEnum.STAGE1_LAYER1.toString();
     }
 
     @Override

@@ -14,7 +14,6 @@ public class Text extends AnimatedEntity {
 
     public Text(String string) {
         this.setString(string);
-        this.type = FONT;
         setRatio(0.4f);
     }
 
@@ -25,6 +24,11 @@ public class Text extends AnimatedEntity {
 
     public void setMode(int mode) {
         this.mode = mode;
+    }
+
+    @Override
+    protected String getTextureName() {
+        return null;
     }
 
     public void draw() {
