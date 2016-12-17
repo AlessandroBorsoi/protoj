@@ -9,8 +9,6 @@ import org.lwjgl.opengl.GL11;
 public class Planet extends SingleEntity {
 
     public Planet() {
-        this.setRatio(0.65f);
-        this.rotation = 180;
     }
 
     @Override

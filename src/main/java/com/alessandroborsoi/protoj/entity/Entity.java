@@ -33,18 +33,14 @@ public abstract class Entity implements IEntity {
     protected Sprite sprite;
     protected int textureId;
     protected String textureName;
-    private float ratio = 1.0f;
 
     public Entity() {
-//        this.texture = ProtoJ.textureLoader.getTexture(this.type);
-//        this.original_width = this.texture.getWidth();
-//        this.original_height = this.texture.getHeight();
-//        this.width = this.original_width * ratio;
-//        this.height = this.original_height * ratio;
         this.sprite = getSprite();
         this.textureName = getTextureName();
         this.textureId = TextureLoader.getInstance().getTextureId(this.textureName);
     }
+
+    protected abstract Sprite getSprite();
 
     protected abstract String getTextureName();
 
@@ -103,20 +99,7 @@ public abstract class Entity implements IEntity {
         this.layer.add(this);
     }
 
-    public void spawn(Vector2f position, Vector2f speed, float rotationSpeed, Layer layer) {
-        spawn(position, speed, layer);
-        this.rotationSpeed = rotationSpeed;
-    }
-
-    protected void setRatio(float newRatio) {
-        this.ratio = newRatio;
-        this.width = this.original_width * ratio;
-        this.height = this.original_height * ratio;
-    }
-
-    protected abstract Sprite getSprite();
-
-    protected Coordinates[] getCoordinates(Sprite sprite) {
+    Coordinates[] getCoordinates(Sprite sprite) {
         int rows = sprite.getRows();
         int cols = sprite.getCols();
         int x = sprite.getX();

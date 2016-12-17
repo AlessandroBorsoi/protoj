@@ -13,7 +13,7 @@ public class PlayerShip extends AnimatedEntity {
     public PlayerShip() {
 //        concentrateAnimation.spawn(new Vector2f(0, 0), new Vector2f(0, 0), Prototyp.fx);
 //        accelerateEntrity.spawn(new Vector2f(0, 0), new Vector2f(0, 0), Prototyp.fx);
-        setRatio(0.25f);
+//        setRatio(0.25f);
     }
 
     @Override

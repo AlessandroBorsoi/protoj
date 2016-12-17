@@ -1,6 +1,7 @@
 package com.alessandroborsoi.protoj.entity;
 
 public enum EntityEnum {
+    FONTS("Fonts"),
     PLAYER_SHIP("PlayerShip"),
     STAGE1_LAYER1("Stage1Layer1");
 

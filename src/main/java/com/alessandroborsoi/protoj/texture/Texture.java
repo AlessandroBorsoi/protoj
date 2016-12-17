@@ -37,7 +37,7 @@ public class Texture {
     @Getter private String name;
 
     private Texture(String name, int width, int height, ByteBuffer data) {
-        log.debug("Loading texture {} on memory", name);
+        log.debug("Loading texture {} in memory", name);
         this.id = glGenTextures();
         this.width = width;
         this.height = height;
