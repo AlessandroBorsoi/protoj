@@ -1,6 +1,7 @@
 package com.alessandroborsoi.protoj.io;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 
 import lombok.Getter;
@@ -9,7 +10,6 @@ import lombok.extern.log4j.Log4j2;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
 import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
-import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
 import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.glfw.GLFW.glfwDefaultWindowHints;
@@ -35,6 +35,7 @@ public class WindowManager {
     public static int HEIGHT = 600;
     @Getter private static long window;
     private static GLFWErrorCallback errorCallback;
+    private static GLFWFramebufferSizeCallback framebufferSizeCallback;
 
     private WindowManager() {
     }
@@ -49,7 +50,7 @@ public class WindowManager {
             }
             glfwDefaultWindowHints();
             glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-            glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+            glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
             window = glfwCreateWindow(WIDTH, HEIGHT, "ProtoJ", NULL, NULL);
             if (window == NULL) {
                 log.error("Failed to create the GLFW window");

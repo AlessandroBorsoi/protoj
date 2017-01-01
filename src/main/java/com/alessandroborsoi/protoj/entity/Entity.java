@@ -46,23 +46,23 @@ public abstract class Entity implements IEntity {
 
     @Override
     public void draw() {
-        GL11.glLoadIdentity();
-        GL11.glTranslatef(position.x, position.y, 0);
-        GL11.glRotatef(this.rotation, 0f, 0f, 1f);
+//        GL11.glLoadIdentity();
+//        GL11.glTranslatef(position.x, position.y, 0);
+//        GL11.glRotatef(this.rotation, 0f, 0f, 1f);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureId);
         GL11.glBegin(GL11.GL_QUADS);
         {
-            GL11.glTexCoord2f(textureRight, textureUp); // Upper right
-            GL11.glVertex2f(width, -height);
+            GL11.glTexCoord2f(0, 0);
+            GL11.glVertex2f(0, 0);
 
-            GL11.glTexCoord2f(textureLeft, textureUp); // Upper left
-            GL11.glVertex2f(-width, -height);
+            GL11.glTexCoord2f(0, 1);
+            GL11.glVertex2f(0, 1);
 
-            GL11.glTexCoord2f(textureLeft, textureDown); // Lower left
-            GL11.glVertex2f(-width, height);
+            GL11.glTexCoord2f(1, 1);
+            GL11.glVertex2f(1, 1);
 
-            GL11.glTexCoord2f(textureRight, textureDown); // Lower right
-            GL11.glVertex2f(width, height);
+            GL11.glTexCoord2f(1, 0);
+            GL11.glVertex2f(1, 0);
         }
         GL11.glEnd();
     }

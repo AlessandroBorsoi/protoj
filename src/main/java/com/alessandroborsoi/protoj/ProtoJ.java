@@ -67,6 +67,7 @@ public class ProtoJ {
         GL11.glDepthMask(false);
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
+        GL11.glOrtho(0, WindowManager.WIDTH, 0, WindowManager.HEIGHT, 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         textureLoader = TextureLoader.getInstance();
         log.debug("initGL() ends");
@@ -75,7 +76,7 @@ public class ProtoJ {
     private void run() {
         try {
 //            new Intro(this).play();
-            addBasicEntries();
+//            addBasicEntries();
             loop();
         } finally {
             log.debug("Terminating all...");
@@ -125,6 +126,17 @@ public class ProtoJ {
         bonus.render();
         foreground.render();
         text.render();
+
+        // set the color of the quad (R,G,B,A)
+        GL11.glColor3f(0.5f, 0.5f, 1.0f);
+
+        // draw quad
+        GL11.glBegin(GL11.GL_QUADS);
+            GL11.glVertex2f(100, 100);
+            GL11.glVertex2f(100 + 200, 100);
+            GL11.glVertex2f(100 + 200, 100 + 200);
+            GL11.glVertex2f(100, 100 + 200);
+        GL11.glEnd();
         WindowManager.render();
     }
 
