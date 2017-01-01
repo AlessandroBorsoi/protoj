@@ -58,17 +58,17 @@ public class ProtoJ {
     private void initGL() {
         log.debug("initGL() starts");
         GL.createCapabilities();
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+//        GL11.glEnable(GL11.GL_TEXTURE_2D);
+//        GL11.glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
         log.debug("OpenGL: {}", GL11.glGetString(GL_VERSION));
-        GL11.glClearDepth(1.0f);
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDepthMask(false);
-        GL11.glMatrixMode(GL11.GL_PROJECTION);
-        GL11.glLoadIdentity();
-        GL11.glOrtho(0, WindowManager.WIDTH, 0, WindowManager.HEIGHT, 1, -1);
-        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+//        GL11.glClearDepth(1.0f);
+//        GL11.glDisable(GL11.GL_DEPTH_TEST);
+//        GL11.glEnable(GL11.GL_BLEND);
+//        GL11.glDepthMask(false);
+//        GL11.glMatrixMode(GL11.GL_PROJECTION);
+//        GL11.glLoadIdentity();
+//        GL11.glOrtho(0, WindowManager.WIDTH, 0, WindowManager.HEIGHT, 1, -1);
+//        GL11.glMatrixMode(GL11.GL_MODELVIEW);
         textureLoader = TextureLoader.getInstance();
         log.debug("initGL() ends");
     }
@@ -132,10 +132,10 @@ public class ProtoJ {
 
         // draw quad
         GL11.glBegin(GL11.GL_QUADS);
-            GL11.glVertex2f(100, 100);
-            GL11.glVertex2f(100 + 200, 100);
-            GL11.glVertex2f(100 + 200, 100 + 200);
-            GL11.glVertex2f(100, 100 + 200);
+            GL11.glVertex2f(0.0f, 0.0f);
+            GL11.glVertex2f(1.0f, 0.0f);
+            GL11.glVertex2f(1.0f, 1.0f);
+            GL11.glVertex2f(0.0f, 1.0f);
         GL11.glEnd();
         WindowManager.render();
     }
