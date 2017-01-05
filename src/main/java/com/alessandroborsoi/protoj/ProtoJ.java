@@ -1,146 +1,118 @@
 package com.alessandroborsoi.protoj;
 
-import com.alessandroborsoi.protoj.entity.impl.Planet;
-import com.alessandroborsoi.protoj.entity.impl.PlayerShip;
-import com.alessandroborsoi.protoj.io.KeyboardHandler;
-import com.alessandroborsoi.protoj.io.WindowManager;
-import com.alessandroborsoi.protoj.texture.TextureLoader;
-import com.alessandroborsoi.protoj.util.Time;
-import com.alessandroborsoi.protoj.util.Vector2f;
-
-import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GL11;
 
-import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 
-import static com.alessandroborsoi.protoj.io.WindowManager.running;
-import static com.alessandroborsoi.protoj.util.Time.getInstance;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
+import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_CORE_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_FORWARD_COMPAT;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
+import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
+import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
+import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
+import static org.lwjgl.glfw.GLFW.glfwGetTime;
+import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
+import static org.lwjgl.glfw.GLFW.glfwInit;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
+import static org.lwjgl.glfw.GLFW.glfwShowWindow;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
+import static org.lwjgl.glfw.GLFW.glfwTerminate;
+import static org.lwjgl.glfw.GLFW.glfwWindowHint;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_TRUE;
 import static org.lwjgl.opengl.GL11.GL_VERSION;
 import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glGetString;
+import static org.lwjgl.opengl.GL11.glViewport;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 @Log4j2
 public class ProtoJ {
-    public static TextureLoader textureLoader;
-    private Time time;
-    private GLFWKeyCallback keyCallback;
-    private static Layer bullets = new Layer();
-    private static Layer enemies = new Layer();
-    private static Layer fx = new Layer();
-    private static Layer bonus = new Layer();
-    @Getter
-    private static Layer background = new Layer();
-    private static Layer foreground = new Layer();
-    private static Layer text = new Layer();
-    private static PlayerShip player = null;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
+    private static long window;
+    private KeyCallback keyCallback;
+    private Game protoJ;
+    private float deltaTime;
+    private float lastFrame;
 
     public static void main(String args[]) {
         new ProtoJ().run();
     }
 
-    private ProtoJ() {
-        init();
-        initGL();
-    }
-
-    private void init() {
-        log.debug("init() starts");
-        time = getInstance();
-        WindowManager.init();
-        log.debug("init() ends");
-    }
-
-    private void initGL() {
-        log.debug("initGL() starts");
-        GL.createCapabilities();
-//        GL11.glEnable(GL11.GL_TEXTURE_2D);
-//        GL11.glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-        log.debug("OpenGL: {}", GL11.glGetString(GL_VERSION));
-//        GL11.glClearDepth(1.0f);
-//        GL11.glDisable(GL11.GL_DEPTH_TEST);
-//        GL11.glEnable(GL11.GL_BLEND);
-//        GL11.glDepthMask(false);
-//        GL11.glMatrixMode(GL11.GL_PROJECTION);
-//        GL11.glLoadIdentity();
-//        GL11.glOrtho(0, WindowManager.WIDTH, 0, WindowManager.HEIGHT, 1, -1);
-//        GL11.glMatrixMode(GL11.GL_MODELVIEW);
-        textureLoader = TextureLoader.getInstance();
-        log.debug("initGL() ends");
-    }
-
     private void run() {
         try {
-//            new Intro(this).play();
-//            addBasicEntries();
+            init();
+            glInit();
             loop();
         } finally {
             log.debug("Terminating all...");
-            WindowManager.terminate();
+            glfwFreeCallbacks(window);
+            glfwDestroyWindow(window);
+            glfwTerminate();
             GL.destroy();
         }
     }
 
-    private void addBasicEntries() {
-        Planet planet = new Planet();
-        planet.spawn(new Vector2f(-150f, -100f), new Vector2f(), bullets);
-//        player = new PlayerShip();
-//        player.spawn(new Vector2f(-150f, -100f), new Vector2f(), bullets);
+    private void init() {
+        GLFWErrorCallback.createPrint(System.err).set();
+        if (!glfwInit()) {
+            log.error("Unable to initialize GLFW");
+            throw new IllegalStateException("Unable to initialize GLFW");
+        }
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+        window = glfwCreateWindow(WIDTH, HEIGHT, "ProtoJ", NULL, NULL);
+        if (window == NULL) {
+            log.error("Failed to create the GLFW window");
+            throw new RuntimeException("Failed to create the GLFW window");
+        }
+        glfwMakeContextCurrent(window);
+        GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        glfwSetWindowPos(window, (videoMode.width() - WIDTH) / 2, (videoMode.height() - HEIGHT) / 2);
+        glfwSwapInterval(1);
+        glfwSetKeyCallback(window, keyCallback = new KeyCallback());
+        glfwShowWindow(window);
+        protoJ = Game.getInstance(WIDTH, HEIGHT);
+        protoJ.init();
+    }
+
+    private void glInit() {
+        GL.createCapabilities();
+        log.debug("OpenGL: {}", glGetString(GL_VERSION));
+        glViewport(0, 0, WIDTH, HEIGHT);
     }
 
     private void loop() {
-        log.debug("The loop begins...");
-        while (running()) {
-            time.heartBeat();
-            glfwSetKeyCallback(WindowManager.getWindow(), keyCallback = new KeyboardHandler());
-            if (KeyboardHandler.isKeyDown(GLFW_KEY_SPACE))
-                log.debug("Space Key Pressed");
-            update();
-            checkCollisions();
-            time.update();
-            render();
+        while (!glfwWindowShouldClose(window)) {
+            float currentFrame = (float) glfwGetTime();
+            deltaTime = currentFrame - lastFrame;
+            lastFrame = currentFrame;
+            glfwPollEvents();
+            protoJ.processInput(deltaTime);
+            protoJ.update(deltaTime);
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+            protoJ.render();
+            glfwSwapBuffers(window);
         }
-        log.debug("...and the loop ends");
-    }
-
-    public void update() {
-        bullets.update();
-        enemies.update();
-        fx.update();
-        background.update();
-        bonus.update();
-        foreground.update();
-        text.update();
-    }
-
-    public void render() {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        bullets.render();
-        enemies.render();
-        fx.render();
-        background.render();
-        bonus.render();
-        foreground.render();
-        text.render();
-
-        // set the color of the quad (R,G,B,A)
-        GL11.glColor3f(0.5f, 0.5f, 1.0f);
-
-        // draw quad
-        GL11.glBegin(GL11.GL_QUADS);
-            GL11.glVertex2f(0.0f, 0.0f);
-            GL11.glVertex2f(1.0f, 0.0f);
-            GL11.glVertex2f(1.0f, 1.0f);
-            GL11.glVertex2f(0.0f, 1.0f);
-        GL11.glEnd();
-        WindowManager.render();
-    }
-
-    private void checkCollisions() {
-
     }
 }
