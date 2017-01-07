@@ -67,19 +67,19 @@ public class ResourceManager {
 
     private static Shader loadShaderFromFile(String vertexSource, String fragmentSource) {
         String vertexPath = getPath("/shader/" + vertexSource);
-        String fregmentPath = getPath("/shader/" + vertexSource);
-        String vertex = null;
-        String fragment = null;
+        String fregmentPath = getPath("/shader/" + fragmentSource);
+        String vertex;
+        String fragment;
         try {
             vertex = new String(Files.readAllBytes(Paths.get(vertexPath)));
         } catch (IOException e) {
-            log.debug("Failed to load shader {} from the file {}", vertexSource, vertexPath);
+            log.error("Failed to load shader {} from the file {}", vertexSource, vertexPath);
             throw new RuntimeException("Failed to load shader from file!");
         }
         try {
             fragment = new String(Files.readAllBytes(Paths.get(fregmentPath)));
         } catch (IOException e) {
-            log.debug("Failed to load shader {} from the file {}", fragmentSource, fregmentPath);
+            log.error("Failed to load shader {} from the file {}", fragmentSource, fregmentPath);
             throw new RuntimeException("Failed to load shader from file!");
         }
         return new Shader(vertex, fragment);
