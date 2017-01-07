@@ -57,7 +57,6 @@ public class ProtoJ {
     private void run() {
         try {
             init();
-            glInit();
             loop();
         } finally {
             log.debug("Terminating all...");
@@ -91,14 +90,11 @@ public class ProtoJ {
         glfwSwapInterval(1);
         glfwSetKeyCallback(window, keyCallback = new KeyCallback());
         glfwShowWindow(window);
-        protoJ = Game.getInstance(WIDTH, HEIGHT);
-        protoJ.init();
-    }
-
-    private void glInit() {
         GL.createCapabilities();
         log.debug("OpenGL: {}", glGetString(GL_VERSION));
         glViewport(0, 0, WIDTH, HEIGHT);
+        protoJ = Game.getInstance(WIDTH, HEIGHT);
+        protoJ.init();
     }
 
     private void loop() {

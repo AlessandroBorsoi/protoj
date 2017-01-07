@@ -7,7 +7,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +22,7 @@ public class ResourceManager {
     private static Map<String, Texture> textures = new HashMap<>();
 
     public static void init() {
-        Collections.list(TextureEnum.class).forEach();
+        EnumSet.allOf(TextureEnum.class).forEach(textureEnum -> loadTexture(textureEnum.toString()));
     }
 
     public static void loadTexture(String name) {

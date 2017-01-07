@@ -1,5 +1,7 @@
 package com.alessandroborsoi.protoj;
 
+import com.alessandroborsoi.protoj.resource.ResourceManager;
+
 public class Game {
     private int width;
     private int height;
@@ -18,7 +20,7 @@ public class Game {
     }
 
     public void init() {
-
+        ResourceManager.init();
     }
 
     public void processInput(float deltaTime) {
