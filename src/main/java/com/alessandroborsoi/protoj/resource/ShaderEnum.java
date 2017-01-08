@@ -1,17 +1,11 @@
 package com.alessandroborsoi.protoj.resource;
 
-import lombok.Getter;
-
 public enum ShaderEnum {
-    SPRITE("sprite", "sprite.vert", "sprite.frag");
+    SPRITE("sprite");
 
-    @Getter private String name;
-    @Getter private String vertex;
-    @Getter private String fragment;
+    private String name;
 
-    ShaderEnum(String name, String vertex, String fragment) {
+    ShaderEnum(String name) {
         this.name = name;
-        this.vertex = vertex;
-        this.fragment = fragment;
     }
 }

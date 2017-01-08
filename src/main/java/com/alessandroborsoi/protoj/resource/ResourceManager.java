@@ -18,7 +18,6 @@ import lombok.extern.log4j.Log4j2;
 
 import static org.lwjgl.stb.STBImage.stbi_failure_reason;
 import static org.lwjgl.stb.STBImage.stbi_load;
-import static org.lwjgl.stb.STBImage.stbi_set_flip_vertically_on_load;
 
 @Log4j2
 public class ResourceManager {
@@ -27,16 +26,15 @@ public class ResourceManager {
 
     public static void init() {
         EnumSet.allOf(TextureEnum.class).forEach(textureEnum -> loadTexture(textureEnum.toString()));
-        EnumSet.allOf(ShaderEnum.class).forEach(shaderEnum -> loadShader(
-                shaderEnum.getName(), shaderEnum.getVertex(), shaderEnum.getFragment()));
+        EnumSet.allOf(ShaderEnum.class).forEach(shaderEnum -> loadShader(shaderEnum.toString()));
     }
 
     public static void loadTexture(String name) {
         textures.put(name, loadTextureFromFile(name));
     }
 
-    public static void loadShader(String name, String vertexSource, String fragmentSource) {
-        shaders.put(name, loadShaderFromFile(vertexSource, fragmentSource));
+    public static void loadShader(String name) {
+        shaders.put(name, loadShaderFromFile(name));
     }
 
     public static Texture getTexture(String name) {
@@ -48,51 +46,49 @@ public class ResourceManager {
     }
 
     private static Texture loadTextureFromFile(String name) {
-        String path = getPath("/texture/" + name + ".png");
+        String path = getResourcePath("/texture/" + name + ".png");
         IntBuffer w = BufferUtils.createIntBuffer(1);
         IntBuffer h = BufferUtils.createIntBuffer(1);
         IntBuffer comp = BufferUtils.createIntBuffer(1);
-        stbi_set_flip_vertically_on_load(true);
+//        stbi_set_flip_vertically_on_load(true);
         log.debug("Loading image: {}", path);
         ByteBuffer image = stbi_load(path, w, h, comp, 4);
         if (image == null) {
-            log.error("Failed to load a texture file: {}", path);
+            log.error("Failed to load the texture file: {}", path);
             throw new RuntimeException("Failed to load a texture file!"
                     + System.lineSeparator() + stbi_failure_reason());
         }
-        int width = w.get();
-        int height = h.get();
-        return new Texture(name, width, height, image);
+        return new Texture(name, w.get(), h.get(), image);
     }
 
-    private static Shader loadShaderFromFile(String vertexSource, String fragmentSource) {
-        String vertexPath = getPath("/shader/" + vertexSource);
-        String fregmentPath = getPath("/shader/" + fragmentSource);
-        String vertex;
-        String fragment;
+    private static Shader loadShaderFromFile(String name) {
+        String vertexPath = getResourcePath("/shader/" + name + ".vert");
+        String fragmentPath = getResourcePath("/shader/" + name + ".frag");
+        String vertexSource;
+        String fragmentSource;
         try {
-            vertex = new String(Files.readAllBytes(Paths.get(vertexPath)));
+            vertexSource = new String(Files.readAllBytes(Paths.get(vertexPath)));
         } catch (IOException e) {
-            log.error("Failed to load shader {} from the file {}", vertexSource, vertexPath);
+            log.error("Failed to load the vertex shader from {}", vertexPath);
             throw new RuntimeException("Failed to load shader from file!");
         }
         try {
-            fragment = new String(Files.readAllBytes(Paths.get(fregmentPath)));
+            fragmentSource = new String(Files.readAllBytes(Paths.get(fragmentPath)));
         } catch (IOException e) {
-            log.error("Failed to load shader {} from the file {}", fragmentSource, fregmentPath);
+            log.error("Failed to load the fragment shader from {}", fragmentPath);
             throw new RuntimeException("Failed to load shader from file!");
         }
-        return new Shader(vertex, fragment);
+        return new Shader(vertexSource, fragmentSource);
     }
 
-    private static String getPath(String path) {
-        URL url = ResourceManager.class.getResource(path);
+    private static String getResourcePath(String resource) {
+        URL url = ResourceManager.class.getResource(resource);
         File file;
         try {
             file = new File(url.toURI());
         } catch (URISyntaxException e) {
-            log.error("Wrong URL: {}", path);
-            throw new RuntimeException("Wrong URL: " + path);
+            log.error("Wrong URI: {}", resource);
+            throw new RuntimeException("Wrong URI: " + resource);
         }
         return file.toString();
     }
