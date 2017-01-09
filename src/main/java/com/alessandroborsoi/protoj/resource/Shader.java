@@ -1,5 +1,7 @@
 package com.alessandroborsoi.protoj.resource;
 
+import glm.mat._4.Mat4;
+import glm.vec._3.Vec3;
 import lombok.extern.log4j.Log4j2;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
@@ -16,8 +18,12 @@ import static org.lwjgl.opengl.GL20.glGetProgramInfoLog;
 import static org.lwjgl.opengl.GL20.glGetProgrami;
 import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
 import static org.lwjgl.opengl.GL20.glGetShaderi;
+import static org.lwjgl.opengl.GL20.glGetUniformLocation;
 import static org.lwjgl.opengl.GL20.glLinkProgram;
 import static org.lwjgl.opengl.GL20.glShaderSource;
+import static org.lwjgl.opengl.GL20.glUniform1i;
+import static org.lwjgl.opengl.GL20.glUniform3f;
+import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 
 @Log4j2
@@ -66,5 +72,26 @@ public class Shader {
             throw new RuntimeException("Program link error");
         }
         log.debug("Program id {} link success", this.id);
+    }
+
+    public void setInteger(String name, int value, boolean useShader) {
+        if (useShader) {
+            this.use();
+        }
+        glUniform1i(glGetUniformLocation(this.id, name), value);
+    }
+
+    public void setVector3f(String name, Vec3 value, boolean useShader) {
+        if (useShader) {
+            this.use();
+        }
+        glUniform3f(glGetUniformLocation(this.id, name), value.x, value.y, value.z);
+    }
+
+    public void setMatrix4(String name, Mat4 matrix, boolean useShader) {
+        if (useShader) {
+            this.use();
+        }
+        glUniformMatrix4fv(glGetUniformLocation(this.id, name), false, matrix.toFa_());
     }
 }

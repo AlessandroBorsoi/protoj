@@ -2,7 +2,10 @@ package com.alessandroborsoi.protoj.entity;
 
 import com.alessandroborsoi.protoj.resource.Shader;
 import com.alessandroborsoi.protoj.resource.Texture;
-import com.alessandroborsoi.protoj.util.Vector2f;
+
+import glm.mat._4.Mat4;
+import glm.vec._2.Vec2;
+import glm.vec._3.Vec3;
 
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.glDrawArrays;
@@ -20,9 +23,13 @@ public abstract class Entity {
         setShader();
     }
 
-    public void draw(Vector2f position) {
+    public void draw(Vec2 position) {
         this.shader.use();
-
+        Mat4 model = new Mat4();
+        model = model.translate(position.x, position.y, 0.0f);
+//        model = model.rotateZ(45.0f);
+        shader.setMatrix4("model", model, false);
+        shader.setVector3f("spriteColor", new Vec3(0.5f, 0.5f, 0.5f), false);
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
         glBindVertexArray(quadVAO);
@@ -33,6 +40,4 @@ public abstract class Entity {
     public abstract void setTexture();
 
     public abstract void setShader();
-
-    public abstract void setQuadVAO(int quadVAO);
 }

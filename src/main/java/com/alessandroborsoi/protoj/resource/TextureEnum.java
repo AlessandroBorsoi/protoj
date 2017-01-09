@@ -14,5 +14,4 @@ public enum TextureEnum {
     public String toString() {
         return this.name.toString();
     }
-
 }

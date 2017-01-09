@@ -32,6 +32,11 @@
             <artifactId>lombok</artifactId>
             <version>1.16.12</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.java-graphics</groupId>
+            <artifactId>glm</artifactId>
+            <version>1.0.1</version>
+        </dependency>
         <!--Log4j 2-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

@@ -42,8 +42,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 @Log4j2
 public class ProtoJ {
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
     private static long window;
     private KeyCallback keyCallback;
     private Game protoJ;
