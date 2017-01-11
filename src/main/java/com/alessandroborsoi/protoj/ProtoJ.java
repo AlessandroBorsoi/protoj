@@ -36,6 +36,7 @@ import static org.lwjgl.opengl.GL11.GL_TRUE;
 import static org.lwjgl.opengl.GL11.GL_VERSION;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glGetError;
 import static org.lwjgl.opengl.GL11.glGetString;
 import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
@@ -105,10 +106,12 @@ public class ProtoJ {
             glfwPollEvents();
             protoJ.processInput(deltaTime);
             protoJ.update(deltaTime);
-            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
             protoJ.render();
             glfwSwapBuffers(window);
+            if (glGetError() != 0)
+                log.debug("glGetError: {}", glGetError());
         }
     }
 }

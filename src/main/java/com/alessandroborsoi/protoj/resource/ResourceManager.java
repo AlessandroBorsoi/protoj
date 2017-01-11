@@ -18,6 +18,7 @@ import lombok.extern.log4j.Log4j2;
 
 import static org.lwjgl.stb.STBImage.stbi_failure_reason;
 import static org.lwjgl.stb.STBImage.stbi_load;
+import static org.lwjgl.stb.STBImage.stbi_set_flip_vertically_on_load;
 
 @Log4j2
 public class ResourceManager {
@@ -50,7 +51,7 @@ public class ResourceManager {
         IntBuffer w = BufferUtils.createIntBuffer(1);
         IntBuffer h = BufferUtils.createIntBuffer(1);
         IntBuffer comp = BufferUtils.createIntBuffer(1);
-//        stbi_set_flip_vertically_on_load(true);
+        stbi_set_flip_vertically_on_load(true);
         log.debug("Loading image: {}", path);
         ByteBuffer image = stbi_load(path, w, h, comp, 4);
         if (image == null) {

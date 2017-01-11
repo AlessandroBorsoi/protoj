@@ -28,8 +28,9 @@ public abstract class Entity {
         Mat4 model = new Mat4();
         model = model.translate(position.x, position.y, 0.0f);
 //        model = model.rotateZ(45.0f);
+        model = model.scale(new Vec3(2.0f, 2.0f, 2.0f));
         shader.setMatrix4("model", model, false);
-        shader.setVector3f("spriteColor", new Vec3(0.5f, 0.5f, 0.5f), false);
+        shader.setVector3f("spriteColor", new Vec3(1.0f, 1.0f, 1.0f), false);
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
         glBindVertexArray(quadVAO);

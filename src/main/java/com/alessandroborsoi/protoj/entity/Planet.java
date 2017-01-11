@@ -4,6 +4,8 @@ import com.alessandroborsoi.protoj.resource.ResourceManager;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
+import lombok.extern.log4j.Log4j2;
+
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
@@ -15,6 +17,7 @@ import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
+@Log4j2
 public class Planet extends Entity {
 
     public Planet() {
