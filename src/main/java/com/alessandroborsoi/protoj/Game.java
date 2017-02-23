@@ -5,7 +5,6 @@ import com.alessandroborsoi.protoj.resource.ResourceManager;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 
 import glm.mat._4.Mat4;
-import glm.vec._2.Vec2;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -30,7 +29,6 @@ public class Game {
     public void init() {
         ResourceManager.init();
         Mat4 projection = new Mat4();
-//        projection = projection.ortho(0.0f, ProtoJ.WIDTH, ProtoJ.HEIGHT, 0.0f, -1.0f, 1.0f);
         ResourceManager.getShader(ShaderEnum.SPRITE.toString()).use().setInteger("image", 0, false);
         ResourceManager.getShader(ShaderEnum.SPRITE.toString()).setMatrix4("projection", projection, false);
         planet = new Planet();
@@ -45,6 +43,6 @@ public class Game {
     }
 
     public void render() {
-        planet.draw(new Vec2(0.0f, 0.0f));
+        planet.draw();
     }
 }

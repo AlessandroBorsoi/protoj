@@ -110,8 +110,10 @@ public class ProtoJ {
             glClear(GL_COLOR_BUFFER_BIT);
             protoJ.render();
             glfwSwapBuffers(window);
-            if (glGetError() != 0)
+            if (glGetError() != 0) {
                 log.debug("glGetError: {}", glGetError());
+                throw new RuntimeException("glGetError: " + glGetError());
+            }
         }
     }
 }
