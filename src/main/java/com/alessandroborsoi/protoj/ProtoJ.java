@@ -1,8 +1,11 @@
 package com.alessandroborsoi.protoj;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
+
+import java.nio.IntBuffer;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -17,6 +20,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
 import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.glfwGetFramebufferSize;
 import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
 import static org.lwjgl.glfw.GLFW.glfwGetTime;
 import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
@@ -93,7 +97,10 @@ public class ProtoJ {
         glfwShowWindow(window);
         GL.createCapabilities();
         log.debug("OpenGL: {}", glGetString(GL_VERSION));
-        glViewport(0, 0, WIDTH, HEIGHT);
+        IntBuffer width = BufferUtils.createIntBuffer(1);
+        IntBuffer height = BufferUtils.createIntBuffer(1);
+        glfwGetFramebufferSize(window, width, height);
+        glViewport(0, 0, width.get(0), height.get(0));
         protoJ = Game.getInstance(WIDTH, HEIGHT);
         protoJ.init();
     }
@@ -104,9 +111,7 @@ public class ProtoJ {
             deltaTime = currentFrame - lastFrame;
             lastFrame = currentFrame;
             glfwPollEvents();
-            protoJ.processInput(deltaTime);
-            protoJ.update(deltaTime);
-            glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
             protoJ.render();
             glfwSwapBuffers(window);

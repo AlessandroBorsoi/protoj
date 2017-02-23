@@ -2,9 +2,9 @@ package com.alessandroborsoi.protoj;
 
 import com.alessandroborsoi.protoj.entity.Planet;
 import com.alessandroborsoi.protoj.resource.ResourceManager;
+import com.alessandroborsoi.protoj.resource.Shader;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 
-import glm.mat._4.Mat4;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -28,18 +28,9 @@ public class Game {
 
     public void init() {
         ResourceManager.init();
-        Mat4 projection = new Mat4();
-        ResourceManager.getShader(ShaderEnum.SPRITE.toString()).use().setInteger("image", 0, false);
-        ResourceManager.getShader(ShaderEnum.SPRITE.toString()).setMatrix4("projection", projection, false);
+        Shader shader = ResourceManager.getShader(ShaderEnum.SPRITE.toString());
+        shader.use().setInteger("image", 0, false);
         planet = new Planet();
-    }
-
-    public void processInput(float deltaTime) {
-
-    }
-
-    public void update(float deltaTime) {
-
     }
 
     public void render() {

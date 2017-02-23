@@ -6,7 +6,6 @@ import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.Texture;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
-import glm.mat._4.Mat4;
 import lombok.extern.log4j.Log4j2;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
@@ -28,15 +27,15 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 @Log4j2
 public class Planet {
-    protected Texture texture;
-    protected Shader shader;
-    protected int quadVAO;
-    public static final float S = 513.0f;
-    public static final float T = 542.0f;
-    public static final float W = 511.0f;
-    public static final float H = 455.0f;
-    public static final float TEXTURE_WIDTH = 1024.0f;
-    public static final float TEXTURE_HEIGHT = 1024.0f;
+    private static final float S = 513.0f;
+    private static final float T = 542.0f;
+    private static final float W = 511.0f;
+    private static final float H = 455.0f;
+    private static final float TEXTURE_WIDTH = 1024.0f;
+    private static final float TEXTURE_HEIGHT = 1024.0f;
+    private Texture texture;
+    private Shader shader;
+    private int vao;
 
     public Planet() {
         this.texture = ResourceManager.getTexture(TextureEnum.STAGE1_LAYER1.toString());
@@ -44,10 +43,10 @@ public class Planet {
 
         float vertices[] = {
                 // Position     // Texture
-                -0.5f, 0.5f,    S/TEXTURE_WIDTH, T/TEXTURE_HEIGHT,          // Top-left
-                0.5f, 0.5f,     (S+W)/TEXTURE_WIDTH, T/TEXTURE_HEIGHT,      // Top-right
-                0.5f, -0.5f,    (S+W)/TEXTURE_WIDTH, (T+H)/TEXTURE_HEIGHT,  // Bottom-right
-                -0.5f, -0.5f,   S/TEXTURE_WIDTH, (T+H)/TEXTURE_HEIGHT,      // Bottom-left
+                -1.0f, 1.0f,    S/TEXTURE_WIDTH, T/TEXTURE_HEIGHT,          // Top-left
+                1.0f, 1.0f,     (S+W)/TEXTURE_WIDTH, T/TEXTURE_HEIGHT,      // Top-right
+                1.0f, -1.0f,    (S+W)/TEXTURE_WIDTH, (T+H)/TEXTURE_HEIGHT,  // Bottom-right
+                -1.0f, -1.0f,   S/TEXTURE_WIDTH, (T+H)/TEXTURE_HEIGHT,      // Bottom-left
         };
 
         int elements[] = {
@@ -55,8 +54,8 @@ public class Planet {
             2, 3, 0
         };
 
-        this.quadVAO = glGenVertexArrays();
-        glBindVertexArray(this.quadVAO);
+        this.vao = glGenVertexArrays();
+        glBindVertexArray(this.vao);
 
         int vbo = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -74,11 +73,9 @@ public class Planet {
 
     public void draw() {
         this.shader.use();
-        Mat4 model = new Mat4();
-        shader.setMatrix4("model", model, false);
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
-        glBindVertexArray(quadVAO);
+        glBindVertexArray(vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
     }
