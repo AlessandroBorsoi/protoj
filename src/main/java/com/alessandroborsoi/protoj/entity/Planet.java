@@ -6,6 +6,8 @@ import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.Texture;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
+import glm.mat._4.Mat4;
+import glm.vec._3.Vec3;
 import lombok.extern.log4j.Log4j2;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
@@ -73,6 +75,8 @@ public class Planet {
 
     public void draw() {
         this.shader.use();
+        Mat4 model = new Mat4();
+        shader.setMatrix4("model", model, false);
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
         glBindVertexArray(vao);

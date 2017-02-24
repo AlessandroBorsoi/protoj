@@ -1,11 +1,19 @@
 package com.alessandroborsoi.protoj.entity;
 
+import com.alessandroborsoi.protoj.KeyCallback;
 import com.alessandroborsoi.protoj.resource.ResourceManager;
 import com.alessandroborsoi.protoj.resource.Shader;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.Texture;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
+import glm.mat._4.Mat4;
+import glm.vec._3.Vec3;
+
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
@@ -33,6 +41,8 @@ public class PlayerShip {
     private Texture texture;
     private Shader shader;
     private int vao;
+    float posX;
+    float posY;
 
     public PlayerShip() {
         this.texture = ResourceManager.getTexture(TextureEnum.PLAYER_SHIP.toString());
@@ -66,10 +76,28 @@ public class PlayerShip {
         glVertexAttribPointer(0, 4, GL_FLOAT, false, 4 * 4, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
+        posX = 0.0f;
+        posY = 0.0f;
     }
 
     public void draw() {
         this.shader.use();
+        Mat4 model = new Mat4();
+        double speed = 0.03;
+        if (KeyCallback.isKeyDown(GLFW_KEY_RIGHT)) {
+            posX = posX < 1.0f ? posX += speed : posX;
+        }
+        if (KeyCallback.isKeyDown(GLFW_KEY_LEFT)) {
+            posX = posX > -1.0f ? posX -= speed : posX;
+        }
+        if (KeyCallback.isKeyDown(GLFW_KEY_UP)) {
+            posY = posY < 1.0f ? posY += speed : posY;
+        }
+        if (KeyCallback.isKeyDown(GLFW_KEY_DOWN)) {
+            posY = posY > -1.0f ? posY -= speed : posY;
+        }
+        model = model.translate(new Vec3(posX, posY, 0.0f));
+        shader.setMatrix4("model", model, false);
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
         glBindVertexArray(vao);

@@ -11,6 +11,6 @@ public enum ShaderEnum {
 
     @Override
     public String toString() {
-        return this.name.toString();
+        return this.name;
     }
 }

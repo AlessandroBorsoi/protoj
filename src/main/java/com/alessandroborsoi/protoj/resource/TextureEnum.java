@@ -12,6 +12,6 @@ public enum TextureEnum {
 
     @Override
     public String toString() {
-        return this.name.toString();
+        return this.name;
     }
 }

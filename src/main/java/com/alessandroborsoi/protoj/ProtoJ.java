@@ -57,7 +57,6 @@ public class ProtoJ {
     private static long window;
     private KeyCallback keyCallback;
     private Game protoJ;
-    private float deltaTime;
     private float lastFrame;
 
     public static void main(String args[]) {
@@ -115,10 +114,10 @@ public class ProtoJ {
     private void loop() {
         while (!glfwWindowShouldClose(window)) {
             float currentFrame = (float) glfwGetTime();
-            deltaTime = currentFrame - lastFrame;
+            float deltaTime = currentFrame - lastFrame;
             lastFrame = currentFrame;
             glfwPollEvents();
-            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
             protoJ.render();
             glfwSwapBuffers(window);
