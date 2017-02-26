@@ -16,3 +16,5 @@ Time step:
 - [Fix Your Timestep!](http://gafferongames.com/game-physics/fix-your-timestep/)
 - [GAME TIMERS: ISSUES AND SOLUTIONS](http://fabiensanglard.net/timer_and_framerate/)
 - [Timestepping](http://archive.li/qMyq5#selection-279.0-279.12)
+- [Main Loop with Fixed Time Steps](http://www.flipcode.com/archives/Main_Loop_with_Fixed_Time_Steps.shtml)
+- [Time-Based Animation](http://idevgames.com/articles/timebasedanimation)
