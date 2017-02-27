@@ -117,6 +117,7 @@ public class ProtoJ {
             protoJ.update(timeSlice);
             protoJ.render();
             glfwSwapBuffers(window);
+            log.info("Entities: {}", Layer.entitiesCount);
             if (glGetError() != 0) {
                 log.debug("glGetError: {}", glGetError());
                 throw new RuntimeException("glGetError: " + glGetError());

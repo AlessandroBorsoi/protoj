@@ -6,14 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Layer {
+    public static int entitiesCount = 0;
     List<Entity> entities = new ArrayList<>();
 
     public void add(Entity entity) {
         this.entities.add(entity);
+        entitiesCount++;
     }
 
     public void remove(Entity entity) {
         this.entities.remove(entity);
+        entitiesCount--;
     }
 
     public void update(double timeSlice) {

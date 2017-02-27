@@ -1,5 +1,6 @@
 package com.alessandroborsoi.protoj.entity;
 
+import com.alessandroborsoi.protoj.Game;
 import com.alessandroborsoi.protoj.resource.ResourceManager;
 import com.alessandroborsoi.protoj.resource.Shader;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
@@ -33,7 +34,7 @@ public class Bullet implements Entity {
     private static final float H = 32.0f;
     private static final float TEXTURE_WIDTH = 64.0f;
     private static final float TEXTURE_HEIGHT = 128.0f;
-    private static final float SPEED = 1.0f;
+    private static final float SPEED = 2.0f;
     private Texture texture;
     private Shader shader;
     private int vao;
@@ -79,7 +80,10 @@ public class Bullet implements Entity {
 
     @Override
     public void update(double timeSlice) {
-
+        posX += SPEED * timeSlice;
+        if (posX > 1.0f) {
+            Game.getInstance().getLayer().remove(this);
+        }
     }
 
     @Override
