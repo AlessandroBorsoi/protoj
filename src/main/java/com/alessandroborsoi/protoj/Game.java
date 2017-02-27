@@ -8,6 +8,10 @@ import com.alessandroborsoi.protoj.resource.ShaderEnum;
 
 import lombok.extern.log4j.Log4j2;
 
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+
 @Log4j2
 public class Game {
     private int width;
@@ -36,7 +40,13 @@ public class Game {
         playerShip = new PlayerShip();
     }
 
+    public void update(double timeSlice) {
+        playerShip.update(timeSlice);
+    }
+
     public void render() {
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
         planet.draw();
         playerShip.draw();
     }

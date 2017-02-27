@@ -38,11 +38,12 @@ public class PlayerShip {
     private static final float H = 128.0f;
     private static final float TEXTURE_WIDTH = 512.0f;
     private static final float TEXTURE_HEIGHT = 512.0f;
+    private static final float SPEED = 1.0f;
     private Texture texture;
     private Shader shader;
     private int vao;
-    float posX;
-    float posY;
+    private float posX;
+    private float posY;
 
     public PlayerShip() {
         this.texture = ResourceManager.getTexture(TextureEnum.PLAYER_SHIP.toString());
@@ -80,22 +81,24 @@ public class PlayerShip {
         posY = 0.0f;
     }
 
+    public void update(double timeSlice) {
+        if (KeyCallback.isKeyDown(GLFW_KEY_RIGHT)) {
+            posX = posX < 1.0f ? posX += (SPEED * timeSlice): posX;
+        }
+        if (KeyCallback.isKeyDown(GLFW_KEY_LEFT)) {
+            posX = posX > -1.0f ? posX -= (SPEED * timeSlice) : posX;
+        }
+        if (KeyCallback.isKeyDown(GLFW_KEY_UP)) {
+            posY = posY < 1.0f ? posY += (SPEED * timeSlice) : posY;
+        }
+        if (KeyCallback.isKeyDown(GLFW_KEY_DOWN)) {
+            posY = posY > -1.0f ? posY -= (SPEED * timeSlice) : posY;
+        }
+    }
+
     public void draw() {
         this.shader.use();
         Mat4 model = new Mat4();
-        double speed = 0.03;
-        if (KeyCallback.isKeyDown(GLFW_KEY_RIGHT)) {
-            posX = posX < 1.0f ? posX += speed : posX;
-        }
-        if (KeyCallback.isKeyDown(GLFW_KEY_LEFT)) {
-            posX = posX > -1.0f ? posX -= speed : posX;
-        }
-        if (KeyCallback.isKeyDown(GLFW_KEY_UP)) {
-            posY = posY < 1.0f ? posY += speed : posY;
-        }
-        if (KeyCallback.isKeyDown(GLFW_KEY_DOWN)) {
-            posY = posY > -1.0f ? posY -= speed : posY;
-        }
         model = model.translate(new Vec3(posX, posY, 0.0f));
         shader.setMatrix4("model", model, false);
         glActiveTexture(GL_TEXTURE0);
