@@ -1,5 +1,6 @@
 package com.alessandroborsoi.protoj;
 
+import com.alessandroborsoi.protoj.entity.Ladybird;
 import com.alessandroborsoi.protoj.entity.Planet;
 import com.alessandroborsoi.protoj.entity.PlayerShip;
 import com.alessandroborsoi.protoj.resource.ResourceManager;
@@ -34,6 +35,7 @@ public class Game {
         shader.use().setInteger("image", 0, false);
         layer.add(new Planet());
         layer.add(PlayerShip.getInstance());
+        layer.add(new Ladybird());
     }
 
     public void update(double timeSlice) {

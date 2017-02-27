@@ -1,6 +1,7 @@
 package com.alessandroborsoi.protoj.resource;
 
 public enum ShaderEnum {
+    ANIMATED("animated"),
     SPRITE("sprite");
 
     private String name;
