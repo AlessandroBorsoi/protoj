@@ -1,5 +1,6 @@
 package com.alessandroborsoi.protoj.entity;
 
+import com.alessandroborsoi.protoj.Game;
 import com.alessandroborsoi.protoj.KeyCallback;
 import com.alessandroborsoi.protoj.resource.ResourceManager;
 import com.alessandroborsoi.protoj.resource.Shader;
@@ -9,10 +10,12 @@ import com.alessandroborsoi.protoj.resource.TextureEnum;
 
 import glm.mat._4.Mat4;
 import glm.vec._3.Vec3;
+import lombok.Getter;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
@@ -31,7 +34,7 @@ import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class PlayerShip {
+public class PlayerShip implements Entity {
     private static final float S = 0.0f;
     private static final float T = 0.0f;
     private static final float W = 128.0f;
@@ -42,10 +45,20 @@ public class PlayerShip {
     private Texture texture;
     private Shader shader;
     private int vao;
+    @Getter
     private float posX;
+    @Getter
     private float posY;
+    private static PlayerShip playerShip;
 
-    public PlayerShip() {
+    public static PlayerShip getInstance() {
+        if (playerShip == null) {
+            playerShip = new PlayerShip();
+        }
+        return playerShip;
+    }
+
+    private PlayerShip() {
         this.texture = ResourceManager.getTexture(TextureEnum.PLAYER_SHIP.toString());
         this.shader = ResourceManager.getShader(ShaderEnum.SPRITE.toString());
 
@@ -81,6 +94,7 @@ public class PlayerShip {
         posY = 0.0f;
     }
 
+    @Override
     public void update(double timeSlice) {
         if (KeyCallback.isKeyDown(GLFW_KEY_RIGHT)) {
             posX = posX < 1.0f ? posX += (SPEED * timeSlice): posX;
@@ -94,9 +108,13 @@ public class PlayerShip {
         if (KeyCallback.isKeyDown(GLFW_KEY_DOWN)) {
             posY = posY > -1.0f ? posY -= (SPEED * timeSlice) : posY;
         }
+        if (KeyCallback.isKeyDown(GLFW_KEY_SPACE)) {
+            Game.getInstance().getLayer().add(new Bullet());
+        }
     }
 
-    public void draw() {
+    @Override
+    public void render() {
         this.shader.use();
         Mat4 model = new Mat4();
         model = model.translate(new Vec3(posX, posY, 0.0f));

@@ -1,6 +1,7 @@
 package com.alessandroborsoi.protoj.resource;
 
 public enum TextureEnum {
+    BULLET_SET1("BulletSet1"),
     PLAYER_SHIP("PlayerShip"),
     STAGE1_LAYER1("Stage1Layer1");
 
