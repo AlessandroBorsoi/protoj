@@ -1,5 +1,6 @@
 package com.alessandroborsoi.protoj.entity;
 
+import com.alessandroborsoi.protoj.Game;
 import com.alessandroborsoi.protoj.resource.ResourceManager;
 import com.alessandroborsoi.protoj.resource.Shader;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
@@ -33,7 +34,7 @@ public class Ladybird implements Entity {
     private static final float H = 64.0f;
     private static final float TEXTURE_WIDTH = 256.0f;
     private static final float TEXTURE_HEIGHT = 256.0f;
-    private static final float SPEED = 1.0f;
+    private static final float SPEED = 0.1f;
     private Texture texture;
     private Shader shader;
     private int vao;
@@ -74,8 +75,8 @@ public class Ladybird implements Entity {
         glVertexAttribPointer(0, 4, GL_FLOAT, false, 4 * 4, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
-        posX = 0.5f;
-        posY = 0.5f;
+        posX = 1.0f;
+        posY = ((float) Math.random()) * 2.0f - 1.0f;
         index = 0;
     }
 
@@ -86,6 +87,9 @@ public class Ladybird implements Entity {
             index = ++index % 16;
             accumulator = 0.0;
         }
+        posX -= SPEED * timeSlice;
+        if (posX < -1.0f)
+            Game.getInstance().getLayer().remove(this);
     }
 
     @Override
