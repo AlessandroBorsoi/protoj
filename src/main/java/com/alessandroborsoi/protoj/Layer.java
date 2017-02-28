@@ -11,12 +11,12 @@ public class Layer {
 
     public void add(Entity entity) {
         this.entities.add(entity);
-        entitiesCount++;
+        ++entitiesCount;
     }
 
     public void remove(Entity entity) {
         this.entities.remove(entity);
-        entitiesCount--;
+        --entitiesCount;
     }
 
     public void update(double timeSlice) {

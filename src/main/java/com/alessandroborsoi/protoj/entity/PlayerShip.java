@@ -109,7 +109,7 @@ public class PlayerShip implements Entity {
             posY = posY > -1.0f ? posY -= (SPEED * timeSlice) : posY;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_SPACE)) {
-            Game.getInstance().getLayer().add(new Bullet());
+            Game.getInstance().getPlayer().add(new Bullet(this.posX, this.posY));
         }
     }
 

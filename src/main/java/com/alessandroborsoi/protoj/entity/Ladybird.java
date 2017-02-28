@@ -9,6 +9,7 @@ import com.alessandroborsoi.protoj.resource.TextureEnum;
 
 import glm.mat._4.Mat4;
 import glm.vec._3.Vec3;
+import lombok.Getter;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
@@ -38,7 +39,7 @@ public class Ladybird implements Entity {
     private Texture texture;
     private Shader shader;
     private int vao;
-    private float posX;
+    @Getter private float posX;
     private float posY;
     private int index;
     private double accumulator;
@@ -82,14 +83,14 @@ public class Ladybird implements Entity {
 
     @Override
     public void update(double timeSlice) {
-        accumulator += timeSlice * 30.0;
-        if (accumulator > 5.0) {
+        accumulator += timeSlice * 6.0;
+        if (accumulator > 1.0) {
             index = ++index % 16;
             accumulator = 0.0;
         }
         posX -= SPEED * timeSlice;
         if (posX < -1.0f)
-            Game.getInstance().getLayer().remove(this);
+            Game.getInstance().getEnemies().remove(this);
     }
 
     @Override
@@ -99,11 +100,18 @@ public class Ladybird implements Entity {
         model = model.translate(new Vec3(posX, posY, 0.0f));
         shader.setMatrix4("model", model, false);
         shader.setInteger("index", index, false);
-        shader.setInteger("offset", 4, false);
+        shader.setInteger("rows", 4, false);
+        shader.setInteger("columns", 4, false);
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
         glBindVertexArray(vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
+    }
+
+    public void destroy() {
+        Game protoJ = Game.getInstance();
+        protoJ.getBackground().add(new Explosion(this.posX, this.posY));
+        protoJ.getEnemies().remove(this);
     }
 }
