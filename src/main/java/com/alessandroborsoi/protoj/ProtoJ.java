@@ -54,6 +54,7 @@ public class ProtoJ {
     private static long window;
     private KeyCallback keyCallback;
     private Game protoJ;
+    private double fps;
 
     public static void main(String args[]) {
         new ProtoJ().run();
@@ -92,7 +93,7 @@ public class ProtoJ {
         glfwMakeContextCurrent(window);
         GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         glfwSetWindowPos(window, (videoMode.width() - WIDTH) / 2, (videoMode.height() - HEIGHT) / 2);
-        glfwSwapInterval(1);
+        glfwSwapInterval(0);
         glfwSetKeyCallback(window, keyCallback = new KeyCallback());
         glfwShowWindow(window);
         GL.createCapabilities();
@@ -109,15 +110,24 @@ public class ProtoJ {
 
     private void loop() {
         double lastTime = glfwGetTime();
+        int frames = 0;
+        double deltas = 0;
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents();
             double currentTime = glfwGetTime();
             double timeSlice = currentTime - lastTime;
+            deltas += timeSlice;
             lastTime = currentTime;
             protoJ.update(timeSlice);
             protoJ.render();
             glfwSwapBuffers(window);
-            log.info("Entities: {}", Layer.entitiesCount);
+            frames++;
+            if (frames == 50) {
+                fps = frames / deltas;
+                frames = 0;
+                deltas = 0.0;
+            }
+            log.info("Score: {} - Entities: {} - FPS: {}", protoJ.getScore(), Layer.entitiesCount, ((int) fps));
             if (glGetError() != 0) {
                 log.debug("glGetError: {}", glGetError());
                 throw new RuntimeException("glGetError: " + glGetError());

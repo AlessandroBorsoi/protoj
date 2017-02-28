@@ -20,11 +20,17 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 @Log4j2
 public class Game {
     private static Game instance;
-    @Getter private Layer background = new Layer();
-    @Getter private Layer player = new Layer();
-    @Getter private Layer enemies = new Layer();
+    @Getter
+    private Layer background = new Layer();
+    @Getter
+    private Layer player = new Layer();
+    @Getter
+    private Layer enemies = new Layer();
+    @Getter
+    private int score;
 
     private Game() {
+        score = 0;
     }
 
     public static Game getInstance() {
@@ -52,17 +58,29 @@ public class Game {
 
     private void checkCollisions() {
         List<Entity> playerEntities = player.entities;
-        List<Entity> enemyEntities = enemies.entities;
+        List<Entity> enemiesEntities = enemies.entities;
         for (int i = 0; i < playerEntities.size(); i++) {
-            for (int j = 0; j < enemyEntities.size(); j++) {
-                if (collision(playerEntities.get(i), enemyEntities.get(j))) {
-                    ((Ladybird) enemyEntities.get(j)).destroy();
+            for (int j = 0; j < enemiesEntities.size(); j++) {
+                if (collision(playerEntities.get(i), enemiesEntities.get(j))) {
+                    ((Ladybird) enemiesEntities.get(j)).destroy();
+                    score++;
                 }
             }
         }
     }
 
     private boolean collision(Entity entityA, Entity entityB) {
+//        if (entityA.position.x + entityA.width < entityB.position.x)
+//            return false;
+//        if (entityA.position.y + entityA.height < entityB.position.y)
+//            return false;
+//        if (entityA.position.x > entityB.position.x + entityB.width)
+//            return false;
+//        if (entityA.position.y > entityB.position.y + entityB.height)
+//            return false;
+//        return true;
+
+
         if (((Ladybird) entityB).getPosX() < 0.75f)
             return true;
         return false;
