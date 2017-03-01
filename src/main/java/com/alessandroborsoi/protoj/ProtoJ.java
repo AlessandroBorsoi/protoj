@@ -117,7 +117,7 @@ public class ProtoJ {
         Text score = new Text("Score: " + protoJ.getScore(), -0.9f, 0.9f);
         Text fpsText = new Text("FPS: ", 0.6f, 0.9f);
         Text entities = new Text("Entities: ", -0.9f, -0.9f);
-        Layer foreground = Game.getInstance().getForeground();
+        Layer foreground = protoJ.getForeground();
         foreground.add(score);
         foreground.add(fpsText);
         foreground.add(entities);

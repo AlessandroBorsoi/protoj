@@ -47,10 +47,10 @@ public class Bullet implements Entity {
 
         float vertices[] = {
                 // Position     // Texture
-                -0.05f, 0.05f,    S/TEXTURE_WIDTH, T/TEXTURE_HEIGHT,          // Top-left
-                0.05f, 0.05f,     (S+W)/TEXTURE_WIDTH, T/TEXTURE_HEIGHT,      // Top-right
-                0.05f, -0.05f,    (S+W)/TEXTURE_WIDTH, (T+H)/TEXTURE_HEIGHT,  // Bottom-right
-                -0.05f, -0.05f,   S/TEXTURE_WIDTH, (T+H)/TEXTURE_HEIGHT,      // Bottom-left
+                -0.05f, 0.05f,  S / TEXTURE_WIDTH, T / TEXTURE_HEIGHT,              // Top-left
+                0.05f, 0.05f,   (S + W) / TEXTURE_WIDTH, T / TEXTURE_HEIGHT,        // Top-right
+                0.05f, -0.05f,  (S + W) / TEXTURE_WIDTH, (T + H) / TEXTURE_HEIGHT,  // Bottom-right
+                -0.05f, -0.05f, S / TEXTURE_WIDTH, (T + H) / TEXTURE_HEIGHT,        // Bottom-left
         };
 
         int elements[] = {

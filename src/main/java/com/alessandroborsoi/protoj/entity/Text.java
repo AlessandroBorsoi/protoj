@@ -36,7 +36,6 @@ public class Text implements Entity {
     private static final float H = 32.0f;
     private static final float TEXTURE_WIDTH = 512.0f;
     private static final float TEXTURE_HEIGHT = 512.0f;
-    private static final float SPEED = 1.0f;
     private Texture texture;
     private Shader shader;
     private int vao;

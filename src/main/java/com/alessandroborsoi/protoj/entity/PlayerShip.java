@@ -41,7 +41,7 @@ public class PlayerShip implements Entity {
     private static final float H = 128.0f;
     private static final float TEXTURE_WIDTH = 512.0f;
     private static final float TEXTURE_HEIGHT = 512.0f;
-    private static final float SPEED = 1.0f;
+    private static final float SPEED = 1000.0f;
     private Texture texture;
     private Shader shader;
     private int vao;
@@ -62,12 +62,20 @@ public class PlayerShip implements Entity {
         this.texture = ResourceManager.getTexture(TextureEnum.PLAYER_SHIP.toString());
         this.shader = ResourceManager.getShader(ShaderEnum.SPRITE.toString());
 
+//        float vertices[] = {
+//                // Position     // Texture
+//                -0.1f, 0.1f,    S / TEXTURE_WIDTH, T / TEXTURE_HEIGHT,              // Top-left
+//                0.1f, 0.1f,     (S + W) / TEXTURE_WIDTH, T / TEXTURE_HEIGHT,        // Top-right
+//                0.1f, -0.1f,    (S + W) / TEXTURE_WIDTH, (T + H) / TEXTURE_HEIGHT,  // Bottom-right
+//                -0.1f, -0.1f,   S / TEXTURE_WIDTH, (T + H) / TEXTURE_HEIGHT,        // Bottom-left
+//        };
+
         float vertices[] = {
                 // Position     // Texture
-                -0.1f, 0.1f,    S/TEXTURE_WIDTH, T/TEXTURE_HEIGHT,          // Top-left
-                0.1f, 0.1f,     (S+W)/TEXTURE_WIDTH, T/TEXTURE_HEIGHT,      // Top-right
-                0.1f, -0.1f,    (S+W)/TEXTURE_WIDTH, (T+H)/TEXTURE_HEIGHT,  // Bottom-right
-                -0.1f, -0.1f,   S/TEXTURE_WIDTH, (T+H)/TEXTURE_HEIGHT,      // Bottom-left
+                0.0f, 0.0f,    S / TEXTURE_WIDTH, T / TEXTURE_HEIGHT,              // Top-left
+                128.0f, 0.0f,     (S + W) / TEXTURE_WIDTH, T / TEXTURE_HEIGHT,        // Top-right
+                128.0f, 128.0f,    (S + W) / TEXTURE_WIDTH, (T + H) / TEXTURE_HEIGHT,  // Bottom-right
+                0.0f, 128.0f,   S / TEXTURE_WIDTH, (T + H) / TEXTURE_HEIGHT,        // Bottom-left
         };
 
         int elements[] = {
@@ -97,16 +105,16 @@ public class PlayerShip implements Entity {
     @Override
     public void update(double timeSlice) {
         if (KeyCallback.isKeyDown(GLFW_KEY_RIGHT)) {
-            posX = posX < 1.0f ? posX += (SPEED * timeSlice): posX;
+            posX = posX < 800.0f ? posX += (SPEED * timeSlice) : posX;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_LEFT)) {
-            posX = posX > -1.0f ? posX -= (SPEED * timeSlice) : posX;
+            posX = posX > 0.0f ? posX -= (SPEED * timeSlice) : posX;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_UP)) {
-            posY = posY < 1.0f ? posY += (SPEED * timeSlice) : posY;
+            posY = posY > 0.0f ? posY -= (SPEED * timeSlice) : posY;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_DOWN)) {
-            posY = posY > -1.0f ? posY -= (SPEED * timeSlice) : posY;
+            posY = posY < 600.0f ? posY += (SPEED * timeSlice) : posY;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_SPACE)) {
             Game.getInstance().getPlayer().add(new Bullet(this.posX, this.posY));
@@ -116,9 +124,15 @@ public class PlayerShip implements Entity {
     @Override
     public void render() {
         this.shader.use();
+        Mat4 projection = new Mat4();
         Mat4 model = new Mat4();
+        Mat4 scale = new Mat4();
+        projection = projection.ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
         model = model.translate(new Vec3(posX, posY, 0.0f));
+        scale = scale.scale(0.5f);
+        shader.setMatrix4("projection", projection, false);
         shader.setMatrix4("model", model, false);
+        shader.setMatrix4("scale", scale, false);
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
         glBindVertexArray(vao);

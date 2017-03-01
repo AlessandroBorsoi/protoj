@@ -44,15 +44,15 @@ public class Planet implements Entity {
 
         float vertices[] = {
                 // Position     // Texture
-                -1.0f, 1.0f,    S/TEXTURE_WIDTH, T/TEXTURE_HEIGHT,          // Top-left
-                1.0f, 1.0f,     (S+W)/TEXTURE_WIDTH, T/TEXTURE_HEIGHT,      // Top-right
-                1.0f, -1.0f,    (S+W)/TEXTURE_WIDTH, (T+H)/TEXTURE_HEIGHT,  // Bottom-right
-                -1.0f, -1.0f,   S/TEXTURE_WIDTH, (T+H)/TEXTURE_HEIGHT,      // Bottom-left
+                0.0f, 0.0f,    S / TEXTURE_WIDTH, T / TEXTURE_HEIGHT,              // Top-left
+                511.0f, 0.0f,     (S + W) / TEXTURE_WIDTH, T / TEXTURE_HEIGHT,        // Top-right
+                511.0f, 455.0f,    (S + W) / TEXTURE_WIDTH, (T + H) / TEXTURE_HEIGHT,  // Bottom-right
+                0.0f, 455.0f,   S / TEXTURE_WIDTH, (T + H) / TEXTURE_HEIGHT,        // Bottom-left
         };
 
         int elements[] = {
-            0, 1, 2,
-            2, 3, 0
+                0, 1, 2,
+                2, 3, 0
         };
 
         this.vao = glGenVertexArrays();
@@ -81,7 +81,11 @@ public class Planet implements Entity {
     public void render() {
         this.shader.use();
         Mat4 model = new Mat4();
+        Mat4 projection = new Mat4();
+        projection = projection.ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
+        shader.setMatrix4("projection", projection, false);
         shader.setMatrix4("model", model, false);
+        shader.setMatrix4("scale", new Mat4(), false);
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
         glBindVertexArray(vao);

@@ -39,7 +39,8 @@ public class Ladybird implements Entity {
     private Texture texture;
     private Shader shader;
     private int vao;
-    @Getter private float posX;
+    @Getter
+    private float posX;
     private float posY;
     private int index;
     private double accumulator;
@@ -50,10 +51,10 @@ public class Ladybird implements Entity {
 
         float vertices[] = {
                 // Position     // Texture
-                -0.1f, 0.1f,    S/TEXTURE_WIDTH, T/TEXTURE_HEIGHT,          // Top-left
-                0.1f, 0.1f,     -(S+W)/TEXTURE_WIDTH, T/TEXTURE_HEIGHT,     // Top-right
-                0.1f, -0.1f,    -(S+W)/TEXTURE_WIDTH, (T+H)/TEXTURE_HEIGHT, // Bottom-right
-                -0.1f, -0.1f,   S/TEXTURE_WIDTH, (T+H)/TEXTURE_HEIGHT,      // Bottom-left
+                -0.1f, 0.1f,    S / TEXTURE_WIDTH, T / TEXTURE_HEIGHT,              // Top-left
+                0.1f, 0.1f,     -(S + W) / TEXTURE_WIDTH, T / TEXTURE_HEIGHT,       // Top-right
+                0.1f, -0.1f,    -(S + W) / TEXTURE_WIDTH, (T + H) / TEXTURE_HEIGHT, // Bottom-right
+                -0.1f, -0.1f,   S / TEXTURE_WIDTH, (T + H) / TEXTURE_HEIGHT,        // Bottom-left
         };
 
         int elements[] = {
