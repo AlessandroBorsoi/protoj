@@ -27,6 +27,8 @@ public class Game {
     @Getter
     private Layer enemies = new Layer();
     @Getter
+    private Layer foreground = new Layer();
+    @Getter
     private int score;
 
     private Game() {
@@ -54,6 +56,7 @@ public class Game {
         background.update(timeSlice);
         enemies.update(timeSlice);
         player.update(timeSlice);
+        foreground.update(timeSlice);
     }
 
     private void checkCollisions() {
@@ -92,5 +95,6 @@ public class Game {
         background.render();
         enemies.render();
         player.render();
+        foreground.render();
     }
 }

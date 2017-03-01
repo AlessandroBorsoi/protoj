@@ -1,5 +1,7 @@
 package com.alessandroborsoi.protoj;
 
+import com.alessandroborsoi.protoj.entity.Text;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -112,6 +114,13 @@ public class ProtoJ {
         double lastTime = glfwGetTime();
         int frames = 0;
         double deltas = 0;
+        Text score = new Text("Score: " + protoJ.getScore(), -0.9f, 0.9f);
+        Text fpsText = new Text("FPS: ", 0.6f, 0.9f);
+        Text entities = new Text("Entities: ", -0.9f, -0.9f);
+        Layer foreground = Game.getInstance().getForeground();
+        foreground.add(score);
+        foreground.add(fpsText);
+        foreground.add(entities);
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents();
             double currentTime = glfwGetTime();
@@ -126,8 +135,10 @@ public class ProtoJ {
                 fps = frames / deltas;
                 frames = 0;
                 deltas = 0.0;
+                score.setText("Score: " + protoJ.getScore());
+                fpsText.setText("FPS: " + ((int) fps));
+                entities.setText("Entities: " + Layer.entitiesCount);
             }
-            log.info("Score: {} - Entities: {} - FPS: {}", protoJ.getScore(), Layer.entitiesCount, ((int) fps));
             if (glGetError() != 0) {
                 log.debug("glGetError: {}", glGetError());
                 throw new RuntimeException("glGetError: " + glGetError());

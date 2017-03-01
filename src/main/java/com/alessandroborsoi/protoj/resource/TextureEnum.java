@@ -3,6 +3,7 @@ package com.alessandroborsoi.protoj.resource;
 public enum TextureEnum {
     BULLET_SET1("BulletSet1"),
     EXPLOSION_SMALL("ExplosionSmall"),
+    FONTS("Fonts"),
     LADYBIRD("Ladybird"),
     PLAYER_SHIP("PlayerShip"),
     STAGE1_LAYER1("Stage1Layer1");
