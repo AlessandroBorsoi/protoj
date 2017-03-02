@@ -1,6 +1,6 @@
 package com.alessandroborsoi.protoj;
 
-import com.alessandroborsoi.protoj.entity.Entity;
+import com.alessandroborsoi.protoj.entity.IEntity;
 import com.alessandroborsoi.protoj.entity.Ladybird;
 import com.alessandroborsoi.protoj.entity.Planet;
 import com.alessandroborsoi.protoj.entity.PlayerShip;
@@ -44,8 +44,8 @@ public class Game {
 
     public void init() {
         ResourceManager.init();
-        Shader shader = ResourceManager.getShader(ShaderEnum.SPRITE.toString());
-        shader.use().setInteger("image", 0, false);
+        Shader shader = ResourceManager.getShader(ShaderEnum.SPRITE.getName());
+        shader.use().setInteger("image", 0);
         background.add(new Planet());
         player.add(PlayerShip.getInstance());
         enemies.add(new Ladybird());
@@ -60,8 +60,8 @@ public class Game {
     }
 
     private void checkCollisions() {
-        List<Entity> playerEntities = player.entities;
-        List<Entity> enemiesEntities = enemies.entities;
+        List<IEntity> playerEntities = player.entities;
+        List<IEntity> enemiesEntities = enemies.entities;
         for (int i = 0; i < playerEntities.size(); i++) {
             for (int j = 0; j < enemiesEntities.size(); j++) {
                 if (collision(playerEntities.get(i), enemiesEntities.get(j))) {
@@ -72,7 +72,7 @@ public class Game {
         }
     }
 
-    private boolean collision(Entity entityA, Entity entityB) {
+    private boolean collision(IEntity entityA, IEntity entityB) {
 //        if (entityA.position.x + entityA.width < entityB.position.x)
 //            return false;
 //        if (entityA.position.y + entityA.height < entityB.position.y)

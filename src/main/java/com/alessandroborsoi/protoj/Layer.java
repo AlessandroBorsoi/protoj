@@ -1,20 +1,20 @@
 package com.alessandroborsoi.protoj;
 
-import com.alessandroborsoi.protoj.entity.Entity;
+import com.alessandroborsoi.protoj.entity.IEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Layer {
     public static int entitiesCount = 0;
-    List<Entity> entities = new ArrayList<>();
+    List<IEntity> entities = new ArrayList<>();
 
-    public void add(Entity entity) {
+    public void add(IEntity entity) {
         this.entities.add(entity);
         ++entitiesCount;
     }
 
-    public void remove(Entity entity) {
+    public void remove(IEntity entity) {
         this.entities.remove(entity);
         --entitiesCount;
     }
@@ -26,6 +26,6 @@ public class Layer {
     }
 
     public void render() {
-        entities.forEach(Entity::render);
+        entities.forEach(IEntity::render);
     }
 }

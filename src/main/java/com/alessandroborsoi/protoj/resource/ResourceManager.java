@@ -25,8 +25,8 @@ public class ResourceManager {
     private static Map<String, Shader> shaders = new HashMap<>();
 
     public static void init() {
-        EnumSet.allOf(TextureEnum.class).forEach(textureEnum -> loadTexture(textureEnum.toString()));
-        EnumSet.allOf(ShaderEnum.class).forEach(shaderEnum -> loadShader(shaderEnum.toString()));
+        EnumSet.allOf(TextureEnum.class).forEach(textureEnum -> loadTexture(textureEnum.getName()));
+        EnumSet.allOf(ShaderEnum.class).forEach(shaderEnum -> loadShader(shaderEnum.getName()));
     }
 
     public static void loadTexture(String name) {

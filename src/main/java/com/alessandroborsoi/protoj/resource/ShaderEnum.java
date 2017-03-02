@@ -1,17 +1,14 @@
 package com.alessandroborsoi.protoj.resource;
 
+import lombok.Getter;
+
 public enum ShaderEnum {
     ANIMATED("animated"),
     SPRITE("sprite");
 
-    private String name;
+    @Getter private String name;
 
     ShaderEnum(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
     }
 }

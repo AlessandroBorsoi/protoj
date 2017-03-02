@@ -74,24 +74,15 @@ public class Shader {
         log.debug("Program id {} link success", this.id);
     }
 
-    public void setInteger(String name, int value, boolean useShader) {
-        if (useShader) {
-            this.use();
-        }
+    public void setInteger(String name, int value) {
         glUniform1i(glGetUniformLocation(this.id, name), value);
     }
 
-    public void setVector3f(String name, Vec3 value, boolean useShader) {
-        if (useShader) {
-            this.use();
-        }
+    public void setVector3f(String name, Vec3 value) {
         glUniform3f(glGetUniformLocation(this.id, name), value.x, value.y, value.z);
     }
 
-    public void setMatrix4(String name, Mat4 matrix, boolean useShader) {
-        if (useShader) {
-            this.use();
-        }
+    public void setMatrix4(String name, Mat4 matrix) {
         glUniformMatrix4fv(glGetUniformLocation(this.id, name), false, matrix.toFa_());
     }
 }
