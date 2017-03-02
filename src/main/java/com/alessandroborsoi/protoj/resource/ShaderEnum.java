@@ -3,8 +3,8 @@ package com.alessandroborsoi.protoj.resource;
 import lombok.Getter;
 
 public enum ShaderEnum {
-    ANIMATED("animated"),
-    SPRITE("sprite");
+    REGULAR("regular"),
+    IRREGULAR("irregular");
 
     @Getter private String name;
 

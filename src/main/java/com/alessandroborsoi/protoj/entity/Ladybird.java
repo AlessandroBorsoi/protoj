@@ -9,7 +9,7 @@ public class Ladybird extends Entity {
     private static final float WIDTH = 64.0f;
     private static final float HEIGHT = 64.0f;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.LADYBIRD;
-    private static final ShaderEnum SHADER_ENUM = ShaderEnum.ANIMATED;
+    private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SPEED = 100.0f;
     private double accumulator;
 

@@ -20,7 +20,7 @@ public class Text extends Entity {
     private static final float WIDTH = 32.0f;
     private static final float HEIGHT = 32.0f;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.FONTS;
-    private static final ShaderEnum SHADER_ENUM = ShaderEnum.ANIMATED;
+    private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SCALE_RATIO = 0.5f;
     @Setter private String text;
 

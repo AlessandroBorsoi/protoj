@@ -1,9 +1,11 @@
 package com.alessandroborsoi.protoj.entity;
 
+import com.alessandroborsoi.protoj.ProtoJ;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
 import glm.mat._4.Mat4;
+import glm.vec._3.Vec3;
 import lombok.extern.log4j.Log4j2;
 
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
@@ -20,9 +22,14 @@ public class Planet extends Entity {
     private static final float WIDTH = 511.0f;
     private static final float HEIGHT = 455.0f;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.STAGE1_LAYER1;
-    private static final ShaderEnum SHADER_ENUM = ShaderEnum.SPRITE;
+    private static final ShaderEnum SHADER_ENUM = ShaderEnum.IRREGULAR;
+    private static final float SPEED = 5.0f;
+    private static final float SCALE_RATIO = 1.3f;
 
     public Planet() {
+        this.posX = ProtoJ.WIDTH;
+        this.posY = ProtoJ.HEIGHT / 2;
+        this.scaleRatio = SCALE_RATIO;
     }
 
     @Override
@@ -59,16 +66,19 @@ public class Planet extends Entity {
 
     @Override
     public void update(double timeSlice) {
-
+        posX -= SPEED * timeSlice;
     }
 
     @Override
     public void render() {
         this.shader.use();
-        Mat4 model = new Mat4();
+        Mat4 model = new Mat4()
+                .translate(new Vec3(-getWidth() / 2.0f, -getHeight() / 2.0f, 0.0f))
+                .translate(new Vec3(posX, posY, 0.0f));
+        Mat4 scale = new Mat4().scale(scaleRatio);
         shader.setMatrix4("projection", projection);
         shader.setMatrix4("model", model);
-        shader.setMatrix4("scale", new Mat4());
+        shader.setMatrix4("scale", scale);
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
         glBindVertexArray(vao);

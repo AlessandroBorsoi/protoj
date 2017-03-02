@@ -8,7 +8,7 @@ public class Explosion extends Entity {
     private static final float WIDTH = 128.0f;
     private static final float HEIGHT = 128.0f;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.EXPLOSION_SMALL;
-    private static final ShaderEnum SHADER_ENUM = ShaderEnum.ANIMATED;
+    private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private double accumulator;
 
     public Explosion(float posX, float posY) {

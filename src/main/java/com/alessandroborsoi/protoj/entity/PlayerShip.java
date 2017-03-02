@@ -16,7 +16,7 @@ public class PlayerShip extends Entity {
     private static final float WIDTH = 128.0f;
     private static final float HEIGHT = 128.0f;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.PLAYER_SHIP;
-    private static final ShaderEnum SHADER_ENUM = ShaderEnum.ANIMATED;
+    private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SCALE_RATIO = 0.5f;
     private static final float SPEED = 600.0f;
     private static PlayerShip playerShip;

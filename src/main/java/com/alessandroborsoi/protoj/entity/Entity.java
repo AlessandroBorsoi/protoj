@@ -115,7 +115,7 @@ public abstract class Entity implements IEntity {
         this.texture.bind();
         glBindVertexArray(vao);
         Mat4 model = new Mat4()
-                .translate(new Vec3(-getWidth() / 2.0f, -getHeight() / 2.0f, 0.0f))   // Center the sprite origin
+                .translate(new Vec3(-getWidth() / 2.0f, -getHeight() / 2.0f, 0.0f))
                 .translate(new Vec3(posX, posY, 0.0f));
         Mat4 scale = new Mat4().scale(scaleRatio);
         shader.setInteger("index", index);

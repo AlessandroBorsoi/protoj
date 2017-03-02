@@ -9,7 +9,7 @@ public class Bullet extends Entity {
     private static final float WIDTH = 32.0f;
     private static final float HEIGHT = 32.0f;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.BULLET_SET1;
-    private static final ShaderEnum SHADER_ENUM = ShaderEnum.ANIMATED;
+    private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SCALE_RATIO = 0.5f;
     private static final float SPEED = 1000.0f;
 

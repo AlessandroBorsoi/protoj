@@ -44,7 +44,7 @@ public class Game {
 
     public void init() {
         ResourceManager.init();
-        Shader shader = ResourceManager.getShader(ShaderEnum.SPRITE.getName());
+        Shader shader = ResourceManager.getShader(ShaderEnum.IRREGULAR.getName());
         shader.use().setInteger("image", 0);
         background.add(new Planet());
         player.add(PlayerShip.getInstance());
@@ -53,7 +53,7 @@ public class Game {
     public void update(double timeSlice) {
         checkCollisions();
         background.update(timeSlice);
-        enemies.add(new Ladybird());
+//        enemies.add(new Ladybird());
         enemies.update(timeSlice);
         player.update(timeSlice);
         foreground.update(timeSlice);
