@@ -84,7 +84,7 @@ public class Game {
 //        return true;
 
 
-        if (((Ladybird) entityB).getPosX() < 0.75f)
+        if (((Ladybird) entityB).getPosX() < 500.0f)
             return true;
         return false;
     }

@@ -21,12 +21,14 @@ public class Text extends Entity {
     private static final float HEIGHT = 32.0f;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.FONTS;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.ANIMATED;
+    private static final float SCALE_RATIO = 0.5f;
     @Setter private String text;
 
     public Text(String text, float posX, float posY) {
         this.posX = posX;
         this.posY = posY;
         this.text = text;
+        this.scaleRatio = SCALE_RATIO;
     }
 
     @Override
@@ -61,15 +63,17 @@ public class Text extends Entity {
         this.texture.bind();
         glBindVertexArray(vao);
         float x = posX;
+        Mat4 scale = new Mat4().scale(scaleRatio);
+        shader.setInteger("rows", textureEnum.getRows());
+        shader.setInteger("columns", textureEnum.getColumns());
+        shader.setMatrix4("projection", projection);
+        shader.setMatrix4("scale", scale);
         for (int i = 0; i < text.length(); i++) {
-            Mat4 model = new Mat4();
-            model = model.translate(new Vec3(x, posY, 0.0f));
-            shader.setMatrix4("model", model);
+            Mat4 model = new Mat4().translate(new Vec3(x, posY, 0.0f));
             shader.setInteger("index", ((int) text.charAt(i)));
-            shader.setInteger("rows", 16);
-            shader.setInteger("columns", 16);
+            shader.setMatrix4("model", model);
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-            x += 0.05f;
+            x += 10.0f;
         }
         glBindVertexArray(0);
     }

@@ -1,6 +1,7 @@
 package com.alessandroborsoi.protoj.entity;
 
 import com.alessandroborsoi.protoj.Game;
+import com.alessandroborsoi.protoj.ProtoJ;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
@@ -20,14 +21,14 @@ public class Ladybird extends Entity {
     private static final float HEIGHT = 64.0f;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.LADYBIRD;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.ANIMATED;
-    private static final float SPEED = 0.1f;
+    private static final float SPEED = 100.0f;
     @Getter
     private int index;
     private double accumulator;
 
     public Ladybird() {
-        posX = 1.0f;
-        posY = ((float) Math.random()) * 2.0f - 1.0f;
+        posX = ProtoJ.WIDTH;
+        posY = ((float) Math.random()) * ProtoJ.HEIGHT;
         index = 0;
     }
 
@@ -59,22 +60,22 @@ public class Ladybird extends Entity {
             accumulator = 0.0;
         }
         posX -= SPEED * timeSlice;
-        if (posX < -1.0f)
-            Game.getInstance().getEnemies().remove(this);
     }
 
     @Override
     public void render() {
         this.shader.use();
-        Mat4 model = new Mat4();
-        model = model.translate(new Vec3(posX, posY, 0.0f));
-        shader.setMatrix4("model", model);
-        shader.setInteger("index", index);
-        shader.setInteger("rows", this.textureEnum.getRows());
-        shader.setInteger("columns", this.textureEnum.getColumns());
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
         glBindVertexArray(vao);
+        Mat4 model = new Mat4().translate(new Vec3(posX, posY, 0.0f));
+        Mat4 scale = new Mat4().scale(scaleRatio);
+        shader.setInteger("index", index);
+        shader.setInteger("rows", textureEnum.getRows());
+        shader.setInteger("columns", textureEnum.getColumns());
+        shader.setMatrix4("projection", projection);
+        shader.setMatrix4("model", model);
+        shader.setMatrix4("scale", scale);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
     }

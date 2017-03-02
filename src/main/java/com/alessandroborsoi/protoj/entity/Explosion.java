@@ -62,15 +62,17 @@ public class Explosion extends Entity {
     @Override
     public void render() {
         this.shader.use();
-        Mat4 model = new Mat4();
-        model = model.translate(new Vec3(posX, posY, 0.0f));
-        shader.setMatrix4("model", model);
-        shader.setInteger("index", index);
-        shader.setInteger("rows", 4);
-        shader.setInteger("columns", 8);
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
         glBindVertexArray(vao);
+        Mat4 model = new Mat4().translate(new Vec3(posX, posY, 0.0f));
+        Mat4 scale = new Mat4().scale(scaleRatio);
+        shader.setInteger("index", index);
+        shader.setInteger("rows", textureEnum.getRows());
+        shader.setInteger("columns", textureEnum.getColumns());
+        shader.setMatrix4("projection", projection);
+        shader.setMatrix4("model", model);
+        shader.setMatrix4("scale", scale);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
     }

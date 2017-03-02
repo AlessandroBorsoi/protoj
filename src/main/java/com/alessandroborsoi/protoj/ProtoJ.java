@@ -114,9 +114,9 @@ public class ProtoJ {
         double lastTime = glfwGetTime();
         int frames = 0;
         double deltas = 0;
-        Text score = new Text("Score: " + protoJ.getScore(), -0.9f, 0.9f);
-        Text fpsText = new Text("FPS: ", 0.6f, 0.9f);
-        Text entities = new Text("Entities: ", -0.9f, -0.9f);
+        Text score = new Text("Score: " + protoJ.getScore(), 20.0f, 20.0f);
+        Text fpsText = new Text("FPS: ", 700.0f, 20.0f);
+        Text entities = new Text("Entities: ", 20.0f, 560.0f);
         Layer foreground = protoJ.getForeground();
         foreground.add(score);
         foreground.add(fpsText);
