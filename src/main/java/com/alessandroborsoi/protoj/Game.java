@@ -48,12 +48,12 @@ public class Game {
         shader.use().setInteger("image", 0);
         background.add(new Planet());
         player.add(PlayerShip.getInstance());
-        enemies.add(new Ladybird());
     }
 
     public void update(double timeSlice) {
         checkCollisions();
         background.update(timeSlice);
+        enemies.add(new Ladybird());
         enemies.update(timeSlice);
         player.update(timeSlice);
         foreground.update(timeSlice);

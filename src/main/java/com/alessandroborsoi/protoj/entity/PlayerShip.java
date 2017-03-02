@@ -2,6 +2,7 @@ package com.alessandroborsoi.protoj.entity;
 
 import com.alessandroborsoi.protoj.Game;
 import com.alessandroborsoi.protoj.KeyCallback;
+import com.alessandroborsoi.protoj.ProtoJ;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
@@ -28,8 +29,8 @@ public class PlayerShip extends Entity {
     }
 
     private PlayerShip() {
-        posX = 0.0f;
-        posY = 0.0f;
+        posX = ProtoJ.WIDTH / 4;
+        posY = ProtoJ.HEIGHT / 2;
         scaleRatio = SCALE_RATIO;
     }
 
