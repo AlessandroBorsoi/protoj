@@ -1,7 +1,7 @@
 package com.alessandroborsoi.protoj.entity;
 
-import com.alessandroborsoi.protoj.Game;
 import com.alessandroborsoi.protoj.KeyCallback;
+import com.alessandroborsoi.protoj.LayerManager;
 import com.alessandroborsoi.protoj.ProtoJ;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
@@ -17,7 +17,7 @@ public class PlayerShip extends Entity {
     private static final float HEIGHT = 128.0f;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.PLAYER_SHIP;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
-    private static final float SCALE_RATIO = 0.5f;
+    private static final float SCALE_RATIO = 0.4f;
     private static final float SPEED = 600.0f;
     private static PlayerShip playerShip;
 
@@ -45,6 +45,11 @@ public class PlayerShip extends Entity {
     }
 
     @Override
+    protected String getLayer() {
+        return LayerManager.PLAYER;
+    }
+
+    @Override
     protected TextureEnum getTextureEnum() {
         return TEXTURE_ENUM;
     }
@@ -69,7 +74,7 @@ public class PlayerShip extends Entity {
             posY = posY < 600.0f ? posY += (SPEED * timeSlice) : posY;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_SPACE)) {
-            Game.getInstance().getPlayer().add(new Bullet(this.posX, this.posY));
+            new Bullet(this.posX, this.posY).spawn();
         }
     }
 }

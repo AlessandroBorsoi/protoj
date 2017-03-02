@@ -1,6 +1,6 @@
 package com.alessandroborsoi.protoj.entity;
 
-import com.alessandroborsoi.protoj.Game;
+import com.alessandroborsoi.protoj.LayerManager;
 import com.alessandroborsoi.protoj.ProtoJ;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
@@ -30,6 +30,11 @@ public class Ladybird extends Entity {
     }
 
     @Override
+    protected String getLayer() {
+        return LayerManager.ENEMIES;
+    }
+
+    @Override
     protected TextureEnum getTextureEnum() {
         return TEXTURE_ENUM;
     }
@@ -48,12 +53,11 @@ public class Ladybird extends Entity {
         }
         posX -= SPEED * timeSlice;
         if (posX < -getWidth())
-            Game.getInstance().getEnemies().remove(this);
+            this.unspawn();
     }
 
     public void destroy() {
-        Game protoJ = Game.getInstance();
-        protoJ.getBackground().add(new Explosion(this.posX, this.posY));
-        protoJ.getEnemies().remove(this);
+        new Explosion(this.posX, this.posY).spawn();
+        this.unspawn();
     }
 }

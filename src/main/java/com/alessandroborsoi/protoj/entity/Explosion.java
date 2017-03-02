@@ -1,6 +1,6 @@
 package com.alessandroborsoi.protoj.entity;
 
-import com.alessandroborsoi.protoj.Game;
+import com.alessandroborsoi.protoj.LayerManager;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
@@ -28,6 +28,11 @@ public class Explosion extends Entity {
     }
 
     @Override
+    protected String getLayer() {
+        return LayerManager.FOREGROUND;
+    }
+
+    @Override
     protected TextureEnum getTextureEnum() {
         return TEXTURE_ENUM;
     }
@@ -45,6 +50,6 @@ public class Explosion extends Entity {
             ++index;
         }
         if (index == 32)
-            Game.getInstance().getBackground().remove(this);
+            this.unspawn();
     }
 }

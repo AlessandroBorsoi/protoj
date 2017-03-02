@@ -10,6 +10,10 @@ public interface IEntity {
 
     float getPosY();
 
+    void spawn();
+
+    void unspawn();
+
     void update(double timeSlice);
 
     void render();

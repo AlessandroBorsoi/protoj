@@ -117,10 +117,9 @@ public class ProtoJ {
         Text score = new Text("Score: " + protoJ.getScore(), 20.0f, 20.0f);
         Text fpsText = new Text("FPS: ", 700.0f, 20.0f);
         Text entities = new Text("Entities: ", 20.0f, 560.0f);
-        Layer foreground = protoJ.getForeground();
-        foreground.add(score);
-        foreground.add(fpsText);
-        foreground.add(entities);
+        score.spawn();
+        fpsText.spawn();
+        entities.spawn();
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents();
             double currentTime = glfwGetTime();

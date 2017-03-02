@@ -1,5 +1,6 @@
 package com.alessandroborsoi.protoj.entity;
 
+import com.alessandroborsoi.protoj.LayerManager;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
@@ -39,6 +40,11 @@ public class Text extends Entity {
     @Override
     public float getSpriteHeight() {
         return HEIGHT;
+    }
+
+    @Override
+    protected String getLayer() {
+        return LayerManager.FOREGROUND;
     }
 
     @Override

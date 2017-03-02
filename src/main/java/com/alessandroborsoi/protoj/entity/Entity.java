@@ -1,5 +1,6 @@
 package com.alessandroborsoi.protoj.entity;
 
+import com.alessandroborsoi.protoj.LayerManager;
 import com.alessandroborsoi.protoj.ProtoJ;
 import com.alessandroborsoi.protoj.resource.Shader;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
@@ -32,6 +33,7 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 public abstract class Entity implements IEntity {
     protected float width;
     protected float height;
+    protected String layer;
     protected TextureEnum textureEnum;
     protected ShaderEnum shaderEnum;
     protected Texture texture;
@@ -47,6 +49,7 @@ public abstract class Entity implements IEntity {
     protected Entity() {
         this.width = getSpriteWidth();
         this.height = getSpriteHeight();
+        this.layer = getLayer();
         this.textureEnum = getTextureEnum();
         this.shaderEnum = getShaderEnum();
         this.texture = getTexture(this.textureEnum.getName());
@@ -89,6 +92,8 @@ public abstract class Entity implements IEntity {
         return height * scaleRatio;
     }
 
+    protected abstract String getLayer();
+
     protected abstract float getSpriteWidth();
 
     protected abstract float getSpriteHeight();
@@ -106,6 +111,16 @@ public abstract class Entity implements IEntity {
                 0.0f, height,   0.0f, height / textureEnum.getHeight(),                             // Bottom-left
         };
         return vertices;
+    }
+
+    @Override
+    public void spawn() {
+        LayerManager.getInstance().getLayers().get(this.layer).add(this);
+    }
+
+    @Override
+    public void unspawn() {
+        LayerManager.getInstance().getLayers().get(this.layer).remove(this);
     }
 
     @Override

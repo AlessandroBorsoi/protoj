@@ -1,5 +1,6 @@
 package com.alessandroborsoi.protoj.entity;
 
+import com.alessandroborsoi.protoj.LayerManager;
 import com.alessandroborsoi.protoj.ProtoJ;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
@@ -40,6 +41,11 @@ public class Planet extends Entity {
     @Override
     public float getSpriteHeight() {
         return HEIGHT;
+    }
+
+    @Override
+    protected String getLayer() {
+        return LayerManager.BACKGROUND;
     }
 
     @Override

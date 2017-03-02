@@ -20,14 +20,14 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 @Log4j2
 public class Game {
     private static Game instance;
-    @Getter
-    private Layer background = new Layer();
-    @Getter
-    private Layer player = new Layer();
-    @Getter
-    private Layer enemies = new Layer();
-    @Getter
-    private Layer foreground = new Layer();
+//    @Getter
+//    private Layer background = new Layer();
+//    @Getter
+//    private Layer player = new Layer();
+//    @Getter
+//    private Layer enemies = new Layer();
+//    @Getter
+//    private Layer foreground = new Layer();
     @Getter
     private int score;
 
@@ -46,22 +46,19 @@ public class Game {
         ResourceManager.init();
         Shader shader = ResourceManager.getShader(ShaderEnum.IRREGULAR.getName());
         shader.use().setInteger("image", 0);
-        background.add(new Planet());
-        player.add(PlayerShip.getInstance());
+        new Planet().spawn();
+        PlayerShip.getInstance().spawn();
     }
 
     public void update(double timeSlice) {
         checkCollisions();
-        background.update(timeSlice);
-//        enemies.add(new Ladybird());
-        enemies.update(timeSlice);
-        player.update(timeSlice);
-        foreground.update(timeSlice);
+        LayerManager.getInstance().update(timeSlice);
+        new Ladybird().spawn();
     }
 
     private void checkCollisions() {
-        List<IEntity> playerEntities = player.entities;
-        List<IEntity> enemiesEntities = enemies.entities;
+        List<IEntity> playerEntities = LayerManager.getInstance().getLayers().get(LayerManager.PLAYER).entities;
+        List<IEntity> enemiesEntities = LayerManager.getInstance().getLayers().get(LayerManager.ENEMIES).entities;
         for (int i = 0; i < playerEntities.size(); i++) {
             for (int j = 0; j < enemiesEntities.size(); j++) {
                 if (collision(playerEntities.get(i), enemiesEntities.get(j))) {
@@ -87,9 +84,6 @@ public class Game {
     public void render() {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        background.render();
-        enemies.render();
-        player.render();
-        foreground.render();
+        LayerManager.getInstance().render();
     }
 }
