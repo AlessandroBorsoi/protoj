@@ -44,7 +44,7 @@ public class Text extends Entity {
 
     @Override
     protected String getLayer() {
-        return LayerManager.FOREGROUND;
+        return LayerManager.TEXT;
     }
 
     @Override

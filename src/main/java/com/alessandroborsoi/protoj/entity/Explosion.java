@@ -29,7 +29,7 @@ public class Explosion extends Entity {
 
     @Override
     protected String getLayer() {
-        return LayerManager.FOREGROUND;
+        return LayerManager.BACKGROUND;
     }
 
     @Override
