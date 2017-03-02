@@ -7,11 +7,17 @@ import com.alessandroborsoi.protoj.resource.Texture;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
 import glm.mat._4.Mat4;
+import glm.vec._3.Vec3;
 import lombok.Getter;
 
 import static com.alessandroborsoi.protoj.resource.ResourceManager.getShader;
 import static com.alessandroborsoi.protoj.resource.ResourceManager.getTexture;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL11.glDrawElements;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
@@ -39,8 +45,8 @@ public abstract class Entity implements IEntity {
     protected float scaleRatio;
 
     protected Entity() {
-        this.width = getWidth();
-        this.height = getHeight();
+        this.width = getSpriteWidth();
+        this.height = getSpriteHeight();
         this.textureEnum = getTextureEnum();
         this.shaderEnum = getShaderEnum();
         this.texture = getTexture(this.textureEnum.getName());
@@ -73,9 +79,19 @@ public abstract class Entity implements IEntity {
         glBindVertexArray(0);
     }
 
-    protected abstract float getWidth();
+    @Override
+    public float getWidth() {
+        return width * scaleRatio;
+    }
 
-    protected abstract float getHeight();
+    @Override
+    public float getHeight() {
+        return height * scaleRatio;
+    }
+
+    protected abstract float getSpriteWidth();
+
+    protected abstract float getSpriteHeight();
 
     protected abstract TextureEnum getTextureEnum();
 
@@ -90,5 +106,23 @@ public abstract class Entity implements IEntity {
                 0.0f, height,   0.0f, height / textureEnum.getHeight(),                             // Bottom-left
         };
         return vertices;
+    }
+
+    @Override
+    public void render() {
+        this.shader.use();
+        glActiveTexture(GL_TEXTURE0);
+        this.texture.bind();
+        glBindVertexArray(vao);
+        Mat4 model = new Mat4().translate(new Vec3(posX, posY, 0.0f));
+        Mat4 scale = new Mat4().scale(scaleRatio);
+        shader.setInteger("index", index);
+        shader.setInteger("rows", textureEnum.getRows());
+        shader.setInteger("columns", textureEnum.getColumns());
+        shader.setMatrix4("projection", projection);
+        shader.setMatrix4("model", model);
+        shader.setMatrix4("scale", scale);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
     }
 }

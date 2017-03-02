@@ -73,20 +73,15 @@ public class Game {
     }
 
     private boolean collision(IEntity entityA, IEntity entityB) {
-//        if (entityA.position.x + entityA.width < entityB.position.x)
-//            return false;
-//        if (entityA.position.y + entityA.height < entityB.position.y)
-//            return false;
-//        if (entityA.position.x > entityB.position.x + entityB.width)
-//            return false;
-//        if (entityA.position.y > entityB.position.y + entityB.height)
-//            return false;
-//        return true;
-
-
-        if (((Ladybird) entityB).getPosX() < 500.0f)
-            return true;
-        return false;
+        if (entityA.getPosX() + entityA.getWidth() < entityB.getPosX())
+            return false;
+        if (entityA.getPosY() + entityA.getHeight() < entityB.getPosY())
+            return false;
+        if (entityA.getPosX() > entityB.getPosX() + entityB.getWidth())
+            return false;
+        if (entityA.getPosY() > entityB.getPosY() + entityB.getHeight())
+            return false;
+        return true;
     }
 
     public void render() {

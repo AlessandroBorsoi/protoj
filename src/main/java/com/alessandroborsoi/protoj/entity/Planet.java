@@ -26,12 +26,12 @@ public class Planet extends Entity {
     }
 
     @Override
-    protected float getWidth() {
+    public float getSpriteWidth() {
         return WIDTH;
     }
 
     @Override
-    protected float getHeight() {
+    public float getSpriteHeight() {
         return HEIGHT;
     }
 
