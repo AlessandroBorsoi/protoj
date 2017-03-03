@@ -123,10 +123,10 @@ public class ProtoJ {
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents();
             double currentTime = glfwGetTime();
-            double timeSlice = currentTime - lastTime;
-            deltas += timeSlice;
+            double dt = currentTime - lastTime;
+            deltas += dt;
             lastTime = currentTime;
-            protoJ.update(timeSlice);
+            protoJ.update(dt);
             protoJ.render();
             glfwSwapBuffers(window);
             frames++;
@@ -139,7 +139,7 @@ public class ProtoJ {
                 entities.setText("Entities: " + Layer.entitiesCount);
             }
             if (glGetError() != 0) {
-                log.debug("glGetError: {}", glGetError());
+                log.error("glGetError: {}", glGetError());
                 throw new RuntimeException("glGetError: " + glGetError());
             }
         }

@@ -47,7 +47,7 @@ public class PlayerSpeed extends Entity {
     }
 
     @Override
-    public void update(double timeSlice) {
+    public void update(double dt) {
         posX = playerShip.getPosX() - playerShip.getWidth();
         posY = playerShip.getPosY();
     }

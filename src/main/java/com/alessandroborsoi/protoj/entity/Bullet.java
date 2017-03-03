@@ -45,8 +45,8 @@ public class Bullet extends Entity {
     }
 
     @Override
-    public void update(double timeSlice) {
-        posX += SPEED * timeSlice;
+    public void update(double dt) {
+        posX += SPEED * dt;
         if (posX > ProtoJ.WIDTH) {
             this.unspawn();
         }

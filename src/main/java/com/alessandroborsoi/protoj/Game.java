@@ -50,9 +50,9 @@ public class Game {
         PlayerShip.getInstance().spawn();
     }
 
-    public void update(double timeSlice) {
+    public void update(double dt) {
         checkCollisions();
-        LayerManager.getInstance().update(timeSlice);
+        LayerManager.getInstance().update(dt);
         new Ladybird().spawn();
     }
 

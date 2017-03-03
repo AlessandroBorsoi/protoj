@@ -14,7 +14,7 @@ public interface IEntity {
 
     void unspawn();
 
-    void update(double timeSlice);
+    void update(double dt);
 
     void render();
 }

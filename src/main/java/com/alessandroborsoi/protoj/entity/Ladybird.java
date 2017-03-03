@@ -45,13 +45,13 @@ public class Ladybird extends Entity {
     }
 
     @Override
-    public void update(double timeSlice) {
-        accumulator += timeSlice * 6.0;
+    public void update(double dt) {
+        accumulator += dt * 6.0;
         if (accumulator > 1.0) {
             index = ++index % 16;
             accumulator = 0.0;
         }
-        posX -= SPEED * timeSlice;
+        posX -= SPEED * dt;
         if (posX < -getWidth())
             this.unspawn();
     }

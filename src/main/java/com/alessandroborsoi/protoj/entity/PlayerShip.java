@@ -60,18 +60,18 @@ public class PlayerShip extends Entity {
     }
 
     @Override
-    public void update(double timeSlice) {
+    public void update(double dt) {
         if (KeyCallback.isKeyDown(GLFW_KEY_RIGHT)) {
-            posX = posX < 800.0f ? posX += (SPEED * timeSlice) : posX;
+            posX = posX < 800.0f ? posX += (SPEED * dt) : posX;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_LEFT)) {
-            posX = posX > 0.0f ? posX -= (SPEED * timeSlice) : posX;
+            posX = posX > 0.0f ? posX -= (SPEED * dt) : posX;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_UP)) {
-            posY = posY > 0.0f ? posY -= (SPEED * timeSlice) : posY;
+            posY = posY > 0.0f ? posY -= (SPEED * dt) : posY;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_DOWN)) {
-            posY = posY < 600.0f ? posY += (SPEED * timeSlice) : posY;
+            posY = posY < 600.0f ? posY += (SPEED * dt) : posY;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_SPACE)) {
             new Bullet(this.posX, this.posY).spawn();

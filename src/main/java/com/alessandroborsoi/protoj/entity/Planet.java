@@ -71,8 +71,8 @@ public class Planet extends Entity {
     }
 
     @Override
-    public void update(double timeSlice) {
-        posX -= SPEED * timeSlice;
+    public void update(double dt) {
+        posX -= SPEED * dt;
     }
 
     @Override

@@ -19,9 +19,9 @@ public class Layer {
         --entitiesCount;
     }
 
-    public void update(double timeSlice) {
+    public void update(double dt) {
         for (int i = 0; i < entities.size(); i++) {
-            entities.get(i).update(timeSlice);
+            entities.get(i).update(dt);
         }
     }
 

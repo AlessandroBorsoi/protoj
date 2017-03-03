@@ -43,8 +43,8 @@ public class Explosion extends Entity {
     }
 
     @Override
-    public void update(double timeSlice) {
-        accumulator += timeSlice * 60.0;
+    public void update(double dt) {
+        accumulator += dt * 60.0;
         if (accumulator > 1.0) {
             accumulator = 0.0;
             ++index;

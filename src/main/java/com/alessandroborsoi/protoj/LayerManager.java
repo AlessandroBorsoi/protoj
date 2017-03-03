@@ -29,8 +29,8 @@ public class LayerManager {
         return layerManager;
     }
 
-    public void update(double timeSlice) {
-        layers.forEach((s, layer) -> layer.update(timeSlice));
+    public void update(double dt) {
+        layers.forEach((s, layer) -> layer.update(dt));
     }
 
     public void render() {

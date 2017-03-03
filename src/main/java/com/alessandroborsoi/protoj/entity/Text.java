@@ -58,7 +58,7 @@ public class Text extends Entity {
     }
 
     @Override
-    public void update(double timeSlice) {
+    public void update(double dt) {
 
     }
 
