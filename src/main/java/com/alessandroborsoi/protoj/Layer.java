@@ -25,7 +25,9 @@ public class Layer {
         }
     }
 
-    public void render() {
-        entities.forEach(IEntity::render);
+    public void render(double alpha) {
+        for (int i = 0; i < entities.size(); i++) {
+            entities.get(i).render(alpha);
+        }
     }
 }

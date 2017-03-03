@@ -76,7 +76,7 @@ public class Planet extends Entity {
     }
 
     @Override
-    public void render() {
+    public void render(double alpha) {
         this.shader.use();
         Mat4 model = new Mat4()
                 .translate(new Vec3(-getWidth() / 2.0f, -getHeight() / 2.0f, 0.0f))

@@ -81,9 +81,9 @@ public class Game {
         return true;
     }
 
-    public void render() {
+    public void render(double alpha) {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        LayerManager.getInstance().render();
+        LayerManager.getInstance().render(alpha);
     }
 }

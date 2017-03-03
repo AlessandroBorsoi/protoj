@@ -33,7 +33,7 @@ public class LayerManager {
         layers.forEach((s, layer) -> layer.update(dt));
     }
 
-    public void render() {
-        layers.forEach((s, layer) -> layer.render());
+    public void render(double alpha) {
+        layers.forEach((s, layer) -> layer.render(alpha));
     }
 }

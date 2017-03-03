@@ -16,5 +16,5 @@ public interface IEntity {
 
     void update(double dt);
 
-    void render();
+    void render(double alpha);
 }

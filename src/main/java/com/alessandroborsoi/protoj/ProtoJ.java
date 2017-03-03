@@ -111,32 +111,42 @@ public class ProtoJ {
     }
 
     private void loop() {
-        double lastTime = glfwGetTime();
         int frames = 0;
-        double deltas = 0;
+        double framesTime = 0;
         Text score = new Text("Score: " + protoJ.getScore(), 20.0f, 20.0f);
         Text fpsText = new Text("FPS: ", 700.0f, 20.0f);
         Text entities = new Text("Entities: ", 20.0f, 560.0f);
         score.spawn();
         fpsText.spawn();
         entities.spawn();
+        double updateRate = 25.0;
+        double dt = 1.0 / updateRate;
+        double accumulator = 0.0f;
+        double lastTime = glfwGetTime();
         while (!glfwWindowShouldClose(window)) {
-            glfwPollEvents();
             double currentTime = glfwGetTime();
-            double dt = currentTime - lastTime;
-            deltas += dt;
+            double deltaTime = currentTime - lastTime;
             lastTime = currentTime;
-            protoJ.update(dt);
-            protoJ.render();
-            glfwSwapBuffers(window);
-            frames++;
-            if (frames == 50) {
-                fps = frames / deltas;
-                frames = 0;
-                deltas = 0.0;
+            accumulator += deltaTime;
+            framesTime += deltaTime;
+            if (accumulator > 0.2f)
+                accumulator = 0.2f;
+            while (accumulator > dt) {
+                glfwPollEvents();
+                protoJ.update(dt);
+                accumulator -= dt;
                 score.setText("Score: " + protoJ.getScore());
                 fpsText.setText("FPS: " + ((int) fps));
                 entities.setText("Entities: " + Layer.entitiesCount);
+            }
+            double alpha = accumulator / dt;
+            protoJ.render(alpha);
+            glfwSwapBuffers(window);
+            frames++;
+            if (frames == 50) {
+                fps = frames / framesTime;
+                frames = 0;
+                framesTime = 0.0;
             }
             if (glGetError() != 0) {
                 log.error("glGetError: {}", glGetError());

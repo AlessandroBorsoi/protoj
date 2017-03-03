@@ -124,7 +124,7 @@ public abstract class Entity implements IEntity {
     }
 
     @Override
-    public void render() {
+    public void render(double alpha) {
         this.shader.use();
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
