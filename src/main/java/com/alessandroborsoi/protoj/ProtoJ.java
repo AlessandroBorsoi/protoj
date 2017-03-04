@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL;
 
 import java.nio.IntBuffer;
 
+import glm.vec._2.Vec2;
 import lombok.extern.log4j.Log4j2;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -113,9 +114,9 @@ public class ProtoJ {
     private void loop() {
         int frames = 0;
         double framesTime = 0;
-        Text score = new Text("Score: " + protoJ.getScore(), 20.0f, 20.0f);
-        Text fpsText = new Text("FPS: ", 700.0f, 20.0f);
-        Text entities = new Text("Entities: ", 20.0f, 560.0f);
+        Text score = new Text("Score: 0", new Vec2(20.0f, 20.0f));
+        Text fpsText = new Text("FPS: 0", new Vec2(700.0f, 20.0f));
+        Text entities = new Text("Entities: 0", new Vec2(20.0f, 560.0f));
         score.spawn();
         fpsText.spawn();
         entities.spawn();

@@ -5,6 +5,8 @@ import com.alessandroborsoi.protoj.ProtoJ;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
+import glm.vec._2.Vec2;
+
 public class Bullet extends Entity {
     private static final float WIDTH = 32.0f;
     private static final float HEIGHT = 32.0f;
@@ -13,9 +15,8 @@ public class Bullet extends Entity {
     private static final float SCALE_RATIO = 0.5f;
     private static final float SPEED = 1000.0f;
 
-    public Bullet(float posX, float posY) {
-        this.posX = posX;
-        this.posY = posY;
+    public Bullet(Vec2 position) {
+        this.position = position;
         scaleRatio = SCALE_RATIO;
     }
 
@@ -46,8 +47,8 @@ public class Bullet extends Entity {
 
     @Override
     public void update(double dt) {
-        posX += SPEED * dt;
-        if (posX > ProtoJ.WIDTH) {
+        position.x += SPEED * dt;
+        if (position.x > ProtoJ.WIDTH) {
             this.unspawn();
         }
     }

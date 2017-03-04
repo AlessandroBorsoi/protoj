@@ -1,14 +1,14 @@
 package com.alessandroborsoi.protoj.entity;
 
+import glm.vec._2.Vec2;
+
 public interface IEntity {
 
     float getWidth();
 
     float getHeight();
 
-    float getPosX();
-
-    float getPosY();
+    Vec2 getPosition();
 
     void spawn();
 

@@ -8,6 +8,7 @@ import com.alessandroborsoi.protoj.resource.Texture;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
 import glm.mat._4.Mat4;
+import glm.vec._2.Vec2;
 import glm.vec._3.Vec3;
 import lombok.Getter;
 
@@ -41,8 +42,9 @@ public abstract class Entity implements IEntity {
     protected float vertices[];
     protected Mat4 projection;
     protected int vao;
-    @Getter protected float posX;
-    @Getter protected float posY;
+    @Getter Vec2 position;
+    @Getter Vec2 oldPosition;
+    @Getter Vec2 interpolatedPosition;
     protected int index;
     protected float scaleRatio;
 
@@ -59,6 +61,9 @@ public abstract class Entity implements IEntity {
         this.projection = projection.ortho(0.0f, ProtoJ.WIDTH, ProtoJ.HEIGHT, 0.0f, -1.0f, 1.0f);
         this.index = 0;
         this.scaleRatio = 1.0f;
+        this.position = new Vec2();
+        this.oldPosition = new Vec2();
+        this.interpolatedPosition = new Vec2();
 
         int elements[] = {
                 0, 1, 2,
@@ -131,7 +136,7 @@ public abstract class Entity implements IEntity {
         glBindVertexArray(vao);
         Mat4 model = new Mat4()
                 .translate(new Vec3(-getWidth() / 2.0f, -getHeight() / 2.0f, 0.0f))
-                .translate(new Vec3(posX, posY, 0.0f));
+                .translate(new Vec3(position.x, position.y, 0.0f));
         Mat4 scale = new Mat4().scale(scaleRatio);
         shader.setInteger("index", index);
         shader.setInteger("rows", textureEnum.getRows());

@@ -28,8 +28,8 @@ public class Planet extends Entity {
     private static final float SCALE_RATIO = 1.3f;
 
     public Planet() {
-        this.posX = ProtoJ.WIDTH;
-        this.posY = ProtoJ.HEIGHT / 2;
+        this.position.x = ProtoJ.WIDTH;
+        this.position.y = ProtoJ.HEIGHT / 2;
         this.scaleRatio = SCALE_RATIO;
     }
 
@@ -72,7 +72,7 @@ public class Planet extends Entity {
 
     @Override
     public void update(double dt) {
-        posX -= SPEED * dt;
+        position.x -= SPEED * dt;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class Planet extends Entity {
         this.shader.use();
         Mat4 model = new Mat4()
                 .translate(new Vec3(-getWidth() / 2.0f, -getHeight() / 2.0f, 0.0f))
-                .translate(new Vec3(posX, posY, 0.0f));
+                .translate(new Vec3(position.x, position.y, 0.0f));
         Mat4 scale = new Mat4().scale(scaleRatio);
         shader.setMatrix4("projection", projection);
         shader.setMatrix4("model", model);

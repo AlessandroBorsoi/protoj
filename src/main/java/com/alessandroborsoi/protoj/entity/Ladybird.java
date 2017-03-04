@@ -14,8 +14,8 @@ public class Ladybird extends Entity {
     private double accumulator;
 
     public Ladybird() {
-        posX = ProtoJ.WIDTH;
-        posY = ((float) Math.random()) * ProtoJ.HEIGHT;
+        position.x = ProtoJ.WIDTH;
+        position.y = ((float) Math.random()) * ProtoJ.HEIGHT;
         index = 0;
     }
 
@@ -51,13 +51,13 @@ public class Ladybird extends Entity {
             index = ++index % 16;
             accumulator = 0.0;
         }
-        posX -= SPEED * dt;
-        if (posX < -getWidth())
+        position.x -= SPEED * dt;
+        if (position.x < -getWidth())
             this.unspawn();
     }
 
     public void destroy() {
-        new Explosion(this.posX, this.posY).spawn();
+        new Explosion(position).spawn();
         this.unspawn();
     }
 }

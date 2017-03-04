@@ -6,6 +6,8 @@ import com.alessandroborsoi.protoj.ProtoJ;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
+import glm.vec._2.Vec2;
+
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
@@ -29,8 +31,8 @@ public class PlayerShip extends Entity {
     }
 
     private PlayerShip() {
-        posX = ProtoJ.WIDTH / 4;
-        posY = ProtoJ.HEIGHT / 2;
+        position.x = ProtoJ.WIDTH / 4;
+        position.y = ProtoJ.HEIGHT / 2;
         scaleRatio = SCALE_RATIO;
     }
 
@@ -62,19 +64,19 @@ public class PlayerShip extends Entity {
     @Override
     public void update(double dt) {
         if (KeyCallback.isKeyDown(GLFW_KEY_RIGHT)) {
-            posX = posX < 800.0f ? posX += (SPEED * dt) : posX;
+            position.x = position.x < 800.0f ? position.x += (SPEED * dt) : position.x;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_LEFT)) {
-            posX = posX > 0.0f ? posX -= (SPEED * dt) : posX;
+            position.x = position.x > 0.0f ? position.x -= (SPEED * dt) : position.x;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_UP)) {
-            posY = posY > 0.0f ? posY -= (SPEED * dt) : posY;
+            position.y = position.y > 0.0f ? position.y -= (SPEED * dt) : position.y;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_DOWN)) {
-            posY = posY < 600.0f ? posY += (SPEED * dt) : posY;
+            position.y = position.y < 600.0f ? position.y += (SPEED * dt) : position.y;
         }
         if (KeyCallback.isKeyDown(GLFW_KEY_SPACE)) {
-            new Bullet(this.posX, this.posY).spawn();
+            new Bullet(new Vec2(position.x, position.y)).spawn();
         }
     }
 }

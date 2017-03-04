@@ -17,8 +17,6 @@ public class PlayerSpeed extends Entity {
     public PlayerSpeed() {
         scaleRatio = SCALE_RATIO;
         playerShip = PlayerShip.getInstance();
-        posX = playerShip.getPosX() - playerShip.getWidth();
-        posY = playerShip.getPosY();
     }
 
     @Override
@@ -48,7 +46,5 @@ public class PlayerSpeed extends Entity {
 
     @Override
     public void update(double dt) {
-        posX = playerShip.getPosX() - playerShip.getWidth();
-        posY = playerShip.getPosY();
     }
 }

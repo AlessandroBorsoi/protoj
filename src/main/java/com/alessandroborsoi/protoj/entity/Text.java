@@ -5,6 +5,7 @@ import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
 import glm.mat._4.Mat4;
+import glm.vec._2.Vec2;
 import glm.vec._3.Vec3;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -25,9 +26,8 @@ public class Text extends Entity {
     private static final float SCALE_RATIO = 0.5f;
     @Setter private String text;
 
-    public Text(String text, float posX, float posY) {
-        this.posX = posX;
-        this.posY = posY;
+    public Text(String text, Vec2 position) {
+        this.position = position;
         this.text = text;
         this.scaleRatio = SCALE_RATIO;
     }
@@ -68,14 +68,14 @@ public class Text extends Entity {
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
         glBindVertexArray(vao);
-        float x = posX;
+        float x = position.x;
         Mat4 scale = new Mat4().scale(scaleRatio);
         shader.setInteger("rows", textureEnum.getRows());
         shader.setInteger("columns", textureEnum.getColumns());
         shader.setMatrix4("projection", projection);
         shader.setMatrix4("scale", scale);
         for (int i = 0; i < text.length(); i++) {
-            Mat4 model = new Mat4().translate(new Vec3(x, posY, 0.0f));
+            Mat4 model = new Mat4().translate(new Vec3(x, position.y, 0.0f));
             shader.setInteger("index", ((int) text.charAt(i)));
             shader.setMatrix4("model", model);
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

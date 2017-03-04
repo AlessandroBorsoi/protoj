@@ -20,16 +20,7 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 @Log4j2
 public class Game {
     private static Game instance;
-//    @Getter
-//    private Layer background = new Layer();
-//    @Getter
-//    private Layer player = new Layer();
-//    @Getter
-//    private Layer enemies = new Layer();
-//    @Getter
-//    private Layer foreground = new Layer();
-    @Getter
-    private int score;
+    @Getter private int score;
 
     private Game() {
         score = 0;
@@ -70,13 +61,13 @@ public class Game {
     }
 
     private boolean collision(IEntity entityA, IEntity entityB) {
-        if (entityA.getPosX() + entityA.getWidth() < entityB.getPosX())
+        if (entityA.getPosition().x + entityA.getWidth() < entityB.getPosition().x)
             return false;
-        if (entityA.getPosY() + entityA.getHeight() < entityB.getPosY())
+        if (entityA.getPosition().y + entityA.getHeight() < entityB.getPosition().y)
             return false;
-        if (entityA.getPosX() > entityB.getPosX() + entityB.getWidth())
+        if (entityA.getPosition().x > entityB.getPosition().x + entityB.getWidth())
             return false;
-        if (entityA.getPosY() > entityB.getPosY() + entityB.getHeight())
+        if (entityA.getPosition().y > entityB.getPosition().y + entityB.getHeight())
             return false;
         return true;
     }

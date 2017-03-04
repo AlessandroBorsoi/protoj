@@ -4,6 +4,8 @@ import com.alessandroborsoi.protoj.LayerManager;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
+import glm.vec._2.Vec2;
+
 public class Explosion extends Entity {
     private static final float WIDTH = 128.0f;
     private static final float HEIGHT = 128.0f;
@@ -11,9 +13,8 @@ public class Explosion extends Entity {
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private double accumulator;
 
-    public Explosion(float posX, float posY) {
-        this.posX = posX;
-        this.posY = posY;
+    public Explosion(Vec2 position) {
+        this.position = position;
         index = 0;
     }
 
