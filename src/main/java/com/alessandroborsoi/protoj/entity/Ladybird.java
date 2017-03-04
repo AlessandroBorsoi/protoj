@@ -16,6 +16,7 @@ public class Ladybird extends Entity {
     public Ladybird() {
         position.x = ProtoJ.WIDTH;
         position.y = ((float) Math.random()) * ProtoJ.HEIGHT;
+        oldPosition = position;
         index = 0;
     }
 

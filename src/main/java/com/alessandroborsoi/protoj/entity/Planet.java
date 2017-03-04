@@ -30,6 +30,7 @@ public class Planet extends Entity {
     public Planet() {
         this.position.x = ProtoJ.WIDTH;
         this.position.y = ProtoJ.HEIGHT / 2;
+        this.oldPosition = position;
         this.scaleRatio = SCALE_RATIO;
     }
 
@@ -77,6 +78,7 @@ public class Planet extends Entity {
 
     @Override
     public void render(double alpha) {
+        interpolate(alpha);
         this.shader.use();
         Mat4 model = new Mat4()
                 .translate(new Vec3(-getWidth() / 2.0f, -getHeight() / 2.0f, 0.0f))

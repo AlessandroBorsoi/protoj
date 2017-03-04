@@ -17,6 +17,7 @@ public class Bullet extends Entity {
 
     public Bullet(Vec2 position) {
         this.position = position;
+        this.oldPosition = position;
         scaleRatio = SCALE_RATIO;
     }
 

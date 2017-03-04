@@ -16,5 +16,7 @@ public interface IEntity {
 
     void update(double dt);
 
+    Vec2 interpolate(double alpha);
+
     void render(double alpha);
 }

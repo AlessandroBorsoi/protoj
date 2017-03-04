@@ -15,6 +15,7 @@ public class Explosion extends Entity {
 
     public Explosion(Vec2 position) {
         this.position = position;
+        this.oldPosition = position;
         index = 0;
     }
 

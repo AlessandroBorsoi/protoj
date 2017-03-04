@@ -33,6 +33,7 @@ public class PlayerShip extends Entity {
     private PlayerShip() {
         position.x = ProtoJ.WIDTH / 4;
         position.y = ProtoJ.HEIGHT / 2;
+        oldPosition = position;
         scaleRatio = SCALE_RATIO;
     }
 

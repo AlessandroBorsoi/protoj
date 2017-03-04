@@ -5,8 +5,6 @@ import com.alessandroborsoi.protoj.entity.Ladybird;
 import com.alessandroborsoi.protoj.entity.Planet;
 import com.alessandroborsoi.protoj.entity.PlayerShip;
 import com.alessandroborsoi.protoj.resource.ResourceManager;
-import com.alessandroborsoi.protoj.resource.Shader;
-import com.alessandroborsoi.protoj.resource.ShaderEnum;
 
 import java.util.List;
 
@@ -35,8 +33,6 @@ public class Game {
 
     public void init() {
         ResourceManager.init();
-        Shader shader = ResourceManager.getShader(ShaderEnum.IRREGULAR.getName());
-        shader.use().setInteger("image", 0);
         new Planet().spawn();
         PlayerShip.getInstance().spawn();
     }

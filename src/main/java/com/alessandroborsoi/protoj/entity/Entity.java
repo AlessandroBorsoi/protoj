@@ -44,7 +44,6 @@ public abstract class Entity implements IEntity {
     protected int vao;
     @Getter Vec2 position;
     @Getter Vec2 oldPosition;
-    @Getter Vec2 interpolatedPosition;
     protected int index;
     protected float scaleRatio;
 
@@ -63,7 +62,6 @@ public abstract class Entity implements IEntity {
         this.scaleRatio = 1.0f;
         this.position = new Vec2();
         this.oldPosition = new Vec2();
-        this.interpolatedPosition = new Vec2();
 
         int elements[] = {
                 0, 1, 2,
@@ -129,7 +127,16 @@ public abstract class Entity implements IEntity {
     }
 
     @Override
+    public Vec2 interpolate(double alpha) {
+        position.x = oldPosition.x * ((float) alpha) + position.x * ((float) (1.0 - alpha));
+        position.y = oldPosition.y * ((float) alpha) + position.y * ((float) (1.0 - alpha));
+        oldPosition = new Vec2(position.x, position.y);
+        return position;
+    }
+
+    @Override
     public void render(double alpha) {
+        interpolate(alpha);
         this.shader.use();
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();
