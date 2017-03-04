@@ -133,7 +133,6 @@ public class ProtoJ {
             if (accumulator > 0.2f)
                 accumulator = 0.2f;
             while (accumulator > dt) {
-                glfwPollEvents();
                 protoJ.update(dt);
                 accumulator -= dt;
                 score.setText("Score: " + protoJ.getScore());
@@ -143,6 +142,7 @@ public class ProtoJ {
             double alpha = accumulator / dt;
             protoJ.render(alpha);
             glfwSwapBuffers(window);
+            glfwPollEvents();
             frames++;
             if (frames == 50) {
                 fps = frames / framesTime;
