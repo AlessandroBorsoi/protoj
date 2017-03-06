@@ -10,6 +10,7 @@ import glm.vec._2.Vec2;
 public class PlayerSpeed extends Entity {
     private static final float WIDTH = 64.0f;
     private static final float HEIGHT = 64.0f;
+    private static final String LAYER = LayerManager.FX;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.PLAYER_SPEED;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SCALE_RATIO = 0.8f;
@@ -34,7 +35,7 @@ public class PlayerSpeed extends Entity {
 
     @Override
     protected String getLayer() {
-        return LayerManager.PLAYER;
+        return LAYER;
     }
 
     @Override
@@ -50,7 +51,8 @@ public class PlayerSpeed extends Entity {
     @Override
     public void update(float dt) {
         position = new Vec2(playerShip.getPosition());
-        position.x -= playerShip.getWidth();
+        position.x -= playerShip.getWidth() / 1.3f;
+        position.y += playerShip.getHeight() / 10;
         if (KeyCallback.moveForward) {
             accumulator += dt * 60.0f;
             if (accumulator > 1.0f) {

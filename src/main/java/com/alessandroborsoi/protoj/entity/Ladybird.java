@@ -8,6 +8,7 @@ import com.alessandroborsoi.protoj.resource.TextureEnum;
 public class Ladybird extends Entity {
     private static final float WIDTH = 64.0f;
     private static final float HEIGHT = 64.0f;
+    private static final String LAYER = LayerManager.ENEMIES;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.LADYBIRD;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SPEED = 100.0f;
@@ -32,7 +33,7 @@ public class Ladybird extends Entity {
 
     @Override
     protected String getLayer() {
-        return LayerManager.ENEMIES;
+        return LAYER;
     }
 
     @Override

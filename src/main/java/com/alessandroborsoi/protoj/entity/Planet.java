@@ -22,6 +22,7 @@ public class Planet extends Entity {
     private static final float T = 542.0f;
     private static final float WIDTH = 511.0f;
     private static final float HEIGHT = 455.0f;
+    private static final String LAYER = LayerManager.BACKGROUND;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.STAGE1_LAYER1;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.IRREGULAR;
     private static final float SPEED = 5.0f;
@@ -46,7 +47,7 @@ public class Planet extends Entity {
 
     @Override
     protected String getLayer() {
-        return LayerManager.BACKGROUND;
+        return LAYER;
     }
 
     @Override

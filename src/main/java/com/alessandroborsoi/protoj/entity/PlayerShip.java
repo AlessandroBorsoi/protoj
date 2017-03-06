@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j2;
 public class PlayerShip extends Entity {
     private static final float WIDTH = 128.0f;
     private static final float HEIGHT = 128.0f;
+    private static final String LAYER = LayerManager.PLAYER;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.PLAYER_SHIP;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SCALE_RATIO = 0.4f;
@@ -48,7 +49,7 @@ public class PlayerShip extends Entity {
 
     @Override
     protected String getLayer() {
-        return LayerManager.PLAYER;
+        return LAYER;
     }
 
     @Override

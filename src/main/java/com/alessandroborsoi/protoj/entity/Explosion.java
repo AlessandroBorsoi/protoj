@@ -9,6 +9,7 @@ import glm.vec._2.Vec2;
 public class Explosion extends Entity {
     private static final float WIDTH = 128.0f;
     private static final float HEIGHT = 128.0f;
+    private static final String LAYER = LayerManager.FX;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.EXPLOSION_SMALL;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private double accumulator;
@@ -31,7 +32,7 @@ public class Explosion extends Entity {
 
     @Override
     protected String getLayer() {
-        return LayerManager.BACKGROUND;
+        return LAYER;
     }
 
     @Override
