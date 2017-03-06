@@ -40,7 +40,7 @@ public class Game {
     public void update(double dt) {
         checkCollisions();
         LayerManager.getInstance().update(dt);
-        new Ladybird().spawn();
+//        new Ladybird().spawn();
     }
 
     private void checkCollisions() {

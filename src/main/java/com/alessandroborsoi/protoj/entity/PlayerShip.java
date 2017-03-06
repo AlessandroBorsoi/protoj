@@ -7,20 +7,20 @@ import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
 import glm.vec._2.Vec2;
+import lombok.extern.log4j.Log4j2;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 
+@Log4j2
 public class PlayerShip extends Entity {
     private static final float WIDTH = 128.0f;
     private static final float HEIGHT = 128.0f;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.PLAYER_SHIP;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SCALE_RATIO = 0.4f;
-    private static final float SPEED = 600.0f;
+    private static final float MAX_SPEED = 600.0f;
+    private static final float ACCELERATION = 500.0f;
+    private static final float DECELERATION = 800.0f;
     private static PlayerShip playerShip;
 
     public static PlayerShip getInstance() {
@@ -64,18 +64,53 @@ public class PlayerShip extends Entity {
 
     @Override
     public void update(double dt) {
-        if (KeyCallback.isKeyDown(GLFW_KEY_RIGHT)) {
-            position.x = position.x < 800.0f ? position.x += (SPEED * dt) : position.x;
+        if (KeyCallback.moveForward) {
+            velocity.x = velocity.x < MAX_SPEED ? velocity.x += ACCELERATION * ((float) dt) : velocity.x;
         }
-        if (KeyCallback.isKeyDown(GLFW_KEY_LEFT)) {
-            position.x = position.x > 0.0f ? position.x -= (SPEED * dt) : position.x;
+        if (KeyCallback.stopForward) {
+            velocity.x -= DECELERATION * ((float) dt);
+            if (velocity.x < 0.0f) {
+                velocity.x = 0.0f;
+                KeyCallback.stopForward = false;
+            }
         }
-        if (KeyCallback.isKeyDown(GLFW_KEY_UP)) {
-            position.y = position.y > 0.0f ? position.y -= (SPEED * dt) : position.y;
+        if (KeyCallback.moveBackward) {
+            velocity.x = velocity.x > -MAX_SPEED ? velocity.x -= ACCELERATION * ((float) dt) : velocity.x;
         }
-        if (KeyCallback.isKeyDown(GLFW_KEY_DOWN)) {
-            position.y = position.y < 600.0f ? position.y += (SPEED * dt) : position.y;
+        if (KeyCallback.stopBackward) {
+            velocity.x += DECELERATION * ((float) dt);
+            if (velocity.x > 0.0f) {
+                velocity.x = 0.0f;
+                KeyCallback.stopBackward = false;
+            }
         }
+        if (KeyCallback.moveUp) {
+            velocity.y = velocity.y > -MAX_SPEED ? velocity.y -= ACCELERATION * ((float) dt) : velocity.y;
+        }
+        if (KeyCallback.stopUp) {
+            velocity.y += DECELERATION * ((float) dt);
+            if (velocity.y > 0.0f) {
+                velocity.y = 0.0f;
+                KeyCallback.stopUp = false;
+            }
+        }
+        if (KeyCallback.moveDown) {
+            velocity.y = velocity.y < MAX_SPEED ? velocity.y += ACCELERATION * ((float) dt) : velocity.y;
+        }
+        if (KeyCallback.stopDown) {
+            velocity.y -= DECELERATION * ((float) dt);
+            if (velocity.y < 0.0f) {
+                velocity.y = 0.0f;
+                KeyCallback.stopDown = false;
+            }
+        }
+        position.x += velocity.x * ((float) dt);
+        position.y += velocity.y * ((float) dt);
+        if (position.x > ProtoJ.WIDTH) position.x = ProtoJ.WIDTH;
+        if (position.x < 0.0f) position.x = 0.0f;
+        if (position.y > ProtoJ.HEIGHT) position.y = ProtoJ.HEIGHT;
+        if (position.y < 0.0f) position.y = 0.0f;
+
         if (KeyCallback.isKeyDown(GLFW_KEY_SPACE)) {
             new Bullet(new Vec2(position.x, position.y)).spawn();
         }

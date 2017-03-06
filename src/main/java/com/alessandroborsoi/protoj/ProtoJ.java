@@ -54,8 +54,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class ProtoJ {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
-    private static long window;
-    private KeyCallback keyCallback;
+    public static long window;
+    public KeyCallback keyCallback;
     private Game protoJ;
     private double fps;
 

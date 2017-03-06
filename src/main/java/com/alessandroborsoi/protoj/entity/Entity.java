@@ -44,6 +44,7 @@ public abstract class Entity implements IEntity {
     protected int vao;
     @Getter Vec2 position;
     @Getter Vec2 oldPosition;
+    protected Vec2 velocity;
     protected int index;
     protected float scaleRatio;
 
@@ -62,6 +63,7 @@ public abstract class Entity implements IEntity {
         this.scaleRatio = 1.0f;
         this.position = new Vec2();
         this.oldPosition = new Vec2();
+        this.velocity = new Vec2();
 
         int elements[] = {
                 0, 1, 2,
