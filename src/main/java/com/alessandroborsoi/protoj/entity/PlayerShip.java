@@ -9,8 +9,6 @@ import com.alessandroborsoi.protoj.resource.TextureEnum;
 import glm.vec._2.Vec2;
 import lombok.extern.log4j.Log4j2;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
-
 @Log4j2
 public class PlayerShip extends Entity {
     private static final float WIDTH = 128.0f;
@@ -20,8 +18,9 @@ public class PlayerShip extends Entity {
     private static final float SCALE_RATIO = 0.4f;
     private static final float MAX_SPEED = 600.0f;
     private static final float ACCELERATION = 500.0f;
-    private static final float DECELERATION = 800.0f;
+    private static final float DECELERATION = 1000.0f;
     private static PlayerShip playerShip;
+    private boolean speedOn;
 
     public static PlayerShip getInstance() {
         if (playerShip == null) {
@@ -63,56 +62,62 @@ public class PlayerShip extends Entity {
     }
 
     @Override
-    public void update(double dt) {
+    public void update(float dt) {
         if (KeyCallback.moveForward) {
-            velocity.x = velocity.x < MAX_SPEED ? velocity.x += ACCELERATION * ((float) dt) : velocity.x;
+            if (!speedOn) {
+                speedOn = true;
+                new PlayerSpeed().spawn();
+            }
+            velocity.x = velocity.x < MAX_SPEED ? velocity.x += ACCELERATION * dt : velocity.x;
         }
         if (KeyCallback.stopForward) {
-            velocity.x -= DECELERATION * ((float) dt);
+            velocity.x -= DECELERATION * dt;
             if (velocity.x < 0.0f) {
                 velocity.x = 0.0f;
                 KeyCallback.stopForward = false;
+                speedOn = false;
             }
         }
         if (KeyCallback.moveBackward) {
-            velocity.x = velocity.x > -MAX_SPEED ? velocity.x -= ACCELERATION * ((float) dt) : velocity.x;
+            velocity.x = velocity.x > -MAX_SPEED ? velocity.x -= ACCELERATION * dt : velocity.x;
         }
         if (KeyCallback.stopBackward) {
-            velocity.x += DECELERATION * ((float) dt);
+            velocity.x += DECELERATION * dt;
             if (velocity.x > 0.0f) {
                 velocity.x = 0.0f;
                 KeyCallback.stopBackward = false;
             }
         }
         if (KeyCallback.moveUp) {
-            velocity.y = velocity.y > -MAX_SPEED ? velocity.y -= ACCELERATION * ((float) dt) : velocity.y;
+            velocity.y = velocity.y > -MAX_SPEED ? velocity.y -= ACCELERATION * dt : velocity.y;
         }
         if (KeyCallback.stopUp) {
-            velocity.y += DECELERATION * ((float) dt);
+            velocity.y += DECELERATION * dt;
             if (velocity.y > 0.0f) {
                 velocity.y = 0.0f;
                 KeyCallback.stopUp = false;
             }
         }
         if (KeyCallback.moveDown) {
-            velocity.y = velocity.y < MAX_SPEED ? velocity.y += ACCELERATION * ((float) dt) : velocity.y;
+            velocity.y = velocity.y < MAX_SPEED ? velocity.y += ACCELERATION * dt : velocity.y;
         }
         if (KeyCallback.stopDown) {
-            velocity.y -= DECELERATION * ((float) dt);
+            velocity.y -= DECELERATION * dt;
             if (velocity.y < 0.0f) {
                 velocity.y = 0.0f;
                 KeyCallback.stopDown = false;
             }
         }
-        position.x += velocity.x * ((float) dt);
-        position.y += velocity.y * ((float) dt);
+        position.x += velocity.x * dt;
+        position.y += velocity.y * dt;
         if (position.x > ProtoJ.WIDTH) position.x = ProtoJ.WIDTH;
         if (position.x < 0.0f) position.x = 0.0f;
         if (position.y > ProtoJ.HEIGHT) position.y = ProtoJ.HEIGHT;
         if (position.y < 0.0f) position.y = 0.0f;
 
-        if (KeyCallback.isKeyDown(GLFW_KEY_SPACE)) {
+        if (KeyCallback.fire) {
             new Bullet(new Vec2(position.x, position.y)).spawn();
+            KeyCallback.fire = false;
         }
     }
 }

@@ -58,12 +58,12 @@ public class Text extends Entity {
     }
 
     @Override
-    public void update(double dt) {
+    public void update(float dt) {
 
     }
 
     @Override
-    public void render(double alpha) {
+    public void render(float alpha) {
         this.shader.use();
         glActiveTexture(GL_TEXTURE0);
         this.texture.bind();

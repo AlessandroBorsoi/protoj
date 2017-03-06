@@ -37,7 +37,7 @@ public class Game {
         PlayerShip.getInstance().spawn();
     }
 
-    public void update(double dt) {
+    public void update(float dt) {
         checkCollisions();
         LayerManager.getInstance().update(dt);
 //        new Ladybird().spawn();
@@ -68,7 +68,7 @@ public class Game {
         return true;
     }
 
-    public void render(double alpha) {
+    public void render(float alpha) {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         LayerManager.getInstance().render(alpha);

@@ -45,7 +45,7 @@ public class Explosion extends Entity {
     }
 
     @Override
-    public void update(double dt) {
+    public void update(float dt) {
         accumulator += dt * 60.0;
         if (accumulator > 1.0) {
             accumulator = 0.0;

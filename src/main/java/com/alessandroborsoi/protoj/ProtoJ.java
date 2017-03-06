@@ -120,9 +120,9 @@ public class ProtoJ {
         score.spawn();
         fpsText.spawn();
         entities.spawn();
-        double updateRate = 25.0;
-        double dt = 1.0 / updateRate;
-        double accumulator = 0.0f;
+        float updateRate = 25.0f;
+        float dt = 1.0f / updateRate;
+        float accumulator = 0.0f;
         double lastTime = glfwGetTime();
         while (!glfwWindowShouldClose(window)) {
             double currentTime = glfwGetTime();
@@ -139,7 +139,7 @@ public class ProtoJ {
                 fpsText.setText("FPS: " + ((int) fps));
                 entities.setText("Entities: " + Layer.entitiesCount);
             }
-            double alpha = accumulator / dt;
+            float alpha = accumulator / dt;
             protoJ.render(alpha);
             glfwSwapBuffers(window);
             glfwPollEvents();

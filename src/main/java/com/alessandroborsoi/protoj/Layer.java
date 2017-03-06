@@ -19,13 +19,13 @@ public class Layer {
         --entitiesCount;
     }
 
-    public void update(double dt) {
+    public void update(float dt) {
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).update(dt);
         }
     }
 
-    public void render(double alpha) {
+    public void render(float alpha) {
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).render(alpha);
         }

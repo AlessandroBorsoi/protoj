@@ -1,22 +1,24 @@
 package com.alessandroborsoi.protoj.entity;
 
+import com.alessandroborsoi.protoj.KeyCallback;
 import com.alessandroborsoi.protoj.LayerManager;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
+
+import glm.vec._2.Vec2;
 
 public class PlayerSpeed extends Entity {
     private static final float WIDTH = 64.0f;
     private static final float HEIGHT = 64.0f;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.PLAYER_SPEED;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
-    private static final float SCALE_RATIO = 0.4f;
+    private static final float SCALE_RATIO = 0.8f;
     private PlayerShip playerShip;
-    private boolean on;
-    private double accumulator;
+    private float accumulator;
 
     public PlayerSpeed() {
-        scaleRatio = SCALE_RATIO;
         playerShip = PlayerShip.getInstance();
+        scaleRatio = SCALE_RATIO;
     }
 
     @Override
@@ -45,6 +47,30 @@ public class PlayerSpeed extends Entity {
     }
 
     @Override
-    public void update(double dt) {
+    public void update(float dt) {
+        position = new Vec2(playerShip.getPosition());
+        position.x -= playerShip.getWidth();
+        if (KeyCallback.moveForward) {
+            accumulator += dt * 60.0f;
+            if (accumulator > 1.0f) {
+                index = ++index;
+                accumulator = 0.0f;
+            }
+            if (index == textureEnum.getRows() * textureEnum.getColumns()) {
+                this.unspawn();
+            }
+        } else {
+            this.unspawn();
+        }
+    }
+
+    @Override
+    public void spawn() {
+        super.spawn();
+    }
+
+    @Override
+    public void unspawn() {
+        super.unspawn();
     }
 }

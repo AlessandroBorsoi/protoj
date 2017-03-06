@@ -29,11 +29,11 @@ public class LayerManager {
         return layerManager;
     }
 
-    public void update(double dt) {
+    public void update(float dt) {
         layers.forEach((s, layer) -> layer.update(dt));
     }
 
-    public void render(double alpha) {
+    public void render(float alpha) {
         layers.forEach((s, layer) -> layer.render(alpha));
     }
 }

@@ -108,14 +108,13 @@ public abstract class Entity implements IEntity {
     protected abstract ShaderEnum getShaderEnum();
 
     protected float[] getVertices() {
-        float vertices[] = {
+        return new float[]{
                 // Position     // Texture
                 0.0f, 0.0f,     0.0f, 0.0f,                                                         // Top-left
                 width, 0.0f,    width / textureEnum.getWidth(), 0.0f,                               // Top-right
                 width, height,  width / textureEnum.getWidth(), height / textureEnum.getHeight(),   // Bottom-right
                 0.0f, height,   0.0f, height / textureEnum.getHeight(),                             // Bottom-left
         };
-        return vertices;
     }
 
     @Override
@@ -129,15 +128,15 @@ public abstract class Entity implements IEntity {
     }
 
     @Override
-    public Vec2 interpolate(double alpha) {
-        position.x = oldPosition.x * ((float) alpha) + position.x * ((float) (1.0 - alpha));
-        position.y = oldPosition.y * ((float) alpha) + position.y * ((float) (1.0 - alpha));
+    public Vec2 interpolate(float alpha) {
+        position.x = oldPosition.x * alpha + position.x * ((float) (1.0 - alpha));
+        position.y = oldPosition.y * alpha + position.y * ((float) (1.0 - alpha));
         oldPosition = new Vec2(position.x, position.y);
         return position;
     }
 
     @Override
-    public void render(double alpha) {
+    public void render(float alpha) {
         interpolate(alpha);
         this.shader.use();
         glActiveTexture(GL_TEXTURE0);

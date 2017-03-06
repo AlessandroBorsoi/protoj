@@ -7,6 +7,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_LAST;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
@@ -20,6 +21,7 @@ public class KeyCallback extends GLFWKeyCallback {
     public static boolean stopBackward;
     public static boolean stopUp;
     public static boolean stopDown;
+    public static boolean fire;
     private static boolean[] keys = new boolean[GLFW_KEY_LAST];
 
     @Override
@@ -33,12 +35,13 @@ public class KeyCallback extends GLFWKeyCallback {
         if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE) stopBackward = true;
         if (key == GLFW_KEY_UP && action == GLFW_RELEASE) stopUp = true;
         if (key == GLFW_KEY_DOWN && action == GLFW_RELEASE) stopDown = true;
+        if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE) fire = true;
 
         if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
             glfwSetWindowShouldClose(window, true);
     }
 
-    public static boolean isKeyDown(int keycode) {
+    private static boolean isKeyDown(int keycode) {
         return keys[keycode];
     }
 }

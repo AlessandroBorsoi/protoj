@@ -46,7 +46,7 @@ public class Ladybird extends Entity {
     }
 
     @Override
-    public void update(double dt) {
+    public void update(float dt) {
         accumulator += dt * 6.0;
         if (accumulator > 1.0) {
             index = ++index % 16;

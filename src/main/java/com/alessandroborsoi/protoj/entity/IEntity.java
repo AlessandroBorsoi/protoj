@@ -14,9 +14,9 @@ public interface IEntity {
 
     void unspawn();
 
-    void update(double dt);
+    void update(float dt);
 
-    Vec2 interpolate(double alpha);
+    Vec2 interpolate(float alpha);
 
-    void render(double alpha);
+    void render(float alpha);
 }

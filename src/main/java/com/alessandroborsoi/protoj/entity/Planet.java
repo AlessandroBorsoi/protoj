@@ -72,12 +72,12 @@ public class Planet extends Entity {
     }
 
     @Override
-    public void update(double dt) {
+    public void update(float dt) {
         position.x -= SPEED * dt;
     }
 
     @Override
-    public void render(double alpha) {
+    public void render(float alpha) {
         interpolate(alpha);
         this.shader.use();
         Mat4 model = new Mat4()
