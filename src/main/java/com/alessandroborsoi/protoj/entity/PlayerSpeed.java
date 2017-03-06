@@ -19,6 +19,7 @@ public class PlayerSpeed extends Entity {
     public PlayerSpeed() {
         playerShip = PlayerShip.getInstance();
         scaleRatio = SCALE_RATIO;
+        blackFilter = true;
     }
 
     @Override
@@ -62,15 +63,5 @@ public class PlayerSpeed extends Entity {
         } else {
             this.unspawn();
         }
-    }
-
-    @Override
-    public void spawn() {
-        super.spawn();
-    }
-
-    @Override
-    public void unspawn() {
-        super.unspawn();
     }
 }

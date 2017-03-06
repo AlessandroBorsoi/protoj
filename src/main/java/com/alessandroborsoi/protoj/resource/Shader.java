@@ -78,10 +78,6 @@ public class Shader {
         glUniform1i(glGetUniformLocation(this.id, name), value);
     }
 
-    public void setVector3f(String name, Vec3 value) {
-        glUniform3f(glGetUniformLocation(this.id, name), value.x, value.y, value.z);
-    }
-
     public void setMatrix4(String name, Mat4 matrix) {
         glUniformMatrix4fv(glGetUniformLocation(this.id, name), false, matrix.toFa_());
     }

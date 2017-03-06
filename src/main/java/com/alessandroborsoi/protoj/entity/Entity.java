@@ -47,6 +47,7 @@ public abstract class Entity implements IEntity {
     protected Vec2 velocity;
     protected int index;
     protected float scaleRatio;
+    protected boolean blackFilter;
 
     protected Entity() {
         this.width = getSpriteWidth();
@@ -149,6 +150,7 @@ public abstract class Entity implements IEntity {
         shader.setInteger("index", index);
         shader.setInteger("rows", textureEnum.getRows());
         shader.setInteger("columns", textureEnum.getColumns());
+        shader.setInteger("blackFilter", blackFilter ? 1 : 0);
         shader.setMatrix4("projection", projection);
         shader.setMatrix4("model", model);
         shader.setMatrix4("scale", scale);
