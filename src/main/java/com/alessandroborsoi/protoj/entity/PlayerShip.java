@@ -26,6 +26,7 @@ public class PlayerShip extends Entity {
     private static final float DECELERATION = 1000.0f;
     private static PlayerShip playerShip;
     private boolean speedOn;
+    private boolean forceChargeOn;
     private float accumulator;
     private float forceBlastChargeTime;
     private int fireType;
@@ -140,14 +141,19 @@ public class PlayerShip extends Entity {
 
         if (KeyCallback.forceBlastCharge) {
             forceBlastChargeTime += dt;
-            if (forceBlastChargeTime < 0.5f)
+            if (forceBlastChargeTime < 0.5f) {
                 fireType = BULLET;
-            else if (forceBlastChargeTime < 1.0f)
+            } else if (forceBlastChargeTime < 1.0f) {
+                if (!forceChargeOn) {
+                    forceChargeOn = true;
+                    new ForceCharge().spawn();
+                }
                 fireType = FORCE_BLAST_1;
-            else if (forceBlastChargeTime < 2.0f)
+            } else if (forceBlastChargeTime < 2.0f) {
                 fireType = FORCE_BLAST_2;
-            else
+            } else {
                 fireType = FORCE_BLAST_3;
+            }
         }
 
         if (KeyCallback.fire) {
@@ -160,6 +166,7 @@ public class PlayerShip extends Entity {
             }
             KeyCallback.fire = false;
             forceBlastChargeTime = 0.0f;
+            forceChargeOn = false;
         }
     }
 }

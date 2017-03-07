@@ -20,6 +20,7 @@ public class Bullet extends Entity {
         this.position = position;
         this.oldPosition = position;
         scaleRatio = SCALE_RATIO;
+        index = 1;
     }
 
     @Override

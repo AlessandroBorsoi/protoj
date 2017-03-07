@@ -31,7 +31,7 @@ ECS:
 
 
 TODO List:
-- PlayerShp movement animations
+- PlayerShip movement animations
 - Flip enemies
 - SpaceTrash
 - Other guns
