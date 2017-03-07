@@ -31,9 +31,7 @@ ECS:
 
 
 TODO List:
-- Acceleration management
 - PlayerShp movement animations
 - Flip enemies
-- KeyHandler
 - SpaceTrash
 - Other guns

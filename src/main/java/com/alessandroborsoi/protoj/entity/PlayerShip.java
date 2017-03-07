@@ -22,6 +22,8 @@ public class PlayerShip extends Entity {
     private static final float DECELERATION = 1000.0f;
     private static PlayerShip playerShip;
     private boolean speedOn;
+    private float accumulator;
+    int count;
 
     public static PlayerShip getInstance() {
         if (playerShip == null) {
@@ -35,6 +37,7 @@ public class PlayerShip extends Entity {
         position.y = ProtoJ.HEIGHT / 2;
         oldPosition = position;
         scaleRatio = SCALE_RATIO;
+        index = 8;
     }
 
     @Override
@@ -91,22 +94,36 @@ public class PlayerShip extends Entity {
         }
         if (KeyCallback.moveUp) {
             velocity.y = velocity.y > -MAX_SPEED ? velocity.y -= ACCELERATION * dt : velocity.y;
+            accumulator += dt * 6.0f;
+            if (accumulator > 1.0 && index < 15) {
+                ++index;
+                accumulator = 0.0f;
+            }
         }
         if (KeyCallback.stopUp) {
+            if (index > 9) --index;
             velocity.y += DECELERATION * dt;
             if (velocity.y > 0.0f) {
                 velocity.y = 0.0f;
                 KeyCallback.stopUp = false;
+                index = 8;
             }
         }
         if (KeyCallback.moveDown) {
             velocity.y = velocity.y < MAX_SPEED ? velocity.y += ACCELERATION * dt : velocity.y;
+            accumulator += dt * 6.0f;
+            if (accumulator > 1.0 && index > 0) {
+                --index;
+                accumulator = 0.0f;
+            }
         }
         if (KeyCallback.stopDown) {
+            if (index < 8) ++index;
             velocity.y -= DECELERATION * dt;
             if (velocity.y < 0.0f) {
                 velocity.y = 0.0f;
                 KeyCallback.stopDown = false;
+                index = 8;
             }
         }
         position.x += velocity.x * dt;
