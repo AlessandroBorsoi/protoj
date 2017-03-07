@@ -16,6 +16,10 @@ public class PlayerShip extends Entity {
     private static final String LAYER = LayerManager.PLAYER;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.PLAYER_SHIP;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
+    private static final int BULLET = 0;
+    private static final int FORCE_BLAST_1 = 1;
+    private static final int FORCE_BLAST_2 = 2;
+    private static final int FORCE_BLAST_3 = 3;
     private static final float SCALE_RATIO = 0.4f;
     private static final float MAX_SPEED = 600.0f;
     private static final float ACCELERATION = 500.0f;
@@ -23,7 +27,8 @@ public class PlayerShip extends Entity {
     private static PlayerShip playerShip;
     private boolean speedOn;
     private float accumulator;
-    int count;
+    private float forceBlastChargeTime;
+    private int fireType;
 
     public static PlayerShip getInstance() {
         if (playerShip == null) {
@@ -133,9 +138,28 @@ public class PlayerShip extends Entity {
         if (position.y > ProtoJ.HEIGHT) position.y = ProtoJ.HEIGHT;
         if (position.y < 0.0f) position.y = 0.0f;
 
+        if (KeyCallback.forceBlastCharge) {
+            forceBlastChargeTime += dt;
+            if (forceBlastChargeTime < 0.5f)
+                fireType = BULLET;
+            else if (forceBlastChargeTime < 1.0f)
+                fireType = FORCE_BLAST_1;
+            else if (forceBlastChargeTime < 2.0f)
+                fireType = FORCE_BLAST_2;
+            else
+                fireType = FORCE_BLAST_3;
+        }
+
         if (KeyCallback.fire) {
-            new Bullet(new Vec2(position.x, position.y)).spawn();
+            switch (fireType) {
+                case BULLET:
+                    new Bullet(new Vec2(position.x, position.y)).spawn();
+                    break;
+                default:
+                    new ForceBlast(new Vec2(position.x, position.y), fireType).spawn();
+            }
             KeyCallback.fire = false;
+            forceBlastChargeTime = 0.0f;
         }
     }
 }

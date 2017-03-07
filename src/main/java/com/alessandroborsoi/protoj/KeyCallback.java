@@ -21,6 +21,7 @@ public class KeyCallback extends GLFWKeyCallback {
     public static boolean stopBackward;
     public static boolean stopUp;
     public static boolean stopDown;
+    public static boolean forceBlastCharge;
     public static boolean fire;
     private static boolean[] keys = new boolean[GLFW_KEY_LAST];
 
@@ -31,6 +32,7 @@ public class KeyCallback extends GLFWKeyCallback {
         moveBackward = isKeyDown(GLFW_KEY_LEFT);
         moveUp = isKeyDown(GLFW_KEY_UP);
         moveDown = isKeyDown(GLFW_KEY_DOWN);
+        forceBlastCharge = isKeyDown(GLFW_KEY_SPACE);
         if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE) stopForward = true;
         if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE) stopBackward = true;
         if (key == GLFW_KEY_UP && action == GLFW_RELEASE) stopUp = true;
