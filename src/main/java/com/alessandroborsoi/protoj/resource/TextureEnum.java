@@ -8,6 +8,7 @@ public enum TextureEnum {
     FONTS("Fonts", 512.0f, 512.0f, 16, 16),
     FORCE_BLAST("ForceBlast", 128.0f, 64.0f, 1, 1),
     FORCE_CHARGE("ForceCharge", 512.0f, 256.0f, 4, 8),
+    IMPLOSION("Implosion", 512.0f, 256.0f, 4, 8),
     LADYBIRD("Ladybird", 256.0f, 256.0f, 4, 4),
     PLAYER_SHIP("PlayerShip", 512.0f, 512.0f, 4, 4),
     PLAYER_SPEED("PlayerSpeed", 512.0f, 256.0f, 4, 8),

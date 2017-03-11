@@ -73,6 +73,11 @@ public class PowerUp extends Entity {
             this.unspawn();
     }
 
+    public void destroy() {
+        new Implosion(position).spawn();
+        this.unspawn();
+    }
+
     @Override
     public void unspawn() {
         super.unspawn();

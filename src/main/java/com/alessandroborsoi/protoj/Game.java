@@ -71,7 +71,7 @@ public class Game {
                 PlayerShip playerShipEntity = ((PlayerShip) playerEntities.get(i));
                 if (collision(playerShipEntity, powerUpEntity)) {
                     playerShipEntity.setPowerUpType(powerUpEntity.getType());
-                    powerUpEntity.unspawn();
+                    powerUpEntity.destroy();
                 }
             }
         }
