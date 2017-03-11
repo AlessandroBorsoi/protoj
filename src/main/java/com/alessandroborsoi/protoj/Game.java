@@ -4,9 +4,12 @@ import com.alessandroborsoi.protoj.entity.IEntity;
 import com.alessandroborsoi.protoj.entity.Ladybird;
 import com.alessandroborsoi.protoj.entity.Planet;
 import com.alessandroborsoi.protoj.entity.PlayerShip;
+import com.alessandroborsoi.protoj.entity.PowerUp;
 import com.alessandroborsoi.protoj.resource.ResourceManager;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -35,22 +38,40 @@ public class Game {
         ResourceManager.init();
         new Planet().spawn();
         PlayerShip.getInstance().spawn();
+        new PowerUp(new Random().nextInt(8)).spawn();
     }
 
     public void update(float dt) {
         checkCollisions();
+        checkPowerUp();
         LayerManager.getInstance().update(dt);
 //        new Ladybird().spawn();
     }
 
     private void checkCollisions() {
-        List<IEntity> playerEntities = LayerManager.getInstance().getLayers().get(LayerManager.PLAYER).entities;
+        List<IEntity> bulletsEntities = LayerManager.getInstance().getLayers().get(LayerManager.BULLETS).entities;
         List<IEntity> enemiesEntities = LayerManager.getInstance().getLayers().get(LayerManager.ENEMIES).entities;
-        for (int i = 0; i < playerEntities.size(); i++) {
+        for (int i = 0; i < bulletsEntities.size(); i++) {
             for (int j = 0; j < enemiesEntities.size(); j++) {
-                if (collision(playerEntities.get(i), enemiesEntities.get(j))) {
+                if (collision(bulletsEntities.get(i), enemiesEntities.get(j))) {
                     ((Ladybird) enemiesEntities.get(j)).destroy();
                     score++;
+                }
+            }
+        }
+    }
+
+    private void checkPowerUp() {
+        Map<String, Layer> layers = LayerManager.getInstance().getLayers();
+        List<IEntity> playerEntities = layers.get(LayerManager.PLAYER).entities;
+        List<IEntity> powerUpEntities = layers.get(LayerManager.POWER_UP).entities;
+        for (int i = 0; i < playerEntities.size(); i++) {
+            for (int j = 0; j < powerUpEntities.size(); j++) {
+                PowerUp powerUpEntity = ((PowerUp) powerUpEntities.get(j));
+                PlayerShip playerShipEntity = ((PlayerShip) playerEntities.get(i));
+                if (collision(playerShipEntity, powerUpEntity)) {
+                    playerShipEntity.setPowerUpType(powerUpEntity.getType());
+                    powerUpEntity.unspawn();
                 }
             }
         }

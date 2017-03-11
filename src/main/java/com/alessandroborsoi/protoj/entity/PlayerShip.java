@@ -7,6 +7,7 @@ import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
 import glm.vec._2.Vec2;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -30,6 +31,7 @@ public class PlayerShip extends Entity {
     private float accumulator;
     private float forceBlastChargeTime;
     private int fireType;
+    @Setter private int powerUpType;
 
     public static PlayerShip getInstance() {
         if (playerShip == null) {
@@ -44,6 +46,7 @@ public class PlayerShip extends Entity {
         oldPosition = position;
         scaleRatio = SCALE_RATIO;
         index = 8;
+        powerUpType = -1;
     }
 
     @Override

@@ -11,6 +11,7 @@ public enum TextureEnum {
     LADYBIRD("Ladybird", 256.0f, 256.0f, 4, 4),
     PLAYER_SHIP("PlayerShip", 512.0f, 512.0f, 4, 4),
     PLAYER_SPEED("PlayerSpeed", 512.0f, 256.0f, 4, 8),
+    POWER_UP("PowerUp1", 512.0f, 512.0f, 8, 8),
     STAGE1_LAYER1("Stage1Layer1", 1024.0f, 1024.0f, 0, 0);
 
     @Getter private String name;

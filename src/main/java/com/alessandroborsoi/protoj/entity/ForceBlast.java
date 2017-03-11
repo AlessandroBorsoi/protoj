@@ -8,7 +8,7 @@ import com.alessandroborsoi.protoj.resource.TextureEnum;
 import glm.vec._2.Vec2;
 
 public class ForceBlast extends Entity {
-    private static final String LAYER = LayerManager.PLAYER;
+    private static final String LAYER = LayerManager.BULLETS;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.FORCE_BLAST;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SCALE_RATIO = 0.5f;

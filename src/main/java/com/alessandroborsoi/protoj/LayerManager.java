@@ -8,6 +8,8 @@ import lombok.Getter;
 public class LayerManager {
     public static final String BACKGROUND = "background";
     public static final String FX = "fx";
+    public static final String POWER_UP = "powerUpType";
+    public static final String BULLETS = "bullets";
     public static final String PLAYER = "player";
     public static final String ENEMIES = "enemies";
     public static final String FOREGROUND = "foreground";
@@ -19,6 +21,8 @@ public class LayerManager {
         layers = new LinkedHashMap<>();
         layers.put(BACKGROUND, new Layer());
         layers.put(FX, new Layer());
+        layers.put(POWER_UP, new Layer());
+        layers.put(BULLETS, new Layer());
         layers.put(PLAYER, new Layer());
         layers.put(ENEMIES, new Layer());
         layers.put(FOREGROUND, new Layer());
