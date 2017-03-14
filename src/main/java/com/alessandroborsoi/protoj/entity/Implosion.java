@@ -17,6 +17,7 @@ public class Implosion extends Entity {
 
     public Implosion(Vec2 position) {
         this.position = position;
+        this.oldPosition = position;
         scaleRatio = SCALE_RATIO;
         blackFilter = true;
     }
@@ -48,6 +49,7 @@ public class Implosion extends Entity {
 
     @Override
     public void update(float dt) {
+        oldPosition = new Vec2(position);
         accumulator += dt * 600.0;
         if (accumulator > 1.0) {
             accumulator = 0.0;

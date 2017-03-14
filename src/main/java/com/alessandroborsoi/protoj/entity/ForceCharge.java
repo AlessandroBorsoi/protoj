@@ -52,6 +52,7 @@ public class ForceCharge extends Entity {
 
     @Override
     public void update(float dt) {
+        oldPosition = new Vec2(position);
         position = new Vec2(playerShip.getPosition());
         position.x += playerShip.getWidth() / 1.3f;
         if (KeyCallback.forceBlastCharge) {

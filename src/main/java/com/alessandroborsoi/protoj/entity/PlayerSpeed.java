@@ -50,6 +50,7 @@ public class PlayerSpeed extends Entity {
 
     @Override
     public void update(float dt) {
+        oldPosition = new Vec2(position);
         position = new Vec2(playerShip.getPosition());
         position.x -= playerShip.getWidth() / 1.3f;
         position.y += playerShip.getHeight() / 10;

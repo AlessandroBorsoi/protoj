@@ -5,6 +5,8 @@ import com.alessandroborsoi.protoj.ProtoJ;
 import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
+import glm.vec._2.Vec2;
+
 public class Ladybird extends Entity {
     private static final float WIDTH = 64.0f;
     private static final float HEIGHT = 64.0f;
@@ -12,6 +14,7 @@ public class Ladybird extends Entity {
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.LADYBIRD;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SPEED = 100.0f;
+    private static final float ROTATION_SPEED = 10.0f;
     private double accumulator;
 
     public Ladybird() {
@@ -48,11 +51,9 @@ public class Ladybird extends Entity {
 
     @Override
     public void update(float dt) {
-        accumulator += dt * 6.0;
-        if (accumulator > 1.0) {
-            index = ++index % 16;
-            accumulator = 0.0;
-        }
+        oldPosition = new Vec2(position);
+        accumulator += dt * ROTATION_SPEED;
+        index = (int) (accumulator % (textureEnum.getRows() * textureEnum.getColumns()));
         position.x -= SPEED * dt;
         if (position.x < -getWidth())
             this.unspawn();

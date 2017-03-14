@@ -44,6 +44,7 @@ public abstract class Entity implements IEntity {
     protected int vao;
     @Getter Vec2 position;
     @Getter Vec2 oldPosition;
+    Vec2 renderPosition;
     protected Vec2 velocity;
     protected int index;
     protected float scaleRatio;
@@ -64,6 +65,7 @@ public abstract class Entity implements IEntity {
         this.scaleRatio = 1.0f;
         this.position = new Vec2();
         this.oldPosition = new Vec2();
+        this.renderPosition = new Vec2();
         this.velocity = new Vec2();
 
         int elements[] = {
@@ -130,10 +132,9 @@ public abstract class Entity implements IEntity {
 
     @Override
     public Vec2 interpolate(float alpha) {
-        position.x = oldPosition.x * alpha + position.x * ((float) (1.0 - alpha));
-        position.y = oldPosition.y * alpha + position.y * ((float) (1.0 - alpha));
-        oldPosition = new Vec2(position.x, position.y);
-        return position;
+        renderPosition.x = position.x * alpha + oldPosition.x * (1.0f - alpha);
+        renderPosition.y = position.y * alpha + oldPosition.y * (1.0f - alpha);
+        return renderPosition;
     }
 
     @Override
@@ -145,7 +146,7 @@ public abstract class Entity implements IEntity {
         glBindVertexArray(vao);
         Mat4 model = new Mat4()
                 .translate(new Vec3(-getWidth() / 2.0f, -getHeight() / 2.0f, 0.0f))
-                .translate(new Vec3(position.x, position.y, 0.0f));
+                .translate(new Vec3(renderPosition.x, renderPosition.y, 0.0f));
         Mat4 scale = new Mat4().scale(scaleRatio);
         shader.setInteger("index", index);
         shader.setInteger("rows", textureEnum.getRows());

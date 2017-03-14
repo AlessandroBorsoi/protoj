@@ -76,6 +76,7 @@ public class PlayerShip extends Entity {
 
     @Override
     public void update(float dt) {
+        oldPosition = new Vec2(position);
         if (KeyCallback.moveForward) {
             if (!speedOn) {
                 speedOn = true;

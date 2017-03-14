@@ -39,6 +39,7 @@ public class Game {
         new Planet().spawn();
         PlayerShip.getInstance().spawn();
         new PowerUp(new Random().nextInt(8)).spawn();
+        new Ladybird().spawn();
     }
 
     public void update(float dt) {

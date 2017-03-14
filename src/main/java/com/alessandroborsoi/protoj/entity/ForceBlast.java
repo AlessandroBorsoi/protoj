@@ -47,6 +47,7 @@ public class ForceBlast extends Entity {
 
     @Override
     public void update(float dt) {
+        oldPosition = new Vec2(position);
         position.x += SPEED * dt;
         if (position.x > ProtoJ.WIDTH) {
             this.unspawn();

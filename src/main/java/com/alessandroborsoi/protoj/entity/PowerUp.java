@@ -7,6 +7,7 @@ import com.alessandroborsoi.protoj.resource.TextureEnum;
 
 import java.util.Random;
 
+import glm.vec._2.Vec2;
 import lombok.Getter;
 
 public class PowerUp extends Entity {
@@ -63,6 +64,7 @@ public class PowerUp extends Entity {
 
     @Override
     public void update(float dt) {
+        oldPosition = new Vec2(position);
         accumulator += dt * 10.0;
         if (accumulator > 1.0) {
             index = ++index % 8 + type * TEXTURE_ENUM.getRows();

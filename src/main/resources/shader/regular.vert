@@ -9,6 +9,7 @@ uniform int columns;
 uniform mat4 projection;
 uniform mat4 model;
 uniform mat4 scale;
+uniform mat4 rotation;
 
 void main()
 {

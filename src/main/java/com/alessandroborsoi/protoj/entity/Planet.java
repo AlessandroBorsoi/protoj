@@ -6,6 +6,7 @@ import com.alessandroborsoi.protoj.resource.ShaderEnum;
 import com.alessandroborsoi.protoj.resource.TextureEnum;
 
 import glm.mat._4.Mat4;
+import glm.vec._2.Vec2;
 import glm.vec._3.Vec3;
 import lombok.extern.log4j.Log4j2;
 
@@ -74,6 +75,7 @@ public class Planet extends Entity {
 
     @Override
     public void update(float dt) {
+        oldPosition = new Vec2(position);
         position.x -= SPEED * dt;
     }
 
