@@ -14,7 +14,7 @@ public class Ladybird extends Entity {
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.LADYBIRD;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SPEED = 100.0f;
-    private static final float ROTATION_SPEED = 10.0f;
+    private static final float ANIMATION_SPEED = 10.0f;
     private double accumulator;
 
     public Ladybird() {
@@ -52,8 +52,8 @@ public class Ladybird extends Entity {
     @Override
     public void update(float dt) {
         oldPosition = new Vec2(position);
-        accumulator += dt * ROTATION_SPEED;
-        index = (int) (accumulator % (textureEnum.getRows() * textureEnum.getColumns()));
+        accumulator += dt * ANIMATION_SPEED;
+        index = (int) accumulator;
         position.x -= SPEED * dt;
         if (position.x < -getWidth())
             this.unspawn();

@@ -26,6 +26,7 @@ public class PowerUp extends Entity {
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SCALE_RATIO = 0.4f;
     private static final float SPEED = 50.0f;
+    private static final float ANIMATION_SPEED = 10.0f;
     @Getter private int type;
     private double accumulator;
 
@@ -65,11 +66,9 @@ public class PowerUp extends Entity {
     @Override
     public void update(float dt) {
         oldPosition = new Vec2(position);
-        accumulator += dt * 10.0;
-        if (accumulator > 1.0) {
-            index = ++index % 8 + type * TEXTURE_ENUM.getRows();
-            accumulator = 0.0;
-        }
+        accumulator += dt * ANIMATION_SPEED;
+        index = ((int) accumulator);
+        index = index % 8 + type * TEXTURE_ENUM.getRows();
         position.x -= SPEED * dt;
         if (position.x < -getWidth())
             this.unspawn();

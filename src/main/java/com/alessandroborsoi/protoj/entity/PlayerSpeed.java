@@ -14,6 +14,7 @@ public class PlayerSpeed extends Entity {
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.PLAYER_SPEED;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SCALE_RATIO = 0.8f;
+    private static final float ANIMATION_SPEED = 30.0f;
     private PlayerShip playerShip;
     private float accumulator;
 
@@ -55,14 +56,10 @@ public class PlayerSpeed extends Entity {
         position.x -= playerShip.getWidth() / 1.3f;
         position.y += playerShip.getHeight() / 10;
         if (KeyCallback.moveForward) {
-            accumulator += dt * 60.0f;
-            if (accumulator > 1.0f) {
-                ++index;
-                accumulator = 0.0f;
-            }
-            if (index == textureEnum.getRows() * textureEnum.getColumns()) {
+            accumulator += dt * ANIMATION_SPEED;
+            index = ((int) accumulator);
+            if (index >= textureEnum.getRows() * textureEnum.getColumns())
                 this.unspawn();
-            }
         } else {
             this.unspawn();
         }

@@ -14,6 +14,7 @@ public class ForceCharge extends Entity {
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.FORCE_CHARGE;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SCALE_RATIO = 1.0f;
+    private static final float ANIMATION_SPEED = 30.0f;
     private PlayerShip playerShip;
     private float accumulator;
 
@@ -56,11 +57,8 @@ public class ForceCharge extends Entity {
         position = new Vec2(playerShip.getPosition());
         position.x += playerShip.getWidth() / 1.3f;
         if (KeyCallback.forceBlastCharge) {
-            accumulator += dt * 50.0f;
-            if (accumulator > 1.0f) {
-                ++index;
-                accumulator = 0.0f;
-            }
+            accumulator += dt * ANIMATION_SPEED;
+            index = (int) accumulator;
         } else {
             this.unspawn();
         }
