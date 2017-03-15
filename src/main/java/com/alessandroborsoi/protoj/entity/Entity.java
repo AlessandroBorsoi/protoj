@@ -50,6 +50,12 @@ public abstract class Entity implements IEntity {
     protected float scaleRatio;
     protected boolean blackFilter;
 
+    protected Entity(Vec2 position) {
+        this();
+        this.position = position;
+        this.oldPosition = position;
+    }
+
     protected Entity() {
         this.width = getSpriteWidth();
         this.height = getSpriteHeight();

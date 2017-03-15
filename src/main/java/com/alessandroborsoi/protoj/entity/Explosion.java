@@ -12,12 +12,11 @@ public class Explosion extends Entity {
     private static final String LAYER = LayerManager.FX;
     private static final TextureEnum TEXTURE_ENUM = TextureEnum.EXPLOSION_SMALL;
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
+    private static final float ANIMATION_SPEED = 30.0f;
     private double accumulator;
 
     public Explosion(Vec2 position) {
-        this.position = position;
-        this.oldPosition = position;
-        index = 0;
+        super(position);
     }
 
     @Override
@@ -47,12 +46,9 @@ public class Explosion extends Entity {
 
     @Override
     public void update(float dt) {
-        accumulator += dt * 60.0;
-        if (accumulator > 1.0) {
-            accumulator = 0.0;
-            ++index;
-        }
-        if (index == 32)
+        accumulator += dt * ANIMATION_SPEED;
+        index = (int) accumulator;
+        if (index >= textureEnum.getRows() * textureEnum.getColumns())
             this.unspawn();
     }
 }

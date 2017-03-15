@@ -17,8 +17,7 @@ public class Bullet extends Entity {
     private static final float SPEED = 1000.0f;
 
     public Bullet(Vec2 position) {
-        this.position = position;
-        this.oldPosition = position;
+        super(position);
         scaleRatio = SCALE_RATIO;
         index = 1;
     }

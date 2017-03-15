@@ -15,8 +15,7 @@ public class ForceBlast extends Entity {
     private static final float SPEED = 1000.0f;
 
     public ForceBlast(Vec2 position, int type) {
-        this.position = position;
-        this.oldPosition = position;
+        super(position);
         scaleRatio = SCALE_RATIO * type;
     }
 

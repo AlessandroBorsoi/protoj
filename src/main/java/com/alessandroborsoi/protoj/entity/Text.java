@@ -8,7 +8,6 @@ import glm.mat._4.Mat4;
 import glm.vec._2.Vec2;
 import glm.vec._3.Vec3;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j2;
 
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
@@ -17,7 +16,6 @@ import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
-@Log4j2
 public class Text extends Entity {
     private static final float WIDTH = 32.0f;
     private static final float HEIGHT = 32.0f;
@@ -28,7 +26,7 @@ public class Text extends Entity {
     @Setter private String text;
 
     public Text(String text, Vec2 position) {
-        this.position = position;
+        super(position);
         this.text = text;
         this.scaleRatio = SCALE_RATIO;
     }

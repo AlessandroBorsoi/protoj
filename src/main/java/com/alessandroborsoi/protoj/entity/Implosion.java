@@ -16,8 +16,7 @@ public class Implosion extends Entity {
     private double accumulator;
 
     public Implosion(Vec2 position) {
-        this.position = position;
-        this.oldPosition = position;
+        super(position);
         scaleRatio = SCALE_RATIO;
         blackFilter = true;
     }
