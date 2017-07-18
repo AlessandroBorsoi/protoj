@@ -22,6 +22,7 @@ public class Ladybird extends Entity {
         position.y = ((float) Math.random()) * ProtoJ.HEIGHT;
         oldPosition = position;
         index = 0;
+        rotationAngle = 0.0f;
     }
 
     @Override
@@ -57,6 +58,12 @@ public class Ladybird extends Entity {
         position.x -= SPEED * dt;
         if (position.x < -getWidth())
             this.unspawn();
+    }
+
+    @Override
+    public void unspawn() {
+        super.unspawn();
+        new Ladybird().spawn();
     }
 
     public void destroy() {

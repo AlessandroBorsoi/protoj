@@ -14,5 +14,5 @@ uniform mat4 rotation;
 void main()
 {
     TexCoords = vec2(vertex.z + (index % columns) / float(columns), vertex.w + (index / columns) / float(rows));
-    gl_Position = projection * model * scale * vec4(vertex.xy, 0.0, 1.0);
+    gl_Position = projection * model * scale * rotation * vec4(vertex.xy, 0.0, 1.0);
 }

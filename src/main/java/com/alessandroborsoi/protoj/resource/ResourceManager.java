@@ -29,11 +29,11 @@ public class ResourceManager {
         EnumSet.allOf(ShaderEnum.class).forEach(shaderEnum -> loadShader(shaderEnum.getName()));
     }
 
-    public static void loadTexture(String name) {
+    private static void loadTexture(String name) {
         textures.put(name, loadTextureFromFile(name));
     }
 
-    public static void loadShader(String name) {
+    private static void loadShader(String name) {
         shaders.put(name, loadShaderFromFile(name));
     }
 

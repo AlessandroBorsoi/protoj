@@ -73,6 +73,7 @@ public class Text extends Entity {
         shader.setInteger("columns", textureEnum.getColumns());
         shader.setMatrix4("projection", projection);
         shader.setMatrix4("scale", scale);
+        shader.setMatrix4("rotation", new Mat4());
         for (int i = 0; i < text.length(); i++) {
             Mat4 model = new Mat4().translate(new Vec3(x, position.y, 0.0f));
             shader.setInteger("index", ((int) text.charAt(i)));

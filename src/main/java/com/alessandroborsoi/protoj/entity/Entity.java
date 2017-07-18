@@ -44,8 +44,9 @@ public abstract class Entity implements IEntity {
     protected int vao;
     @Getter Vec2 position;
     @Getter Vec2 oldPosition;
-    Vec2 renderPosition;
+    protected Vec2 renderPosition;
     protected Vec2 velocity;
+    protected float rotationAngle;
     protected int index;
     protected float scaleRatio;
     protected boolean blackFilter;
@@ -73,6 +74,7 @@ public abstract class Entity implements IEntity {
         this.oldPosition = new Vec2();
         this.renderPosition = new Vec2();
         this.velocity = new Vec2();
+        this.rotationAngle = 0.0f;
 
         int elements[] = {
                 0, 1, 2,
@@ -154,6 +156,8 @@ public abstract class Entity implements IEntity {
                 .translate(new Vec3(-getWidth() / 2.0f, -getHeight() / 2.0f, 0.0f))
                 .translate(new Vec3(renderPosition.x, renderPosition.y, 0.0f));
         Mat4 scale = new Mat4().scale(scaleRatio);
+        Mat4 rotation = new Mat4()
+                .rotateZ(rotationAngle * Math.PI / 180.0f);
         shader.setInteger("index", index);
         shader.setInteger("rows", textureEnum.getRows());
         shader.setInteger("columns", textureEnum.getColumns());
@@ -161,6 +165,7 @@ public abstract class Entity implements IEntity {
         shader.setMatrix4("projection", projection);
         shader.setMatrix4("model", model);
         shader.setMatrix4("scale", scale);
+        shader.setMatrix4("rotation", rotation);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
     }
