@@ -39,7 +39,7 @@ public abstract class Entity implements IEntity {
     protected ShaderEnum shaderEnum;
     protected Texture texture;
     protected Shader shader;
-    protected float vertices[];
+    protected float[] vertices;
     protected Mat4 projection;
     protected int vao;
     @Getter Vec2 position;
@@ -76,7 +76,7 @@ public abstract class Entity implements IEntity {
         this.velocity = new Vec2();
         this.rotationAngle = 0.0f;
 
-        int elements[] = {
+        int[] elements = {
                 0, 1, 2,
                 2, 3, 0
         };
@@ -139,10 +139,9 @@ public abstract class Entity implements IEntity {
     }
 
     @Override
-    public Vec2 interpolate(float alpha) {
+    public void interpolate(float alpha) {
         renderPosition.x = position.x * alpha + oldPosition.x * (1.0f - alpha);
         renderPosition.y = position.y * alpha + oldPosition.y * (1.0f - alpha);
-        return renderPosition;
     }
 
     @Override

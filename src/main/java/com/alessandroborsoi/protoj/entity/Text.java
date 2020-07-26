@@ -76,7 +76,7 @@ public class Text extends Entity {
         shader.setMatrix4("rotation", new Mat4());
         for (int i = 0; i < text.length(); i++) {
             Mat4 model = new Mat4().translate(new Vec3(x, position.y, 0.0f));
-            shader.setInteger("index", ((int) text.charAt(i)));
+            shader.setInteger("index", text.charAt(i));
             shader.setMatrix4("model", model);
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
             x += 10.0f;

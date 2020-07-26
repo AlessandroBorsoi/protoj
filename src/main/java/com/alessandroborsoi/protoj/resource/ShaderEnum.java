@@ -6,7 +6,7 @@ public enum ShaderEnum {
     REGULAR("regular"),
     IRREGULAR("irregular");
 
-    @Getter private String name;
+    @Getter private final String name;
 
     ShaderEnum(String name) {
         this.name = name;

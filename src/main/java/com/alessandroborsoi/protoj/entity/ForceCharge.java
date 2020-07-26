@@ -15,7 +15,7 @@ public class ForceCharge extends Entity {
     private static final ShaderEnum SHADER_ENUM = ShaderEnum.REGULAR;
     private static final float SCALE_RATIO = 1.0f;
     private static final float ANIMATION_SPEED = 30.0f;
-    private PlayerShip playerShip;
+    private final PlayerShip playerShip;
     private float accumulator;
 
     public ForceCharge() {

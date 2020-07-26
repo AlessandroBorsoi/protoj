@@ -54,17 +54,14 @@ public class Game {
         List<IEntity> bulletsEntities = layers.get(LayerManager.BULLETS).entities;
         List<IEntity> enemiesEntities = layers.get(LayerManager.ENEMIES).entities;
         List<IEntity> playerEntities = layers.get(LayerManager.PLAYER).entities;
+        checkCollisions(bulletsEntities, enemiesEntities);
+        checkCollisions(playerEntities, enemiesEntities);
+    }
+
+    private void checkCollisions(List<IEntity> bulletsEntities, List<IEntity> enemiesEntities) {
         for (int i = 0; i < bulletsEntities.size(); i++) {
             for (int j = 0; j < enemiesEntities.size(); j++) {
                 if (collision(bulletsEntities.get(i), enemiesEntities.get(j))) {
-                    ((Ladybird) enemiesEntities.get(j)).destroy();
-                    score++;
-                }
-            }
-        }
-        for (int i = 0; i < playerEntities.size(); i++) {
-            for (int j = 0; j < enemiesEntities.size(); j++) {
-                if (collision(playerEntities.get(i), enemiesEntities.get(j))) {
                     ((Ladybird) enemiesEntities.get(j)).destroy();
                     score++;
                 }

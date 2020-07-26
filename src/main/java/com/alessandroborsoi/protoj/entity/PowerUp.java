@@ -27,7 +27,7 @@ public class PowerUp extends Entity {
     private static final float SCALE_RATIO = 0.4f;
     private static final float SPEED = 50.0f;
     private static final float ANIMATION_SPEED = 10.0f;
-    @Getter private int type;
+    @Getter private final int type;
     private double accumulator;
 
     public PowerUp(int type) {

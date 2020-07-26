@@ -23,7 +23,7 @@ public class KeyCallback extends GLFWKeyCallback {
     public static boolean stopDown;
     public static boolean forceBlastCharge;
     public static boolean fire;
-    private static boolean[] keys = new boolean[GLFW_KEY_LAST];
+    private static final boolean[] keys = new boolean[GLFW_KEY_LAST];
 
     @Override
     public void invoke(long window, int key, int scancode, int action, int mods) {

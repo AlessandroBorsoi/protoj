@@ -18,10 +18,10 @@ import static org.lwjgl.opengl.GL11.glTexParameteri;
 
 @Log4j2
 public class Texture {
-    private int id;
-    private int width;
-    private int height;
-    private String name;
+    private final int id;
+    private final int width;
+    private final int height;
+    private final String name;
 
     public Texture(String name, int width, int height, ByteBuffer image) {
         log.debug("Loading texture {} on memory", name);

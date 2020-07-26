@@ -15,7 +15,7 @@ public class LayerManager {
     public static final String FOREGROUND = "foreground";
     public static final String TEXT = "text";
     private static LayerManager layerManager;
-    @Getter private Map<String, Layer> layers;
+    @Getter private final Map<String, Layer> layers;
 
     private LayerManager() {
         layers = new LinkedHashMap<>();

@@ -63,14 +63,13 @@ public class Planet extends Entity {
 
     @Override
     protected float[] getVertices() {
-        float vertices[] = {
+        return new float[]{
                 // Position     // Texture
                 0.0f, 0.0f,     S / this.textureEnum.getWidth(), T / this.textureEnum.getHeight(),                      // Top-left
                 WIDTH, 0.0f,    (S + WIDTH) / this.textureEnum.getWidth(), T / this.textureEnum.getHeight(),            // Top-right
                 WIDTH, HEIGHT,  (S + WIDTH) / this.textureEnum.getWidth(), (T + HEIGHT) / this.textureEnum.getHeight(), // Bottom-right
                 0.0f, HEIGHT,   S / this.textureEnum.getWidth(), (T + HEIGHT) / this.textureEnum.getHeight(),           // Bottom-left
         };
-        return vertices;
     }
 
     @Override

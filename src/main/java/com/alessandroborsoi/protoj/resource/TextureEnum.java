@@ -15,11 +15,11 @@ public enum TextureEnum {
     POWER_UP("PowerUp1", 512.0f, 512.0f, 8, 8),
     STAGE1_LAYER1("Stage1Layer1", 1024.0f, 1024.0f, 0, 0);
 
-    @Getter private String name;
-    @Getter private float width;
-    @Getter private float height;
-    @Getter private int rows;
-    @Getter private int columns;
+    @Getter private final String name;
+    @Getter private final float width;
+    @Getter private final float height;
+    @Getter private final int rows;
+    @Getter private final int columns;
 
     TextureEnum(String name, float width, float height, int rows, int columns) {
         this.name = name;

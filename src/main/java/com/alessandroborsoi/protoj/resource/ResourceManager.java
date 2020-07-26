@@ -21,8 +21,8 @@ import static org.lwjgl.stb.STBImage.stbi_load;
 
 @Log4j2
 public class ResourceManager {
-    private static Map<String, Texture> textures = new HashMap<>();
-    private static Map<String, Shader> shaders = new HashMap<>();
+    private static final Map<String, Texture> textures = new HashMap<>();
+    private static final Map<String, Shader> shaders = new HashMap<>();
 
     public static void init() {
         EnumSet.allOf(TextureEnum.class).forEach(textureEnum -> loadTexture(textureEnum.getName()));

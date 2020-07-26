@@ -161,12 +161,10 @@ public class PlayerShip extends Entity {
         }
 
         if (KeyCallback.fire) {
-            switch (fireType) {
-                case BULLET:
-                    new Bullet(new Vec2(position.x, position.y)).spawn();
-                    break;
-                default:
-                    new ForceBlast(new Vec2(position.x, position.y), fireType).spawn();
+            if (fireType == BULLET) {
+                new Bullet(new Vec2(position.x, position.y)).spawn();
+            } else {
+                new ForceBlast(new Vec2(position.x, position.y), fireType).spawn();
             }
             KeyCallback.fire = false;
             forceBlastChargeTime = 0.0f;
